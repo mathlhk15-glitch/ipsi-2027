@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2027 대입 대학별 핵심 가이드</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0f2340;--navy-mid:#1a3a5c;--teal:#1e8a7e;--teal-light:#2ab3a3;--gold:#c9933a;--gold-light:#e8b456;--bg:#f4f1eb;--bg-card:#faf8f4;--text:#1a1a2e;--text-sub:#4a4a6a;--text-muted:#7a7a9a;--border:#ddd8ce;--red:#c0392b;--green:#1a7a4e}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;min-height:100vh}
+header{background:var(--navy);padding:48px 40px 36px;position:relative;overflow:hidden}
+header::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 40px,rgba(255,255,255,.02) 40px,rgba(255,255,255,.02) 41px)}
+.header-inner{max-width:1200px;margin:0 auto;position:relative}
+.header-badge{display:inline-block;background:var(--gold);color:var(--navy);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:4px 12px;border-radius:2px;margin-bottom:16px}
+header h1{font-family:'Noto Serif KR',serif;font-size:clamp(24px,4vw,38px);color:#fff;font-weight:700;line-height:1.3;margin-bottom:10px}
+header h1 span{color:var(--gold-light)}
+header p{color:rgba(255,255,255,.65);font-size:14px}
+.header-stats{display:flex;gap:32px;margin-top:28px;flex-wrap:wrap}
+.stat{display:flex;flex-direction:column}
+.stat-num{font-family:'Noto Serif KR',serif;font-size:28px;font-weight:700;color:var(--gold-light)}
+.stat-label{font-size:11px;color:rgba(255,255,255,.5);letter-spacing:1px}
+
+/* update badge */
+.update-notice{background:rgba(30,138,126,.15);border:1px solid rgba(30,138,126,.4);border-radius:6px;padding:10px 16px;margin-top:20px;display:inline-flex;align-items:center;gap:10px;font-size:12px;color:rgba(255,255,255,.75)}
+.update-dot{width:8px;height:8px;border-radius:50%;background:var(--teal-light);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+.controls{background:var(--navy-mid);padding:20px 40px;position:sticky;top:0;z-index:100;box-shadow:0 4px 20px rgba(0,0,0,.3)}
+.controls-inner{max-width:1200px;margin:0 auto;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+#searchInput{flex:1;min-width:200px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:6px;padding:10px 16px;color:#fff;font-size:14px;font-family:'Noto Sans KR',sans-serif;outline:none;transition:border-color .2s}
+#searchInput::placeholder{color:rgba(255,255,255,.4)}
+#searchInput:focus{border-color:var(--teal-light)}
+.filter-group{display:flex;gap:8px;flex-wrap:wrap}
+.filter-btn{padding:7px 14px;border-radius:20px;border:1px solid rgba(255,255,255,.2);background:transparent;color:rgba(255,255,255,.7);font-size:12px;font-weight:500;cursor:pointer;transition:all .2s;font-family:'Noto Sans KR',sans-serif}
+.filter-btn:hover,.filter-btn.active{background:var(--teal);border-color:var(--teal);color:#fff}
+.filter-btn[data-filter="전체"].active{background:var(--gold);border-color:var(--gold);color:var(--navy)}
+
+.main{max-width:1200px;margin:0 auto;padding:40px}
+.result-count{font-size:13px;color:var(--text-muted);margin-bottom:24px}
+.result-count strong{color:var(--teal)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:24px}
+
+.card{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;overflow:hidden;transition:transform .2s,box-shadow .2s;display:flex;flex-direction:column;position:relative}
+.card:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(15,35,64,.12)}
+
+/* 업데이트 배지 */
+.card-updated{position:absolute;top:12px;right:12px;background:rgba(201,147,58,.2);border:1px solid rgba(201,147,58,.5);border-radius:3px;padding:2px 7px;font-size:10px;color:var(--gold-light);font-weight:600;letter-spacing:.5px}
+.card-updated.new{background:rgba(30,138,126,.25);border-color:rgba(42,179,163,.6);color:#4de8d8}
+
+.card-header{background:var(--navy);padding:20px 22px 16px}
+.card-region{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold-light);margin-bottom:6px}
+.card-title{font-family:'Noto Serif KR',serif;font-size:18px;font-weight:700;color:#fff;margin-bottom:8px}
+.card-summary{font-size:12px;color:rgba(255,255,255,.55);line-height:1.5}
+.card-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.tag{font-size:10px;font-weight:700;padding:3px 9px;border-radius:3px;letter-spacing:.5px}
+.tag.교과{background:rgba(26,58,92,.9);color:#7ecbf5;border:1px solid rgba(126,203,245,.3)}
+.tag.종합{background:rgba(30,110,92,.9);color:#7ef5d4;border:1px solid rgba(126,245,212,.3)}
+.tag.논술{background:rgba(110,58,30,.9);color:#f5b87e;border:1px solid rgba(245,184,126,.3)}
+.tag.정시{background:rgba(58,30,110,.9);color:#c07ef5;border:1px solid rgba(192,126,245,.3)}
+.tag.주의{background:rgba(192,57,43,.9);color:#ffa5a5;border:1px solid rgba(255,165,165,.3)}
+.tag.특수{background:rgba(60,60,60,.9);color:#e0e0e0;border:1px solid rgba(224,224,224,.2)}
+
+.card-body{padding:20px 22px;flex:1;display:flex;flex-direction:column;gap:14px}
+.section-block{border-left:3px solid var(--border);padding-left:12px}
+.section-block.교과{border-color:#7ecbf5}.section-block.종합{border-color:#7ef5d4}
+.section-block.논술{border-color:#f5b87e}.section-block.특수{border-color:var(--gold)}
+.section-block.정시{border-color:#c07ef5}
+.section-title{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-bottom:6px}
+.section-block.교과 .section-title{color:#3a8fba}.section-block.종합 .section-title{color:#1e8a6e}
+.section-block.논술 .section-title{color:#ba6a30}.section-block.특수 .section-title{color:var(--gold)}
+.section-block.정시 .section-title{color:#8a5aba}
+.section-items{list-style:none;display:flex;flex-direction:column;gap:3px}
+.section-items li{font-size:12.5px;color:var(--text-sub);padding-left:12px;position:relative;line-height:1.6}
+.section-items li::before{content:'·';position:absolute;left:0;color:var(--text-muted)}
+.cutline-bar{background:rgba(15,35,64,.05);border-radius:6px;padding:10px 14px;display:flex;gap:12px;flex-wrap:wrap}
+.cutline-item{display:flex;flex-direction:column}
+.cutline-label{font-size:10px;color:var(--text-muted);font-weight:700;letter-spacing:.5px}
+.cutline-val{font-size:13px;font-weight:700;color:var(--navy)}
+.caution-box{background:rgba(192,57,43,.06);border:1px solid rgba(192,57,43,.2);border-radius:6px;padding:10px 12px;font-size:12px;color:var(--red);line-height:1.6}
+.caution-box::before{content:'⚠ ';font-weight:700}
+.point-box{background:rgba(30,138,126,.06);border:1px solid rgba(30,138,126,.2);border-radius:6px;padding:10px 12px;font-size:12px;color:var(--green);line-height:1.6}
+.point-box::before{content:'★ ';font-weight:700}
+.card-expand-btn{display:block;width:100%;background:rgba(15,35,64,.04);border:none;border-top:1px solid var(--border);padding:11px;font-size:12px;font-weight:600;color:var(--text-muted);cursor:pointer;text-align:center;transition:background .2s;font-family:'Noto Sans KR',sans-serif}
+.card-expand-btn:hover{background:rgba(15,35,64,.08);color:var(--navy)}
+.card-extra{display:none;padding:0 22px 20px}
+.card-extra.open{display:block}
+.hidden{display:none!important}
+footer{margin-top:60px;background:var(--navy);padding:30px 40px;text-align:center;font-size:12px;color:rgba(255,255,255,.35);line-height:2}
+@media(max-width:600px){header,.controls,.main{padding-left:20px;padding-right:20px}.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <div class="header-badge">창원경일고 진로진학상담</div>
+    <h1>2027 대입<br><span>대학별 핵심 가이드</span></h1>
+    <p>수시·정시 전형 변화 및 입시 결과 · 상담 포인트 총정리</p>
+    <div class="header-stats">
+      <div class="stat"><span class="stat-num" id="totalCount">20</span><span class="stat-label">수록 대학</span></div>
+      <div class="stat"><span class="stat-num">4</span><span class="stat-label">전형 유형</span></div>
+      <div class="stat"><span class="stat-num" id="lastUpdate">2026.06</span><span class="stat-label">최종 업데이트</span></div>
+    </div>
+    <div class="update-notice">
+      <span class="update-dot"></span>
+      대학 추가 시 카드를 가나다 순 위치에 삽입하면 자동 반영됩니다 · 카드 우측 상단 날짜 = 해당 대학 마지막 업데이트
+    </div>
+  </div>
+</header>
+
+<div class="controls">
+  <div class="controls-inner">
+    <input type="text" id="searchInput" placeholder="대학명 또는 키워드 검색 (예: 수능최저, 논술, 면접, 의대)…" oninput="filterCards()">
+    <div class="filter-group">
+      <button class="filter-btn active" data-filter="전체" onclick="setFilter('전체')">전체</button>
+      <button class="filter-btn" data-filter="수도권" onclick="setFilter('수도권')">수도권</button>
+      <button class="filter-btn" data-filter="충청권" onclick="setFilter('충청권')">충청권</button>
+      <button class="filter-btn" data-filter="영남권" onclick="setFilter('영남권')">영남권</button>
+      <button class="filter-btn" data-filter="교과" onclick="setFilter('교과')">교과</button>
+      <button class="filter-btn" data-filter="종합" onclick="setFilter('종합')">종합</button>
+      <button class="filter-btn" data-filter="논술" onclick="setFilter('논술')">논술</button>
+      <button class="filter-btn" data-filter="여대" onclick="setFilter('여대')">여대</button>
+      <button class="filter-btn" data-filter="특수" onclick="setFilter('특수')">특성화</button>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+  <p class="result-count" id="resultCount"></p>
+  <div class="grid" id="cardGrid">
+
+<!-- 가나다 순 정렬 -->
+
+<!-- 가천대학교 -->
+<div class="card" data-region="수도권" data-tags="교과 종합 논술">
+  <div class="card-updated">2026.06</div>
+  <div class="card-header">
+    <div class="card-region">수도권 · 경기 성남</div>
+    <div class="card-title">가천대학교</div>
+    <div class="card-summary">2년 연속 수시 지원자 수 1위. 한의예·약학 27대입 논술 신규 모집.</div>
+    <div class="card-tags">
+      <span class="tag 교과">교과</span><span class="tag 종합">종합</span><span class="tag 논술">논술</span>
+      <span class="tag 주의">지원자수 1위</span>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="section-block 교과">
+      <div class="section-title">학생부 교과</div>
+      <ul class="section-items">
+        <li><strong>학생부우수자</strong>: 유형1(전과목 A/B 환산) vs 유형2(상위10과목) 중 우수한 것 → 대체로 유형1 예상</li>
+        <li>농어촌·특성화고는 유형1만 반영</li>
+        <li><strong>지역균형</strong>: 일반40+진로60 / 일반 5등급까지 만점 / 만점자 간 입결 갈림</li>
+        <li>기초 교과 개념 확인 질문 출제</li>
+        <li><strong>지역의사전형</strong>: 교과100, 3개 1등급 (수학 지정 없음, 탐구 각각 인정)</li>
+      </ul>
+    </div>
+    <div class="section-block 종합">
+      <div class="section-title">학생부 종합</div>
+      <ul class="section-items">
+        <li>면접 50% / 성적보다 <strong>활동 중심</strong> 평가</li>
+        <li>서류: 인성40 (학교생활충실) / 진학의지40 / 학업20</li>
+        <li>진학의지 = 지원 모집단위 학습에 필요한 기초·기반을 교과·활동으로 준비했는지</li>
+        <li>첨단학과: 학과 탐색 매우 중요</li>
+      </ul>
+    </div>
+    <div class="section-block 논술">
+      <div class="section-title">논술 전형</div>
+      <ul class="section-items">
+        <li>EBS 연계 출제 / 한의예·약학 <strong>27대입 신규</strong> 논술 모집</li>
+        <li>일반학과 최저 1개 3등급 / 바이오로직스 2합 5</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card-extra" id="extra-gachon">
+    <div class="caution-box">지역균형 만점자 구간에서 추가 변별. 한의예·약학 논술 첫 시행 연도 — 지원 전략 신중히.</div>
+  </div>
+  <button class="card-expand-btn" onclick="toggleExtra('extra-gachon',this)">▾ 상세 보기</button>
+</div>
+
+<!-- 가톨릭대학교 -->
+<div class="card" data-region="수도권" data-tags="교과 종합 논술">
+  <div class="card-updated">2026.06</div>
+  <div class="card-header">
+    <div class="card-region">수도권 · 경기 부천</div>
+    <div class="card-title">가톨릭대학교</div>
+    <div class="card-summary">교과 소폭 감소, 종합 소폭 증가. 28대입부터 약술형 논술로 변경.</div>
+    <div class="card-tags">
+      <span class="tag 교과">교과</span><span class="tag 종합">종합</span><span class="tag 논술">논술</span>
+      <span class="tag 주의">28부터 약술논술</span>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="section-block 교과">
+      <div class="section-title">지역균형</div>
+      <ul class="section-items">
+        <li>자유전공 최저 <strong>2합 6</strong> / 나머지 <strong>2합 7</strong></li>
+        <li>진로선택 기준: B → <strong>2등급</strong>으로 상향 (전년 3등급)</li>
+        <li>실질경쟁률 2.4 수준으로 낮음 (전년 약술 논술 지원자 영향)</li>
+        <li>가톨릭지도자추천전형: 모집단위·인원 모두 확대</li>
+        <li>학교장추천전형: 의예·간호·약학과만 선발</li>
+      </ul>
+    </div>
+    <div class="section-block 종합">
+      <div class="section-title">학생부 종합</div>
+      <ul class="section-items">
+        <li>서류: 학업40 / 진로35 / 공동체25 (진로 5%↓, 공동체 5%↑)</li>
+        <li>면접: 지원동기 묻지 않음, 학생부 기재 내용만 질문</li>
+        <li>잠재서류전형: 충원 100% / 잠재면접전형: 충원 50%, 면접 합격률 46.3%</li>
+        <li>컴퓨터 관련 모집단위 경쟁률 낮음 — 주목</li>
+      </ul>
+    </div>
+    <div class="section-block 논술">
+      <div class="section-title">논술 전형</div>
+      <ul class="section-items">
+        <li>27대입: 기존 방식 / <strong>28대입부터 약술형</strong> 논술로 변경</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card-extra" id="extra-catholic">
+    <div class="cutline-bar">
+      <div class="cutline-item"><span class="cutline-label">의예 면접 합격률</span><span class="cutline-val">80%</span></div>
+      <div class="cutline-item"><span class="cutline-label">약학 면접 합격률</span><span class="cutline-val">69%</span></div>
+      <div class="cutline-item"><span class="cutline-label">간호 면접 합격률</span><span class="cutline-val">40%</span></div>
+    </div>
+    <div style="height:8px"></div>
+    <div class="caution-box">자연계 전년도 의외 결과 모집단위 있음 → 27대입 경쟁률 상승 가능성. 홈페이지에 전년도 입시결과 자료집 참고.</div>
+  </div>
+  <button class="card-expand-btn" onclick="toggleExtra('extra-catholic',this)">▾ 상세 보기</button>
+</div>
+
+<!-- 강남대학교 -->
+<div class="card" data-region="수도권" data-tags="교과 종합 논술">
+  <div class="card-updated">2026.06</div>
+  <div class="card-header">
+    <div class="card-region">수도권 · 경기 용인</div>
+    <div class="card-title">강남대학교</div>
+    <div class="card-summary">논술 50명 축소, 지역균형·교과우수자 증가. 26부터 교과전형 수능최저·논술 신설.</div>
+    <div class="card-tags">
+      <span class="tag 교과">교과</span><span class="tag 종합">종합</span><span class="tag 논술">논술</span>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="section-block 교과">
+      <div class="section-title">지역균형 (교과)</div>
+      <ul class="section-items">
+        <li>상위 20개 과목 반영 / 수능최저 <strong>1개 3등급</strong></li>
+        <li>주간 최저충족률 45% / 야간은 최저 없음</li>
+        <li>합격 내신 <strong>2.8~3.4등급</strong></li>
+        <li>27대입: 지역균형 22명↑ / 학교생활우수자1 28명↑ / 논술 50명↓</li>
+        <li>26 대입부터 정시 수능 3개 → 4개 영역 반영</li>
+      </ul>
+    </div>
+    <div class="section-block 종합">
+      <div class="section-title">학생부 종합</div>
+      <ul class="section-items">
+        <li>3~5등급 학교생활 충실 학생 지원 권장</li>
+        <li>사범계열: 면접 전형으로 운영</li>
+        <li>자유전공학부: 문화콘텐츠·사회복지 순 선호 / 26학번 반도체 희망 증가</li>
+      </ul>
+    </div>
+    <div class="section-block 논술">
+      <div class="section-title">논술 전형</div>
+      <ul class="section-items">
+        <li>수능특강 위주 약술형 10문항 / 난이도 쉬움</li>
+        <li>수능최저 없음 / <strong>5등급 이하 학생 지원 가능</strong></li>
+        <li>모집단위별 선발 규모 큼 / 논술전형 가이드북 공개 예정</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card-extra" id="extra-kangnam">
+    <div class="cutline-bar">
+      <div class="cutline-item"><span class="cutline-label">지역균형</span><span class="cutline-val">2.8~3.4</span></div>
+      <div class="cutline-item"><span class="cutline-label">종합</span><span class="cutline-val">3~5등급</span></div>
+      <div class="cutline-item"><span class="cutline-label">논술</span><span class="cutline-val">5등급↓ 가능</span></div>
+    </div>
+  </div>
+  <button class="card-expand-btn" onclick="toggleExtra('extra-kangnam',this)">▾ 상세 보기</button>
+</div>
+
+<!-- 경기대학교 -->
+<div class="card" data-region="수도권" data-tags="교과 종합 논술">
+  <div class="card-updated">2026.06</div>
+  <div class="card-header">
+    <div class="card-region">수도권 · 경기 수원 (서울캠: 관광문화대학)</div>
+    <div class="card-title">경기대학교</div>
+    <div class="card-summary">서울 실습 위주 학과 특화. 논술 자유전공 수원·서울 어디든 지원 가능.</div>
+    <div class="card-tags">
+      <span class="tag 교과">교과</span><span class="tag 종합">종합</span><span class="tag 논술">논술</span>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="section-block 교과">
+      <div class="section-title">교과 전형</div>
+      <ul class="section-items">
+        <li>교과성적우수자: 수능최저 <strong>2합 7</strong> (영어 2등급→1등급 인정) / 충족률 60.55%</li>
+        <li>교과성적우수자: 단과대학별 반영 교과 다름 (경영학과는 과학 반영 주의)</li>
+        <li>학교장추천: 전교과 반영 / 수능최저 없음</li>
+        <li>합격 내신 <strong>2.5~3등급 초반</strong> / 미인정결석·조퇴·지각·결과 모두 출결 반영</li>
+        <li>입학처 100% 입시결과 공개 / 캠퍼스·계열 구분 없이 전과·복수전공 가능</li>
+      </ul>
+    </div>
+    <div class="section-block 종합">
+      <div class="section-title">KGU 종합 전형</div>
+      <ul class="section-items">
+        <li>3~4등급 주 합격 / 종합전형 간 복수 지원 불가</li>
+        <li>계열적합성30%, 자기주도성20% 특징 / 출결: 자기주도성 영역서 평가</li>
+        <li>서류평가 위원이 면접 문항 직접 생성 (연계 깊음)</li>
+        <li>SW우수자 전형: 꾸준한 관련 분야 관심 학생 선호</li>
+        <li>디자인학부: 면접에 아이디어 스케치 포함</li>
+        <li>BARUN 역량 연간 250개 비교과 프로그램</li>
+      </ul>
+    </div>
+    <div class="section-block 논술">
+      <div class="section-title">논술 전형</div>
+      <ul class="section-items">
+        <li>자유전공학부 단독 선발 / 수능최저 없음</li>
+        <li>평균 5등급대 합격 (최저 7등급 내외)</li>
+        <li>자유전공 → 수원·서울 대부분 모집단위 지원 가능</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card-extra" id="extra-gyeonggi">
+    <div class="caution-box">전년도 화학과 4.3등급 합격 발생 → 27대입 경쟁률 상승 예상.</div>
+  </div>
+  <button class="card-expand-btn" onclick="toggleExtra('extra-gyeonggi',this)">▾ 상세 보기</button>
+</div>
+
+<!-- 계명대학교 -->
+<div class="card" data-region="영남권" data-tags="교과 종합">
+  <div class="card-updated">2026.06</div>
+  <div class="card-header">
+    <div class="card-region">영남권 · 대구</div>
+    <div class="card-title">계명대학교</div>
+    <div class="card-summary">캠퍼스 내 지하철 2개역. 교과면접전형 대폭 확대(29→56개 학과).</div>
+    <div class="card-tags">
+      <span class="tag 교과">교과</span><span class="tag 종합">종합</span><span class="tag 특수">해외복수학위</span>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="section-block 교과">
+      <div class="section-title">학생부 교과</div>
+      <ul class="section-items">
+        <li>일반전형(교과100) vs 면접전형(2단계 면접30) 구분</li>
+        <li>교과면접: 수능최저 일반보다 낮음 / 1단계 배수 10→<strong>20배수</strong> 확대</li>
+        <li>교과면접 모집단위 <strong>29→56개</strong> 대폭 확대</li>
+        <li>일반전형: 3개 교과 성적 반영</li>
+        <li>의예과: MMI 면접 / 면접: 지원동기·학업계획·사회이슈</li>
+      </ul>
+    </div>
+    <div class="section-block 종합">
+      <div class="section-title">학생부 종합</div>
+      <ul class="section-items">
+        <li>서류100 / 의예과 면접 있음 (1단계 7→<strong>10배수</strong> 확대)</li>
+        <li>약학부 4명 신규 모집 / 예체능 계열 종합 선발</li>
+        <li>27대입부터 서류평가 방식 변경: <strong>수치 자료 배제</strong>하고 평가</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card-extra" id="extra-keimyung">
+    <div class="point-box">기계공학과 Auburn대(미) 3+2 공동학위. 디지펜공학과 닌텐도 설립 대학 복수학위(2.5+2년). 한문교육과 임용합격률 1위. 경찰행정학과 25년 간부후보생 6명·경찰공무원 58명 합격. 1학년 2학기부터 전과(70여개, 경쟁률 1:1 미만).</div>
+    <div style="height:8px"></div>
+    <div class="caution-box">27대입부터 서류평가 수치 자료 배제 방식 — 정성평가 비중 상승.</div>
+  </div>
+  <button class="card-expand-btn" onclick="toggleExtra('extra-keimyung',this)">▾ 상세 보기</button>
+</div>
+
+<!-- 단국대학교 -->
+<div class="card" data-region="수도권" data-tags="교과 종합 논술">
+  <div class="card-updated">2026.06</div>
+  <div class="card-header">
+    <div class="card-region">수도권 · 죽전 / 충청권 · 천안</div>
+    <div class="card-title">단국대학교</div>
+    <div class="card-summary">28부터 정시 학생부정성 10%, 종합 면접 40%. 창업인재전형 27이 마지막.</div>
+    <div class="card-tags">
+      <span class="tag 교과">교과</span><span class="tag 종합">종합</span><span class="tag 논술">논술</span>
+      <span class="tag 주의">캠퍼스 분리</span>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="section-block 교과">
+      <div class="section-title">지역균형 (교과)</div>
+      <ul class="section-items">
+        <li>비교과(출결) <strong>5%</strong> 반영</li>
+        <li>죽전 최저 <strong>2합 6</strong> / 천안 <strong>2합 8</strong></li>
+        <li>죽전 합격 2등급 초중반</li>
+        <li>AI건축융합학과 27대입 신설</li>
+      </ul>
+    </div>
+    <div class="section-block 종합">
+      <div class="section-title">학생부 종합</div>
+      <ul class="section-items">
+        <li>서류: 진로 몰빵형 활동 비선호</li>
+        <li>DKU서류형: 학업역량 45% / DKU면접형: 진로역량 45%, 면접 역전율 하위 20%</li>
+        <li>창업인재: 앱개발·수익창출 경험 우대 / <strong>27대입이 마지막 기회</strong> (28 폐지)</li>
+      </ul>
+    </div>
+    <div class="section-block 논술">
+      <div class="section-title">논술 전형</div>
+      <ul class="section-items">
+        <li>수능최저 없음 / 무전공광역·계열광역 모두 선발</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card-extra" id="extra-dankook">
+    <div class="caution-box">죽전·천안 모집단위 분포 다름. 28부터 정시 학생부정성 10% 도입. 프리무스국제대학: 4년 전과목 영어 수업.</div>
+    <div style="height:8px"></div>
+    <div class="point-box">한국외대 다음으로 다양한 외국학 전공. 디즈니 인턴십 프로그램. 창업 경험 학생은 창업인재 전형 반드시 검토 (27이 마지막). 천안캠 코스메디컬소재학과 = 화장품공학.</div>
+  </div>
+  <button class="card-expand-btn" onclick="toggleExtra('extra-dankook',this)">▾ 상세 보기</button>
+</div>
+
+<!-- 대구가톨릭대학교 -->
+<div class="card" data-region="영남권" data-tags="교과 종합">
+  <div class="card-updated">2026.06</div>
+  <div class="card-header">
+    <div class="card-region">영남권 · 대구</div>
+    <div class="card-title">대구가톨릭대학교</div>
+    <div class="card-summary">수시 최초합격자 전원 장학금 지급. 의예·약학·간호 최저 높은 편.</div>
+    <div class="card-tags">
+      <span class="tag 교과">교과</span><span class="tag 종합">종합</span><span class="tag 특수">장학금</span>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="section-block 교과">
+      <div class="section-title">교과 전형</div>
+      <ul class="section-items">
+        <li>교과80+출결20 / 공통·일반 상위 8과목 + 진로 4과목</li>
+        <li>지역교과: 공통·일반 상위 6과목 + 진로 6과목</li>
+        <li>의예 <strong>3합 4 (수학 포함)</strong> / 약학 <strong>3합 5</strong> / 간호 <strong>2합 7 (탐구1)</strong></li>
+        <li>의예과: 1단계 10배수 → MMI 면접</li>
+        <li>탐구 2과목 평균 절사</li>
+        <li>일반학과: 대학 환산식 <strong>4~6등급</strong> 수준</li>
+      </ul>
+    </div>
+    <div class="section-block 종합">
+      <div class="section-title">종합 전형</div>
+      <ul class="section-items">
+        <li>서류100 / 학업40+진로30+공동체30</li>
+        <li>간호 수능최저 2합 8 / 글로벌항공서비스: 면접 있음</li>
+        <li>합격 분포 3~6등급으로 폭 넓음</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card-extra" id="extra-dgcu">
+    <div class="point-box">수시 최초합격자 전원 장학금: 인문 100만원 / 자연·예체능 150만원. 자격증·동아리·방과후 포인트 → 장학금 환산 제도 별도 운영.</div>
+    <div style="height:8px"></div>
+    <div class="caution-box">탐구 2과목 평균 절사. 의예 수학 필수 포함. 간호 최저 2합 8 — 타 대학 대비 높은 편.</div>
+  </div>
+  <button class="card-expand-btn" onclick="toggleExtra('extra-dgcu',this)">▾ 상세 보기</button>
+</div>
+
+<!-- 대진대학교 -->
+<div class="card" data-region="수도권" data-tags="교과 종합 정시">
+  <div class="card-updated new">2026.06 신규</div>
+  <div class="card-header">
+    <div class="card-region">수도권 · 경기 포천</div>
+    <div class="card-title">대진대학교</div>
+    <div class="card-summary">서울·경기 지원자 90%. 반영과목 15→18개 변경. 28대입 전형 구조 개편 예고.</div>
+    <div class="card-tags">
+      <span class="tag 교과">교과</span><span class="tag 종합">종합</span><span class="tag 정시">정시</span>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="section-block 교과">
+      <div class="section-title">학생부 교과</div>
+      <ul class="section-items">
+        <li><strong>학생부우수자</strong>: 교과70+면접30 / 면접문항 2개 사전 공지 / 응시율 57%</li>
+        <li>합격 <strong>3등급 초중반</strong></li>
+        <li><strong>학교장추천</strong>: 교과100 / 학생부우수자보다 성적 높음 (면접 없음)</li>
+        <li>반영과목 <strong>15→18개</strong>로 변경 / 진로선택 최대 5→8개로 확대</li>
+        <li>성취도 A 과목 개수 많으면 유리 / 18과목 기준 전년 대비 0.1~0.2등급 하락 효과</li>
+        <li>28대입부터 다시 15과목 반영으로 변경 예정</li>
+      </ul>
+    </div>
+    <div class="section-block 종합">
+      <div class="section-title">윈윈대진 (종합)</div>
+      <ul class="section-items">
+        <li>서류: 학업40+진로30+공동체20 / 2단계 서류확인면접 30%</li>
+        <li>진로탐색노력 높이 평가</li>
+        <li>전과목 평균 기준 <strong>5등급 후반~6등급 초반</strong>까지 합격</li>
+        <li>28대입부터 서류형·면접형으로 구분 운영 예정</li>
+      </ul>
+    </div>
+    <div class="section-block 정시">
+      <div class="section-title">정시 수능 100</div>
+      <ul class="section-items">
+        <li>국수영 중 상위 1개 60 + 그 외·탐구·한국사 중 1개 40</li>
+        <li><strong>한국사 반영</strong>이 특징 / 정시 입결은 영어·한국사 반영된 결과</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card-extra" id="extra-daejin">
+    <div class="caution-box">실용음악학과 폐지. 여러 학과 구조 개편 있음. 교내 순환버스 운영(캠퍼스 넓음).</div>
+  </div>
+  <button class="card-expand-btn" onclick="toggleExtra('extra-daejin',this)">▾ 상세 보기</button>
+</div>
+
+<!-- 덕성여대 -->
+<div class="card" data-region="수도권" data-tags="교과 종합 정시 여대">
+  <div class="card-updated new">2026.06 신규</div>
+  <div class="card-header">
+    <div class="card-region">수도권 · 서울</div>
+    <div class="card-title">덕성여자대학교</div>
+    <div class="card-summary">전면 자유전공제 실시 대학. 교과 반영 방식 전과목으로 변경.</div>
+    <div class="card-tags">
+      <span class="tag 교과">교과</span><span class="tag 종합">종합</span><span class="tag 정시">정시</span>
+      <span class="tag 특수">여대</span><span class="tag 특수">자유전공</span>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="section-block 교과">
+      <div class="section-title">고교추천 (교과 100)</div>
+      <ul class="section-items">
+        <li>반영 방법: 진로 상위3 → <strong>전과목</strong>으로 변경</li>
+        <li>수능최저 <strong>2합 7</strong> / 약학: 사회 허용 (영어+사회 동시 불가)</li>
+        <li>글로벌융합대학: 제2외국어·한문 허용 (2합 7)</li>
+        <li>합격 <strong>2등급 중반~3등급 중반</strong></li>
+        <li>26 대입: 모집인원 변동·반영방식 변화로 경쟁률 하락 있었음</li>
+      </ul>
+    </div>
+    <div class="section-block 종합">
+      <div class="section-title">덕성인재 (종합)</div>
+      <ul class="section-items">
+        <li>덕성인재1: 서류100 / 덕성인재2: 2단계 면접40</li>
+        <li>통합선발(4배수) / 단일전공(3배수)</li>
+        <li>서류: 자기주도30+학업20+탐구25+공동체25</li>
+        <li>덕성인재 전형 <strong>3등급 후반</strong>까지 합격 (성적 조밀도 높음)</li>
+        <li>덕성인재2 서류 역전율 <strong>46.73%</strong> — 면접 영향력 매우 큼</li>
+        <li>수시요강에 모집단위별 평가 방안 기록 — 필독</li>
+      </ul>
+    </div>
+    <div class="section-block 정시">
+      <div class="section-title">정시</div>
+      <ul class="section-items">
+        <li>다군 자유전공학부: 수능90+교과10 신설</li>
+        <li>정시 비율: 우수 영역순 30/25/25/20 변경</li>
+        <li>약대 과탐 2과목 반영 시 가산점 20%</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card-extra" id="extra-duksung">
+    <div class="caution-box">전면 자유전공제 대학 — 모집단위별 평가 방안 다름. 개별 학과 입결 참고 어려울 수 있음.</div>
+  </div>
+  <button class="card-expand-btn" onclick="toggleExtra('extra-duksung',this)">▾ 상세 보기</button>
+</div>
+
+<!-- 상명대학교 -->
+<div class="card" data-region="수도권" data-tags="교과 종합 논술">
+  <div class="card-updated new">2026.06 신규</div>
+  <div class="card-header">
+    <div class="card-region">수도권 · 서울 / 충청권 · 천안</div>
+    <div class="card-title">상명대학교</div>
+    <div class="card-summary">1학년부터 전과 가능. 교과 수능최저 26부터 폐지. 캠퍼스간 전과 매년 26명.</div>
+    <div class="card-tags">
+      <span class="tag 교과">교과</span><span class="tag 종합">종합</span><span class="tag 논술">논술</span>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="section-block 교과">
+      <div class="section-title">고교추천 (교과 100)</div>
+      <ul class="section-items">
+        <li>수능최저 <strong>26대입부터 폐지</strong></li>
+        <li>국가안보학과: 남학생만 지원 가능, 체력검정 20점 반영</li>
+        <li>전년도 경쟁률로 의외 성적 합격 사례 있었음</li>
+        <li>1학년부터 전과 신청 가능 / 신청자 중 1~2명 제외 전과 승인 / 캠퍼스간 전과도 매년 26명</li>
+      </ul>
+    </div>
+    <div class="section-block 종합">
+      <div class="section-title">상명인재 (종합)</div>
+      <ul class="section-items">
+        <li>서류100 / 학업35+진로45+공동체20</li>
+        <li>면접은 예체능 계열에서만 실시</li>
+      </ul>
+    </div>
+    <div class="section-block 논술">
+      <div class="section-title">논술 전형</div>
+      <ul class="section-items">
+        <li>약술형 / 인문: 국어8+수학2 / 자연: 국어2+수학8</li>
+        <li>합격자 평균: 인문 <strong>93점</strong> / 자연 <strong>69점</strong></li>
+      </ul>
+    </div>
+  </div>
+  <div class="card-extra" id="extra-sangmyung">
+    <div class="point-box">서울캠 27대입: 핀테크·빅데이터융합·스마트생산 → 데이터과학전공으로 통합 선발. 천안캠 정통신학과·AI반도체학과 명칭 변경.</div>
+  </div>
+  <button class="card-expand-btn" onclick="toggleExtra('extra-sangmyung',this)">▾ 상세 보기</button>
+</div>
+
+<!-- 서울과학기술대학교 -->
+<div class="card" data-region="수도권" data-tags="교과 종합 논술">
+  <div class="card-updated">2026.06</div>
+  <div class="card-header">
+    <div class="card-region">수도권 · 서울</div>
+    <div class="card-title">서울과학기술대학교</div>
+    <div class="card-summary">수능 백분위 3년 연속 상승(26대입 86). 종합 추합률 54%. 논술 합격점 91점.</div>
+    <div class="card-tags">
+      <span class="tag 교과">교과</span><span class="tag 종합">종합</span><span class="tag 논술">논술</span>
+      <span class="tag 주의">백분위 상승세</span>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="section-block 교과">
+      <div class="section-title">고교추천 (교과 100)</div>
+      <ul class="section-items">
+        <li>수능최저 <strong>2합 7</strong> (경쟁대학 대비 낮음) / 충족률 <strong>92.28%</strong></li>
+        <li>계열별 반영 교과 80단위 이상 이수 자격 조건</li>
+        <li>평균 <strong>2.02등급</strong></li>
+      </ul>
+    </div>
+    <div class="section-block 종합">
+      <div class="section-title">학생부 종합</div>
+      <ul class="section-items">
+        <li>1단계 3배수 → 2단계 면접30% / 서류: 학업35+진로45+공동체25</li>
+        <li>기회균등 전형 타 대학보다 많음 / 면접 응시율 90% / 추합률 54%</li>
+        <li>교과 평균 3.29 / 2.5~3.5 구간 최다</li>
+        <li>자유전공학부(1유형) 종합 18명 신규 선발 / 융자융합물리학과 신설</li>
+      </ul>
+    </div>
+    <div class="section-block 논술">
+      <div class="section-title">논술 전형</div>
+      <ul class="section-items">
+        <li>수능최저 없음 / 11월 23일 실시 / 합격자 점수 <strong>91점 — 매우 쉬움</strong></li>
+      </ul>
+    </div>
+  </div>
+  <div class="card-extra" id="extra-seoultech">
+    <div class="cutline-bar">
+      <div class="cutline-item"><span class="cutline-label">수능 백분위</span><span class="cutline-val">86 (26대입)</span></div>
+      <div class="cutline-item"><span class="cutline-label">교과 평균</span><span class="cutline-val">2.02등급</span></div>
+      <div class="cutline-item"><span class="cutline-label">종합 평균</span><span class="cutline-val">3.29등급</span></div>
+    </div>
+    <div style="height:8px"></div>
+    <div class="point-box">실기 1단계 교과 8배수(전년 10배수). 정시 수학 미반영 가능 — 수학 약한 학생 지원 시 특이사항 확인.</div>
+  </div>
+  <button class="card-expand-btn" onclick="toggleExtra('extra-seoultech',this)">▾ 상세 보기</button>
+</div>
+
+<!-- 성신여자대학교 -->
+<div class="card" data-region="수도권" data-tags="교과 종합 논술 여대">
+  <div class="card-updated">2026.06</div>
+  <div class="card-header">
+    <div class="card-region">수도권 · 서울</div>
+    <div class="card-title">성신여자대학교</div>
+    <div class="card-summary">융합AI반도체학과 신설. 자유전공제 도입. 교과 반영 방식 전과목으로 변경.</div>
+    <div class="card-tags">
+      <span class="tag 교과">교과</span><span class="tag 종합">종합</span><span class="tag 논술">논술</span>
+      <span class="tag 특수">여대</span>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="section-block 교과">
+      <div class="section-title">고교추천 (교과)</div>
+      <ul class="section-items">
+        <li>반영 방법: 진로 상위3 → <strong>전과목</strong>으로 변경</li>
+        <li>수능최저 <strong>2합 7</strong> / 약학: 사회 허용 (영어+사회 동시 불가)</li>
+        <li>글로벌융합대학: 제2외국어·한문 허용 (2합 7)</li>
+        <li>전공선발·무전공선발(자유전공·첨단분야전공) 분리 운영</li>
+        <li>26 평균 2.07 / 25 평균 2.24 / 진로선택 반영 3→<strong>4개</strong> 변경</li>
+        <li>자유전공에서 예체능 계열 선택 불가로 변경</li>
+      </ul>
+    </div>
+    <div class="section-block 종합">
+      <div class="section-title">자기주도인재 전형</div>
+      <ul class="section-items">
+        <li>26대입부터 면접비율 40% 적용 / 진로역량 중심 50%</li>
+        <li>합격 3등급 초반~4등급 중반</li>
+        <li>면접 역전율 <strong>46.73%</strong> — 면접 영향력 매우 큼</li>
+        <li>일부 모집단위 현저히 낮은 최저 등급은 특목고 학생</li>
+      </ul>
+    </div>
+    <div class="section-block 논술">
+      <div class="section-title">논술우수자</div>
+      <ul class="section-items">
+        <li>수능 전 실시 예정 (10월 3~4일) / 수능최저 2합 7 / 합격자 <strong>80점 초반</strong></li>
+      </ul>
+    </div>
+  </div>
+  <div class="card-extra" id="extra-sungshin">
+    <div class="caution-box">25대입 단일전공, 26대입 무전공 모집 — 개별 학과 입결은 25대입 기준 참고.</div>
+    <div style="height:8px"></div>
+    <div class="point-box">정시 다군 자유전공학부 수능90+교과10 신설. 약대 정시 과탐 2과목 가산점 20%. 대학 제공 책자에 2년 결과 자료 수록.</div>
+  </div>
+  <button class="card-expand-btn" onclick="toggleExtra('extra-sungshin',this)">▾ 상세 보기</button>
+</div>
+
+<!-- 아주대학교 -->
+<div class="card" data-region="수도권" data-tags="교과 종합 논술">
+  <div class="card-updated">2026.06</div>
+  <div class="card-header">
+    <div class="card-region">수도권 · 경기 수원</div>
+    <div class="card-title">아주대학교</div>
+    <div class="card-summary">전년과 크게 달라지지 않음. 첨단학과 신설 및 지역의사선발전형 신설.</div>
+    <div class="card-tags">
+      <span class="tag 교과">교과</span><span class="tag 종합">종합</span><span class="tag 논술">논술</span>
+      <span class="tag 주의">최저충족 50%</span>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="section-block 교과">
+      <div class="section-title">학생부 교과</div>
+      <ul class="section-items">
+        <li>수능 전 영역 응시 지원 자격 요건 <strong>폐지</strong></li>
+        <li>수능최저 충족률 약 <strong>50%</strong> / 의대 교과 입결 <strong>1.0</strong></li>
+        <li>영어+탐구로 충족 41.7% / 자연계: 영어+탐구·수학+영어 多</li>
+        <li>수학 이수단위 28단위 기준 입결 갈림</li>
+        <li>50%컷·70%컷 역전은 환산점 순 표시 때문 (정상)</li>
+      </ul>
+    </div>
+    <div class="section-block 종합">
+      <div class="section-title">학생부 종합</div>
+      <ul class="section-items">
+        <li><strong>ACE</strong>: 고른 학업역량 / <strong>첨단융합인재</strong>: 수학·과학 강점 선발</li>
+        <li>종합 충원율 50% / 합격자 95% 재학생 (의약학 85~90%)</li>
+        <li>일반학과 면접: 서류 확인형, 꼬리질문 多, 서류 신뢰도 80%</li>
+        <li>의학과: 서류+제시문 평가 (가치관 확인 면접)</li>
+        <li>지역의사선발전형 신설: 1단계 서류100%(3배수) → 2단계 70%+면접30%</li>
+      </ul>
+    </div>
+    <div class="section-block 논술">
+      <div class="section-title">논술 전형</div>
+      <ul class="section-items">
+        <li>일반학과 수능최저 없음 (의대·약대만 적용)</li>
+        <li>가장 늦게 논술 실시 → 경쟁률 높음 / 기출 풀이 필수</li>
+        <li>일반 결시율 20% / 의약학 결시율 65% / 의대: 생명과학 점수 민감</li>
+        <li>논술 합격자 재학생 62%</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card-extra" id="extra-ajou">
+    <div class="cutline-bar">
+      <div class="cutline-item"><span class="cutline-label">교과</span><span class="cutline-val">1.0~2등급</span></div>
+      <div class="cutline-item"><span class="cutline-label">종합</span><span class="cutline-val">2~3등급</span></div>
+      <div class="cutline-item"><span class="cutline-label">논술</span><span class="cutline-val">4~5등급 가능</span></div>
+    </div>
+    <div style="height:8px"></div>
+    <div class="caution-box">ACE와 첨단인재전형 선발 모집단위 다름. 첨단에코에너지·AI컴퓨터공학·첨단스마트산업 신설로 모집인원 변동.</div>
+    <div style="height:8px"></div>
+    <div class="point-box">국방디지털융합학과(군계약학과): 졸업 후 공군 장교 임관. 입결은 고교 유형과 연계해 해석 필요.</div>
+  </div>
+  <button class="card-expand-btn" onclick="toggleExtra('extra-ajou',this)">▾ 상세 보기</button>
+</div>
+
+<!-- 우송대학교 -->
+<div class="card" data-region="충청권" data-tags="교과 특수">
+  <div class="card-updated">2026.06</div>
+  <div class="card-header">
+    <div class="card-region">충청권 · 대전 (대전역 도보 10분)</div>
+    <div class="card-title">우송대학교</div>
+    <div class="card-summary">철도·외식조리·간호 3대 특성화. 취업 직결형 커리큘럼 강점.</div>
+    <div class="card-tags">
+      <span class="tag 교과">교과</span><span class="tag 특수">철도</span>
+      <span class="tag 특수">조리</span><span class="tag 특수">간호</span>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="section-block 특수">
+      <div class="section-title">주요 특성화 학과</div>
+      <ul class="section-items">
+        <li><strong>철도대학</strong>: 3학년 2학기 기관사 면허 / 매년 30% 공기업 취업 (25년 120명)</li>
+        <li><strong>외식조리대학</strong>: CJ 연계 매년 60명 정규직 / 교내 레스토랑 7곳 / 프랑스 LYFE대학 복수전공 / 자격증 가산점 없음 (공부가 핵심)</li>
+        <li><strong>간호학과</strong>: 대학병원 취업률 96.2% / 미국 간호면허 취득 과정 / 26년 미군 간호사 63명 / 2+2 미국 복수학위 / 4년간 도서관 야간 자율학습(~22시)</li>
+      </ul>
+    </div>
+    <div class="section-block 교과">
+      <div class="section-title">전형 방법</div>
+      <ul class="section-items">
+        <li>교과80+면접20: 상위 6과목 (국1·영or수1·사or과1·자유3) / 면접 실질반영률 40%</li>
+        <li>면접: 지원동기·학업계획·졸업 후 진로 / 예상문항 입학처 공개</li>
+        <li>교과100: 상위 12과목 / 입시결과 100%까지 공개</li>
+        <li>6과목 반영 → 전과목 대비 약 1등급 향상 효과</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card-extra" id="extra-woosong">
+    <div class="point-box">AI컴퓨터공학·솔브릿지경영·토탈펫케어 입결 낮음 → 입학 후 조리대학 희망학과 전과 가능. 자유전공학부로 조리대학 희망 학생 대부분 수용.</div>
+  </div>
+  <button class="card-expand-btn" onclick="toggleExtra('extra-woosong',this)">▾ 상세 보기</button>
+</div>
+
+<!-- 인천대학교 -->
+<div class="card" data-region="수도권" data-tags="교과 종합">
+  <div class="card-updated">2026.06</div>
+  <div class="card-header">
+    <div class="card-region">수도권 · 인천</div>
+    <div class="card-title">인천대학교</div>
+    <div class="card-summary">27대입 변경 최소화. 지역균형 28대입 폐지 예정 — 27이 마지막 기회.</div>
+    <div class="card-tags">
+      <span class="tag 교과">교과</span><span class="tag 종합">종합</span>
+      <span class="tag 주의">지역균형 28폐지</span>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="section-block 교과">
+      <div class="section-title">교과성적우수자</div>
+      <ul class="section-items">
+        <li>교과100 / 수능최저 <strong>2합 7</strong> (동북아 2합 6)</li>
+        <li>최초 충족률 인문·자연 65% / 동북아 60% 미만</li>
+        <li>내신 <strong>2점대 중후반</strong></li>
+      </ul>
+    </div>
+    <div class="section-block 교과">
+      <div class="section-title">지역균형 (28부터 폐지)</div>
+      <ul class="section-items">
+        <li>교과100 / 수능최저 없음</li>
+        <li>평균 인문 2.9 / 자연 2.78 / 27 성적 전년보다 낮았음</li>
+        <li><strong>격년제 경쟁률 널뛰기</strong> 주의 / 이수단위 가산점으로 변별</li>
+      </ul>
+    </div>
+    <div class="section-block 종합">
+      <div class="section-title">자기추천전형</div>
+      <ul class="section-items">
+        <li>2단계 면접30% / 3~4등급 주 합격</li>
+        <li>학업30+진로30+발전20+공동체20 / 해당 전공 교수 면접</li>
+        <li>자기소개·마무리에 구체적 내용 언급 효과적</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card-extra" id="extra-inu">
+    <div class="caution-box">지역균형 전형은 27대입이 사실상 마지막. 정보기술대학 → 인공지능대학 명칭 변경. 실기우수자 스포츠과학부 단계형→일괄합산 변경.</div>
+    <div style="height:8px"></div>
+    <div class="point-box">동북아국제통상: 미국대학 1년 이수 기회. 이수단위 가산점 — 자유전공학부 교차지원 차단 기능.</div>
+  </div>
+  <button class="card-expand-btn" onclick="toggleExtra('extra-inu',this)">▾ 상세 보기</button>
+</div>
+
+<!-- 인하대학교 -->
+<div class="card" data-region="수도권" data-tags="교과 종합 논술">
+  <div class="card-updated">2026.06</div>
+  <div class="card-header">
+    <div class="card-region">수도권 · 인천</div>
+    <div class="card-title">인하대학교</div>
+    <div class="card-summary">교과 입결 3년 연속 상승. 26 평균 2.2(과열) — 27 경쟁률 하락 가능성. 논술 경쟁률 하락 중.</div>
+    <div class="card-tags">
+      <span class="tag 교과">교과</span><span class="tag 종합">종합</span><span class="tag 논술">논술</span>
+      <span class="tag 주의">입결 과열 주의</span>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="section-block 교과">
+      <div class="section-title">교과 전형</div>
+      <ul class="section-items">
+        <li>수능최저: 인문·자유전공 <strong>2합 6</strong> / 자연 <strong>2합 5</strong></li>
+        <li>28대입부터 2합 6으로 통일 예정</li>
+        <li>충족률 인문 77% / 자연 55% / 의예 49%</li>
+        <li>3년 연속 입결 상승 / 26 평균 2.2 → 27 경쟁률 낮아질 가능성</li>
+        <li>인기학과 펑크 발생 이력 — 경쟁률 따라 펑크 예측 필요</li>
+      </ul>
+    </div>
+    <div class="section-block 종합">
+      <div class="section-title">인하인재 전형</div>
+      <ul class="section-items">
+        <li>면접형: 진로탐구역량 50% / 서류형: 기초학업역량 50%</li>
+        <li>최근 3년 면접형 경쟁률 하락 (자연 2점 후반, 인문 3점 초반)</li>
+        <li>면접: 기초학업역량 확인 질문 많음</li>
+      </ul>
+    </div>
+    <div class="section-block 논술">
+      <div class="section-title">논술 전형</div>
+      <ul class="section-items">
+        <li>경쟁률 계속 하락 중 / 27대입 전통 방식 논술</li>
+        <li>26 등록자 수리논술 점수 약 50점 (문항 어려웠음)</li>
+        <li>28대입 약술형 논술 도입 내부 검토 중</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card-extra" id="extra-inha">
+    <div class="caution-box">26 교과 평균 2.2는 과도하게 높은 수준. 전년 입결 그대로 기준 삼으면 낭패. 반드시 경쟁률 함께 판단.</div>
+  </div>
+  <button class="card-expand-btn" onclick="toggleExtra('extra-inha',this)">▾ 상세 보기</button>
+</div>
+
+<!-- 차의과학대학교 -->
+<div class="card" data-region="수도권" data-tags="교과 종합">
+  <div class="card-updated new">2026.06 신규</div>
+  <div class="card-header">
+    <div class="card-region">수도권 · 경기 포천·성남</div>
+    <div class="card-title">차의과학대학교</div>
+    <div class="card-summary">현재 의전원을 운영하는 유일한 대학. 미래융합대학 → 글로벌미래인재대학으로 개편.</div>
+    <div class="card-tags">
+      <span class="tag 교과">교과</span><span class="tag 종합">종합</span><span class="tag 특수">의전원</span>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="section-block 교과">
+      <div class="section-title">학생부 교과</div>
+      <ul class="section-items">
+        <li>전형 변경 사항 없음</li>
+        <li><strong>차학생부교과</strong>: 2단계 면접30 / 수능최저 통과율 52.5%</li>
+        <li><strong>지역균형</strong>: 교과100 / 수능최저 통과율 67.7%</li>
+        <li>약학과 수능최저: 수학 포함 <strong>3합 6</strong></li>
+      </ul>
+    </div>
+    <div class="section-block 종합">
+      <div class="section-title">학생부 종합</div>
+      <ul class="section-items">
+        <li>26대입부터 약대 3명 선발</li>
+        <li>서류: 학업40+진로40+공동체20</li>
+        <li>면접: 서류 확인 면접</li>
+        <li>약학과 수능최저: 수학 포함 3합 6 / 최저 통과율 <strong>33.3%</strong></li>
+      </ul>
+    </div>
+  </div>
+  <div class="card-extra" id="extra-cha">
+    <div class="point-box">의전원 경기북부우수인재 전형 있음 — 졸업생 지도에 참고. 의전원 운영 유일한 대학으로 의학 진학 다양한 경로 존재.</div>
+    <div style="height:8px"></div>
+    <div class="caution-box">약학과 최저 통과율 33.3% — 지원 시 수능최저 충족 가능성 최우선 검토.</div>
+  </div>
+  <button class="card-expand-btn" onclick="toggleExtra('extra-cha',this)">▾ 상세 보기</button>
+</div>
+
+<!-- 평택대학교 -->
+<div class="card" data-region="수도권" data-tags="교과 종합">
+  <div class="card-updated">2026.06</div>
+  <div class="card-header">
+    <div class="card-region">수도권 · 경기 평택</div>
+    <div class="card-title">평택대학교</div>
+    <div class="card-summary">수시 지원자 62%가 경기 지역. 자유전공 모집단위 다양하게 운영.</div>
+    <div class="card-tags"><span class="tag 교과">교과</span><span class="tag 종합">종합</span></div>
+  </div>
+  <div class="card-body">
+    <div class="section-block 교과">
+      <div class="section-title">전형별 반영 방식</div>
+      <ul class="section-items">
+        <li><strong>PTU교과·PTU자율전공</strong>: 상위 9과목 (진로선택 3개 포함 가능)</li>
+        <li><strong>PTU추천</strong>: 상위 3과목 / 27대입부터 진로선택 1개 포함 가능</li>
+        <li><strong>PTU종합</strong>: 서류100 / 일부 단위 27대입부터 추가 선발</li>
+        <li>자유전공: 학과 선택형 vs 독립 학과형으로 분리 운영</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card-extra" id="extra-ptu">
+    <div class="caution-box">일부 모집단위 명칭 변경. 전형별 반영 과목 수 달라 성적 산출 방식 꼼꼼히 확인 필요.</div>
+  </div>
+  <button class="card-expand-btn" onclick="toggleExtra('extra-ptu',this)">▾ 상세 보기</button>
+</div>
+
+<!-- 한국공학대학교 -->
+<div class="card" data-region="수도권" data-tags="교과 종합 논술">
+  <div class="card-updated">2026.06</div>
+  <div class="card-header">
+    <div class="card-region">수도권 · 경기 시흥</div>
+    <div class="card-title">한국공학대학교</div>
+    <div class="card-summary">산업통상부 설립 공과특성화. 수도권 취업률 1위(93%). 논술 80명 감소.</div>
+    <div class="card-tags">
+      <span class="tag 교과">교과</span><span class="tag 종합">종합</span><span class="tag 논술">논술</span>
+      <span class="tag 특수">취업특화</span>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="section-block 교과">
+      <div class="section-title">교과우수자 / 지역균형</div>
+      <ul class="section-items">
+        <li>교과우수자: 2합 <strong>공학7·경영8</strong> / 미적분·기하 적용 시 1등급 상향 / 충족률 70%</li>
+        <li>지역균형: 교과100 수능최저 없음 → 교과우수자보다 성적 높음</li>
+        <li>합격 <strong>2등급 후반~3등급 초반</strong></li>
+      </ul>
+    </div>
+    <div class="section-block 종합">
+      <div class="section-title">창의인재 / 융합인재</div>
+      <ul class="section-items">
+        <li>창의인재: 서류60+면접40 / 56명↑ / 평균 <strong>4등급</strong> / 수학·과학 우수</li>
+        <li>융합인재(자유전공): 서류100 / 학업역량 강조 / 평균 3.8등급 (최저 4.6)</li>
+        <li>대학에 없는 전공 희망 시 평가에서 불리</li>
+      </ul>
+    </div>
+    <div class="section-block 논술">
+      <div class="section-title">논술 전형</div>
+      <ul class="section-items">
+        <li>선발 80명 감소 / 단과대별 자유전공만 선발</li>
+        <li>약술형 수학 9문항 / 80점대 중반이 합격권 (2문항 이하 오답)</li>
+        <li>경영도 공학과 동일 문제 / 입학 후 1학년 2학기 전과 가능</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card-extra" id="extra-koreatech">
+    <div class="cutline-bar">
+      <div class="cutline-item"><span class="cutline-label">취업률</span><span class="cutline-val">93%</span></div>
+      <div class="cutline-item"><span class="cutline-label">정규직</span><span class="cutline-val">87.9%</span></div>
+      <div class="cutline-item"><span class="cutline-label">전공일치</span><span class="cutline-val">87%</span></div>
+    </div>
+    <div style="height:8px"></div>
+    <div class="point-box">4학년 졸업작품 전시 한국공학대전 운영. 입결 높아 보이는 학과는 특성화고 포함 영향 — 일반고 기준 입결 별도 확인.</div>
+  </div>
+  <button class="card-expand-btn" onclick="toggleExtra('extra-koreatech',this)">▾ 상세 보기</button>
+</div>
+
+<!-- 한국기술교육대학교 -->
+<div class="card" data-region="충청권" data-tags="교과 종합 논술 특수">
+  <div class="card-updated new">2026.06 신규</div>
+  <div class="card-header">
+    <div class="card-region">충청권 · 충남 천안</div>
+    <div class="card-title">한국기술교육대학교</div>
+    <div class="card-summary">고용노동부 설립 국책대학. 전국 4년제 취업률 1위(82.8%). 대기업·공기업·공무원 33%.</div>
+    <div class="card-tags">
+      <span class="tag 교과">교과</span><span class="tag 종합">종합</span><span class="tag 논술">논술</span>
+      <span class="tag 특수">취업특화</span>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="section-block 교과">
+      <div class="section-title">학생부 교과 (일반전형)</div>
+      <ul class="section-items">
+        <li>수능최저 <strong>2합 8</strong> (자연: 수학 필수 / 사회계열: 국어 필수)</li>
+        <li>석차 등급 있는 과목만 반영 / 진로선택 상위 3과목 가산점</li>
+        <li>합격 <strong>3점 초중반</strong></li>
+      </ul>
+    </div>
+    <div class="section-block 종합">
+      <div class="section-title">학생부 종합</div>
+      <ul class="section-items">
+        <li><strong>서류형</strong>: 학업35+전공적합성35+나우리역량30 / 수학·과학 우대</li>
+        <li>랩실 문화 있음 — 단체 생활 적응성도 중요</li>
+        <li>합격 3등급 중반~4등급 중반</li>
+        <li><strong>면접형</strong>: 1단계 4배수 / 면접40% (실질 52.6%) / 서류형보다 0.4등급 낮음</li>
+      </ul>
+    </div>
+    <div class="section-block 논술">
+      <div class="section-title">논술 전형</div>
+      <ul class="section-items">
+        <li>11월 25일 실시 / 공학: 수학논술 / 사회: 인문논술</li>
+        <li>26대입 난이도 어려웠음 (27은 다소 쉬워질 것으로 예상)</li>
+        <li>7월 중순 온라인 모의 논술 참고</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card-extra" id="extra-koreatech2">
+    <div class="cutline-bar">
+      <div class="cutline-item"><span class="cutline-label">취업률</span><span class="cutline-val">82.8% (전국1위)</span></div>
+      <div class="cutline-item"><span class="cutline-label">대기업·공기업</span><span class="cutline-val">33%</span></div>
+    </div>
+    <div style="height:8px"></div>
+    <div class="point-box">실무형 실습 비중 50% (학습량 많음). 기업연계 장기현장실습 운영 (3개월 이상). 희망자 4년간 기숙사 이용 가능. 전과 승인율 67%. 자연 희망 성적 낮으면 자유전공 인문으로 입학 후 전과 가능.</div>
+  </div>
+  <button class="card-expand-btn" onclick="toggleExtra('extra-koreatech2',this)">▾ 상세 보기</button>
+</div>
+
+  </div><!-- /grid -->
+</div><!-- /main -->
+
+<footer>
+  창원경일고등학교 진로진학상담실 · 2027 대입 대학별 핵심 가이드<br>
+  카드 우측 상단 날짜 = 해당 대학 정보 마지막 업데이트 / <span style="color:rgba(42,179,163,.7)">초록 배지 = 신규 추가</span><br>
+  본 자료는 설명회 내용 기반 정리이며, 최종 지원 전 반드시 각 대학 모집요강을 확인하시기 바랍니다.
+</footer>
+
+<script>
+let currentFilter = '전체';
+function setFilter(f) {
+  currentFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.toggle('active', b.dataset.filter === f));
+  filterCards();
+}
+function filterCards() {
+  const q = document.getElementById('searchInput').value.trim().toLowerCase();
+  const cards = document.querySelectorAll('.card');
+  let visible = 0;
+  cards.forEach(card => {
+    const region = card.dataset.region || '';
+    const tags = card.dataset.tags || '';
+    const text = card.innerText.toLowerCase();
+    const filterMatch = currentFilter === '전체' || region.includes(currentFilter) || tags.includes(currentFilter);
+    const searchMatch = !q || text.includes(q);
+    const show = filterMatch && searchMatch;
+    card.classList.toggle('hidden', !show);
+    if (show) visible++;
+  });
+  const total = cards.length;
+  document.getElementById('totalCount').textContent = total;
+  document.getElementById('resultCount').innerHTML =
+    visible === total
+      ? `전체 <strong>${total}개</strong> 대학 수록`
+      : `<strong>${visible}개</strong> 대학 표시 중 (전체 ${total}개)`;
+}
+function toggleExtra(id, btn) {
+  const el = document.getElementById(id);
+  const isOpen = el.classList.toggle('open');
+  btn.textContent = isOpen ? '▴ 접기' : '▾ 상세 보기';
+}
+filterCards();
+</script>
+</body>
+</html>
