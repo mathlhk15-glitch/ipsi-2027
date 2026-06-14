@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2027 수능완성 문학·독서 학습맵</title>
+<style>
+:root{
+  --ra:#2563EB;--rl:#DBEAFE;
+  --la:#DC2626;--ll:#FFE4E1;
+  --bg:#F3F4F6;--cb:#FFFFFF;
+  --tx:#111827;--su:#6B7280;
+  --bd:#E5E7EB;--gr:#16A34A;--gl:#DCFCE7;
+  --st:#D97706;--sl:#FEF3C7;
+  --pu:#7C3AED;--pl:#EDE9FE;
+  --sh:0 2px 8px rgba(0,0,0,.07);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Apple SD Gothic Neo','Malgun Gothic','Noto Sans KR',sans-serif;background:var(--bg);color:var(--tx);min-height:100vh;}
+
+/* HEADER */
+.hd{background:linear-gradient(135deg,#0F172A,#1E3A5F);color:#fff;padding:20px 16px 14px;text-align:center;box-shadow:0 4px 20px rgba(0,0,0,.3);}
+.hd-title{font-size:1.15rem;font-weight:800;letter-spacing:-.5px;margin-bottom:2px;}
+.hd-sub{font-size:.7rem;opacity:.6;margin-bottom:10px;}
+/* 안내 문구 */
+.hd-notice{font-size:.68rem;background:rgba(255,255,255,.1);border-radius:8px;padding:7px 12px;margin-bottom:12px;line-height:1.6;opacity:.85;text-align:left;}
+/* 진행바 */
+.pg-wrap{max-width:380px;margin:0 auto;}
+.pg-top{display:flex;justify-content:space-between;font-size:.68rem;opacity:.8;margin-bottom:4px;}
+.pg-bg{background:rgba(255,255,255,.2);border-radius:10px;height:7px;overflow:hidden;}
+.pg-fill{height:100%;background:linear-gradient(90deg,#34D399,#10B981);border-radius:10px;transition:width .4s;}
+
+/* 오늘 하나만 */
+.today-wrap{padding:10px 14px 0;text-align:center;}
+.today-btn{display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#F59E0B,#D97706);color:#fff;border:none;border-radius:30px;padding:9px 20px;font-size:.83rem;font-weight:700;cursor:pointer;font-family:inherit;box-shadow:0 4px 12px rgba(217,119,6,.35);transition:transform .15s;}
+.today-btn:hover{transform:translateY(-1px);}
+
+/* 루트 탭 */
+.route-sec{background:#fff;padding:10px 14px 8px;border-bottom:1px solid var(--bd);}
+.sec-label{font-size:.66rem;color:var(--su);font-weight:700;letter-spacing:.5px;margin-bottom:6px;text-transform:uppercase;}
+.route-row{display:flex;gap:5px;flex-wrap:wrap;}
+.rb{padding:5px 12px;border-radius:20px;border:1.5px solid var(--bd);background:#fff;font-size:.73rem;cursor:pointer;font-family:inherit;color:var(--su);transition:all .15s;white-space:nowrap;}
+.rb:hover{border-color:#9CA3AF;color:var(--tx);}
+.rb.ac{color:#fff;border-color:transparent;}
+.rb-all.ac{background:#111827;}
+.rb-intro.ac{background:#2563EB;}
+.rb-classic.ac{background:#DC2626;}
+.rb-reading.ac{background:#059669;}
+.rb-lit.ac{background:#7C3AED;}
+.rb-career.ac{background:#D97706;}
+.rb-star.ac{background:#D97706;}
+.rb-reset{color:#9CA3AF;border-color:#E5E7EB;font-size:.68rem;margin-left:auto;}
+.rb-reset:hover{border-color:var(--la);color:var(--la);}
+
+/* 루트 진행률 */
+.rp-wrap{padding:8px 14px;background:#fff;border-bottom:1px solid var(--bd);display:none;}
+.rp-wrap.vis{display:block;}
+.rp-title{font-size:.7rem;font-weight:700;color:var(--su);margin-bottom:5px;}
+.rp-bg{background:#F3F4F6;border-radius:10px;height:7px;overflow:hidden;}
+.rp-fill{height:100%;background:linear-gradient(90deg,#60A5FA,#2563EB);border-radius:10px;transition:width .4s;}
+.rp-lbl{font-size:.66rem;color:var(--su);margin-top:3px;}
+
+/* 세부 필터 */
+.filter-sec{background:#fff;border-bottom:1px solid var(--bd);padding:9px 14px;}
+.frow{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:5px;}
+.frow:last-child{margin-bottom:0;}
+.flb{font-size:.65rem;color:var(--su);font-weight:700;text-transform:uppercase;align-self:center;min-width:34px;}
+.fb{padding:4px 9px;border-radius:14px;border:1.5px solid var(--bd);background:#fff;font-size:.7rem;cursor:pointer;font-family:inherit;color:var(--su);transition:all .15s;white-space:nowrap;}
+.fb:hover{border-color:#9CA3AF;color:var(--tx);}
+.fb.fa{background:#111827;border-color:#111827;color:#fff;font-weight:600;}
+.fb.fr{background:#2563EB;border-color:#2563EB;color:#fff;font-weight:600;}
+.fb.fl{background:#DC2626;border-color:#DC2626;color:#fff;font-weight:600;}
+.fb.fv{background:#7C3AED;border-color:#7C3AED;color:#fff;font-weight:600;}
+
+/* 검색 */
+.search-sec{padding:8px 14px;background:#fff;border-bottom:1px solid var(--bd);}
+.si{width:100%;padding:8px 13px;border:1.5px solid var(--bd);border-radius:10px;font-size:.82rem;font-family:inherit;color:var(--tx);outline:none;transition:border-color .15s;}
+.si:focus{border-color:var(--ra);}
+.chip-row{display:flex;gap:4px;flex-wrap:wrap;margin-top:6px;}
+.chip{padding:3px 8px;border-radius:11px;background:#F3F4F6;border:1px solid var(--bd);font-size:.66rem;color:var(--su);cursor:pointer;transition:all .15s;}
+.chip:hover{background:#E5E7EB;color:var(--tx);}
+
+/* 메인 */
+.main{max-width:680px;margin:0 auto;padding:12px 11px 80px;}
+.sec-hd{display:flex;align-items:center;gap:8px;margin:16px 0 8px;}
+.sec-hd-t{font-size:.73rem;font-weight:700;color:var(--su);letter-spacing:.4px;text-transform:uppercase;white-space:nowrap;}
+.sec-div{flex:1;height:1px;background:var(--bd);}
+
+/* 카드 */
+.card{background:var(--cb);border-radius:14px;border:1.5px solid var(--bd);padding:12px 13px;margin-bottom:8px;box-shadow:var(--sh);transition:box-shadow .15s;display:flex;gap:10px;align-items:flex-start;}
+.card:hover{box-shadow:0 4px 16px rgba(0,0,0,.1);}
+.card.rc{border-left:4px solid var(--ra);}
+.card.lc{border-left:4px solid var(--la);}
+.card.dc{border-color:var(--gr);background:var(--gl);}
+.card.dc.rc,.card.dc.lc{border-left-color:var(--gr);}
+.card.sc{border-color:var(--st)!important;background:var(--sl);}
+
+/* 버튼 열 */
+.cc{display:flex;flex-direction:column;gap:4px;flex-shrink:0;margin-top:1px;}
+.cbtn{width:34px;height:34px;border-radius:8px;border:1.5px solid var(--bd);background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;transition:all .15s;}
+.cbtn:hover{border-color:#9CA3AF;}
+.cbtn.db{background:var(--gr);border-color:var(--gr);color:#fff;}
+.cbtn.sb{background:var(--st);border-color:var(--st);color:#fff;}
+
+/* 카드 본문 */
+.cb{flex:1;min-width:0;}
+.ct{display:flex;align-items:center;gap:4px;flex-wrap:wrap;margin-bottom:4px;}
+.badge{font-size:.61rem;font-weight:700;padding:2px 7px;border-radius:8px;}
+.br{background:var(--rl);color:var(--ra);}
+.bl{background:var(--ll);color:var(--la);}
+.bs{background:#F3F4F6;color:#6B7280;font-size:.6rem;}
+.bi{background:var(--rl);color:#1D4ED8;font-size:.6rem;}
+.card-title{font-size:.91rem;font-weight:700;color:var(--tx);margin-bottom:3px;line-height:1.4;}
+.pre-q{font-size:.71rem;color:#4B5563;background:#F9FAFB;border-left:3px solid #D1D5DB;padding:4px 8px;border-radius:0 6px 6px 0;margin-bottom:5px;line-height:1.55;}
+.rec-reason{font-size:.69rem;color:#059669;background:#ECFDF5;padding:4px 8px;border-radius:7px;margin-bottom:5px;line-height:1.5;}
+.ctags{display:flex;flex-wrap:wrap;gap:3px;margin-bottom:6px;}
+.ctag{font-size:.62rem;background:var(--pl);color:var(--pu);padding:2px 7px;border-radius:8px;font-weight:600;}
+.clink{display:inline-flex;align-items:center;gap:3px;font-size:.72rem;color:var(--ra);text-decoration:none;font-weight:600;padding:4px 9px;background:var(--rl);border-radius:7px;transition:background .15s;}
+.clink:hover{background:#BFDBFE;}
+.lc .clink{color:var(--la);background:var(--ll);}
+.lc .clink:hover{background:#FECACA;}
+
+/* 팝업 오버레이 */
+.ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:300;align-items:center;justify-content:center;padding:16px;}
+.ov.show{display:flex;}
+.popup{background:#fff;border-radius:20px;padding:24px 20px;max-width:360px;width:100%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.3);}
+.popup .emo{font-size:2.2rem;margin-bottom:10px;}
+.popup h3{font-size:.95rem;font-weight:800;margin-bottom:4px;line-height:1.4;}
+.pop-domain{font-size:.7rem;color:var(--su);margin-bottom:10px;}
+.pop-q{font-size:.75rem;color:#374151;background:#F9FAFB;border-left:3px solid var(--ra);padding:7px 10px;border-radius:0 8px 8px 0;margin-bottom:10px;text-align:left;line-height:1.6;}
+.pop-reason{font-size:.71rem;color:#059669;background:#ECFDF5;padding:5px 10px;border-radius:8px;margin-bottom:14px;text-align:left;line-height:1.5;}
+.pop-link{display:block;background:var(--ra);color:#fff;text-decoration:none;padding:10px;border-radius:11px;font-weight:700;font-size:.83rem;margin-bottom:8px;}
+.pop-btns{display:flex;gap:6px;}
+.pop-btn{flex:1;padding:8px;border-radius:9px;border:1.5px solid var(--bd);background:#fff;font-family:inherit;font-size:.75rem;cursor:pointer;color:var(--su);}
+.pop-btn:hover{background:#F3F4F6;}
+.pop-btn.green{background:var(--gr);color:#fff;border-color:var(--gr);font-weight:700;}
+.pop-btn.green:hover{background:#15803D;}
+
+/* 토스트 */
+.toast{position:fixed;bottom:76px;left:50%;transform:translateX(-50%) translateY(16px);background:#111827;color:#fff;padding:9px 18px;border-radius:28px;font-size:.78rem;font-weight:600;opacity:0;transition:all .3s;z-index:500;white-space:nowrap;pointer-events:none;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+/* 하단 통계 */
+.footer{position:fixed;bottom:0;left:0;right:0;background:rgba(255,255,255,.96);backdrop-filter:blur(8px);border-top:1px solid var(--bd);padding:8px 20px;display:flex;justify-content:center;gap:18px;font-size:.7rem;color:var(--su);z-index:200;}
+.si-item{display:flex;align-items:center;gap:4px;}
+.sdot{width:7px;height:7px;border-radius:50%;}
+.sdot.r{background:var(--ra);}
+.sdot.l{background:var(--la);}
+.sdot.d{background:var(--gr);}
+.sdot.s{background:var(--st);}
+.snum{font-weight:700;color:var(--tx);}
+
+.empty{text-align:center;padding:50px 20px;color:var(--su);font-size:.86rem;}
+
+@media(max-width:480px){
+  .hd{padding:16px 13px 12px;}
+  .hd-title{font-size:1rem;}
+  .card{padding:10px 11px;}
+  .cbtn{width:30px;height:30px;font-size:13px;}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="hd">
+  <div class="hd-title">📚 2027 수능완성 문학·독서 학습맵</div>
+  <div class="hd-sub">창원경일고 진로진학상담실 · 총 63개 작품·지문</div>
+  <div class="hd-notice">
+    이 자료는 제출용 과제가 아닙니다. 수능완성을 공부하다 궁금한 작품·지문을 하나씩 찾아 읽는 자율 학습맵입니다.<br>
+    처음 시작한다면 '입문 10선'이나 '오늘 하나만 읽기'부터 눌러 보세요.<br>
+    ✅ 체크 기록은 본인 기기에만 저장되며 선생님에게 제출되지 않습니다.
+  </div>
+  <div class="pg-wrap">
+    <div class="pg-top">
+      <span id="pg-txt">오늘 하나씩 쌓는 중 · 0개 읽음</span>
+      <span id="pg-pct">0 / 63</span>
+    </div>
+    <div class="pg-bg"><div class="pg-fill" id="pg-bar"></div></div>
+  </div>
+</div>
+
+<!-- 오늘 하나만 -->
+<div class="today-wrap">
+  <button class="today-btn" onclick="showToday()">☕ 오늘 하나만 읽기 — 랜덤 추천</button>
+</div>
+
+<!-- 루트 탭 -->
+<div class="route-sec">
+  <div class="sec-label">📌 학습 루트</div>
+  <div class="route-row">
+    <button class="rb rb-all ac" onclick="setRoute('all',this)">📚 전체</button>
+    <button class="rb rb-intro" onclick="setRoute('intro',this)">🎯 입문 10선</button>
+    <button class="rb rb-classic" onclick="setRoute('classic',this)">🔥 고전 집중</button>
+    <button class="rb rb-reading" onclick="setRoute('reading',this)">🧠 독서 집중</button>
+    <button class="rb rb-lit" onclick="setRoute('lit',this)">✍️ 문학 집중</button>
+    <button class="rb rb-career" onclick="setRoute('career',this)">🧭 진로 연결 10선</button>
+    <button class="rb rb-star" onclick="setRoute('star',this)">⭐ 다시 볼 자료</button>
+    <button class="rb rb-reset" onclick="resetProgress()">🔄 초기화</button>
+  </div>
+</div>
+
+<!-- 루트 진행률 -->
+<div class="rp-wrap" id="rpWrap">
+  <div class="rp-title" id="rpTitle"></div>
+  <div class="rp-bg"><div class="rp-fill" id="rpBar"></div></div>
+  <div class="rp-lbl" id="rpLbl"></div>
+</div>
+
+<!-- 세부 필터 -->
+<div class="filter-sec">
+  <div class="frow">
+    <span class="flb">영역</span>
+    <button class="fb fa" onclick="setSub('domain','all',this)">전체</button>
+    <button class="fb" onclick="setSub('domain','독서',this)">📖 독서</button>
+    <button class="fb" onclick="setSub('domain','문학',this)">✍️ 문학</button>
+  </div>
+  <div class="frow">
+    <span class="flb">갈래</span>
+    <button class="fb fa" onclick="setSub('sub','all',this)">전체</button>
+    <button class="fb" onclick="setSub('sub','인문',this)">인문</button>
+    <button class="fb" onclick="setSub('sub','사회',this)">사회</button>
+    <button class="fb" onclick="setSub('sub','과학',this)">과학</button>
+    <button class="fb" onclick="setSub('sub','독서이론',this)">독서이론</button>
+    <button class="fb" onclick="setSub('sub','현대시',this)">현대시</button>
+    <button class="fb" onclick="setSub('sub','현대소설',this)">현대소설</button>
+    <button class="fb" onclick="setSub('sub','고전시가',this)">고전시가</button>
+    <button class="fb" onclick="setSub('sub','고전소설',this)">고전소설</button>
+    <button class="fb" onclick="setSub('sub','고전산문',this)">고전산문</button>
+    <button class="fb" onclick="setSub('sub','현대산문',this)">현대산문</button>
+    <button class="fb" onclick="setSub('sub','극',this)">극</button>
+  </div>
+  <div class="frow">
+    <span class="flb">회차</span>
+    <button class="fb fa" onclick="setSub('round','all',this)">전체</button>
+    <button class="fb" onclick="setSub('round','유형편',this)">유형편</button>
+    <button class="fb" onclick="setSub('round','실전1회',this)">실전1</button>
+    <button class="fb" onclick="setSub('round','실전2회',this)">실전2</button>
+    <button class="fb" onclick="setSub('round','실전3회',this)">실전3</button>
+    <button class="fb" onclick="setSub('round','실전4회',this)">실전4</button>
+    <button class="fb" onclick="setSub('round','실전5회',this)">실전5</button>
+  </div>
+</div>
+
+<!-- 검색 + 진로 칩 -->
+<div class="search-sec">
+  <input class="si" id="si" type="text" placeholder="🔍 작품명, 작가, 진로키워드, 질문 내용 검색..." oninput="render()">
+  <div class="chip-row">
+    <span class="chip" onclick="chipSearch('법학')">⚖️ 법학</span>
+    <span class="chip" onclick="chipSearch('경영')">💼 경영</span>
+    <span class="chip" onclick="chipSearch('심리')">🧠 심리</span>
+    <span class="chip" onclick="chipSearch('공학')">⚙️ 공학</span>
+    <span class="chip" onclick="chipSearch('환경')">🌱 환경</span>
+    <span class="chip" onclick="chipSearch('의학')">🏥 의학</span>
+    <span class="chip" onclick="chipSearch('AI')">🤖 AI</span>
+    <span class="chip" onclick="chipSearch('역사')">📜 역사</span>
+    <span class="chip" onclick="chipSearch('철학')">💡 철학</span>
+    <span class="chip" onclick="chipSearch('교육')">🎓 교육</span>
+    <span class="chip" onclick="chipSearch('문예창작')">✍️ 문예창작</span>
+    <span class="chip" onclick="chipSearch('사회학')">🏙️ 사회학</span>
+  </div>
+</div>
+
+<div class="main" id="cardContainer"></div>
+
+<!-- 오늘 하나만 팝업 -->
+<div class="ov" id="todayOv">
+  <div class="popup">
+    <div class="emo">☕</div>
+    <h3 id="p-title"></h3>
+    <div class="pop-domain" id="p-domain"></div>
+    <div class="pop-q">💬 <span id="p-q"></span></div>
+    <div class="pop-reason">✅ <span id="p-reason"></span></div>
+    <a class="pop-link" id="p-link" target="_blank" rel="noopener">📖 해설 바로 보기</a>
+    <div class="pop-btns">
+      <button class="pop-btn" onclick="closeToday()">닫기</button>
+      <button class="pop-btn" onclick="shuffleToday()">🔀 다른 거</button>
+      <button class="pop-btn green" onclick="doneFromToday()">✅ 읽었어요</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<!-- 하단 통계 -->
+<div class="footer">
+  <div class="si-item"><div class="sdot r"></div>독서 <span class="snum">22</span></div>
+  <div class="si-item"><div class="sdot l"></div>문학 <span class="snum">41</span></div>
+  <div class="si-item"><div class="sdot d"></div>읽었어요 <span class="snum" id="s-d">0</span></div>
+  <div class="si-item"><div class="sdot s"></div>다시볼게요 <span class="snum" id="s-s">0</span></div>
+</div>
+
+<script>
+// ── localStorage 키 (충돌 방지용 구체적 이름) ──
+const KEY_DONE = 'cwgyeongil_2027_suwan_done_v3';
+const KEY_STAR = 'cwgyeongil_2027_suwan_star_v3';
+
+const ROUND_ORDER = ["유형편","실전1회","실전2회","실전3회","실전4회","실전5회"];
+
+// ── 데이터 (63개 전체) ──
+const DATA = [
+  // ── 독서 22개 ──
+  {n:1, domain:"독서",sub:"인문",    author:"",         title:"정도전의 불교 비판",
+   round:"유형편", intro:false,classic:false,careerPick:false,
+   career:["철학","윤리학","역사학","한국학"],
+   q:"종교를 비판하는 것은 어떤 근거에서 정당화될 수 있을까?",
+   reason:"인문 지문에서 사상 간 논쟁 구조를 파악하는 연습에 적합.",
+   url:"https://blog.naver.com/foredu0813/224310735163"},
+  {n:2, domain:"독서",sub:"사회",    author:"",         title:"법인의 권리 능력과 유형",
+   round:"유형편", intro:false,classic:false,careerPick:true,
+   career:["법학","행정학","경영학"],
+   q:"회사도 사람처럼 권리와 책임을 질 수 있을까?",
+   reason:"법학·경영 진로 희망자에게 핵심 개념인 법인의 구조를 파악하는 데 좋음.",
+   url:"https://blog.naver.com/foredu0813/224310741278"},
+  {n:3, domain:"독서",sub:"과학",    author:"",         title:"가상 발전소의 역할과 의미",
+   round:"유형편", intro:true, classic:false,careerPick:true,
+   career:["에너지공학","환경공학","전기전자"],
+   q:"개인의 에너지가 전력망에 연결된다는 것은 사회적으로 무엇을 의미할까?",
+   reason:"과학·기술 지문에서 개념 구조와 사회적 활용을 함께 파악하는 연습에 좋음.",
+   url:"https://blog.naver.com/foredu0813/224310742441"},
+  {n:4, domain:"독서",sub:"독서이론",author:"",         title:"독서에 대한 심리학적 관점",
+   round:"유형편", intro:true, classic:false,careerPick:false,
+   career:["심리학","교육학","국어교육"],
+   q:"나는 글을 읽을 때 내용을 어떤 방식으로 이해하고 있을까?",
+   reason:"독서이론 지문은 역설적으로 읽기 자체를 돌아보게 만드는 효과가 있음.",
+   url:"https://blog.naver.com/foredu0813/224310743470"},
+  {n:5, domain:"독서",sub:"독서이론",author:"",         title:"요약, 판데이크",
+   round:"실전1회",intro:false,classic:false,careerPick:false,
+   career:["교육학","언어학","국어교육"],
+   q:"요약이란 단순히 줄이는 것인가, 아니면 재구성하는 것인가?",
+   reason:"요약 전략을 이론적으로 이해하면 독서 지문 전체 구조 파악 능력이 높아짐.",
+   url:"https://blog.naver.com/foredu0813/224310789270"},
+  {n:6, domain:"독서",sub:"인문",    author:"",         title:"피아제, 전개념적 사고기",
+   round:"실전1회",intro:true, classic:false,careerPick:true,
+   career:["심리학","교육학","아동학"],
+   q:"아이의 사고는 어른의 사고와 어떻게 다를까?",
+   reason:"발달심리학 핵심 개념인 피아제 이론을 텍스트 구조로 이해하는 데 적합.",
+   url:"https://blog.naver.com/foredu0813/224310790078"},
+  {n:7, domain:"독서",sub:"사회",    author:"",         title:"대표성 편향, 확증 편향, 주식 투자",
+   round:"실전1회",intro:true, classic:false,careerPick:true,
+   career:["경제학","경영학","심리학","금융"],
+   q:"사람들은 왜 합리적인 투자를 하기 어려울까?",
+   reason:"심리 개념이 경제적 판단과 연결되는 방식을 볼 수 있는 융합형 지문.",
+   url:"https://blog.naver.com/foredu0813/224312451303"},
+  {n:8, domain:"독서",sub:"과학",    author:"",         title:"지구의 기후, 태양, 태양 복사 에너지",
+   round:"실전1회",intro:false,classic:false,careerPick:false,
+   career:["지구과학","천문학","환경공학"],
+   q:"태양에너지의 변화가 지구 기후에 어떤 파급효과를 미칠까?",
+   reason:"인과관계 중심의 과학 지문 구조 훈련에 적합.",
+   url:"https://blog.naver.com/foredu0813/224312593562"},
+  {n:9, domain:"독서",sub:"독서이론",author:"",         title:"흄, 굿맨, 스윈번, 귀납",
+   round:"실전2회",intro:false,classic:false,careerPick:false,
+   career:["철학","논리학","과학철학"],
+   q:"'과거에 그랬으니 미래에도 그럴 것이다'는 주장은 왜 완벽하지 않을까?",
+   reason:"귀납 추론의 한계를 철학적으로 이해하는 훈련에 적합.",
+   url:"https://blog.naver.com/foredu0813/224312455777"},
+  {n:10,domain:"독서",sub:"사회",    author:"",         title:"탄소중립, 온실가스 배출량, 스코프, 기업 활동",
+   round:"실전2회",intro:false,classic:false,careerPick:true,
+   career:["환경공학","경영학","정책학","국제학"],
+   q:"기업이 탄소중립을 선언하는 것은 진심일까, 전략일까?",
+   reason:"ESG와 탄소회계 개념을 사회 지문으로 이해하는 데 좋음.",
+   url:"https://blog.naver.com/foredu0813/224312450428"},
+  {n:11,domain:"독서",sub:"과학",    author:"",         title:"기체 분자, 분압, 호흡 과정",
+   round:"실전2회",intro:false,classic:false,careerPick:false,
+   career:["화학","생명과학","의학","약학"],
+   q:"숨을 쉰다는 것이 물리·화학적으로 어떤 과정일까?",
+   reason:"기초과학 개념을 수능 독서 방식으로 정리하는 데 적합.",
+   url:"https://blog.naver.com/foredu0813/224312452575"},
+  {n:12,domain:"독서",sub:"독서이론",author:"",         title:"읽기 과정, 텍스트 복잡도",
+   round:"실전3회",intro:false,classic:false,careerPick:false,
+   career:["교육학","언어학","국어교육"],
+   q:"어떤 글이 '읽기 어려운' 글일까? 그 기준은 무엇인가?",
+   reason:"텍스트 구조와 독자 반응의 관계를 이론적으로 이해하는 데 좋음.",
+   url:"https://blog.naver.com/foredu0813/224312454976"},
+  {n:13,domain:"독서",sub:"인문",    author:"",         title:"지각 경험, 개념주의, 비개념주의",
+   round:"실전3회",intro:false,classic:false,careerPick:false,
+   career:["철학","인지과학","심리학"],
+   q:"내가 본다는 것은 눈이 하는 일인가, 뇌가 하는 일인가?",
+   reason:"인식론 철학 지문에서 관점 대립 구조 파악 훈련에 적합.",
+   url:"https://blog.naver.com/foredu0813/224312596967"},
+  {n:14,domain:"독서",sub:"사회",    author:"",         title:"법률의 착오, 정당한 이유",
+   round:"실전3회",intro:false,classic:false,careerPick:false,
+   career:["법학","행정학"],
+   q:"'몰랐다'는 사실은 법적 책임을 피할 수 있는 이유가 될까?",
+   reason:"법학 지문의 핵심인 '요건과 효과' 구조를 파악하는 훈련에 좋음.",
+   url:"https://blog.naver.com/foredu0813/224312595721"},
+  {n:15,domain:"독서",sub:"과학",    author:"",         title:"맛 변화 물질, 미각, 단맛 수용체, 마리클베리",
+   round:"실전3회",intro:false,classic:false,careerPick:false,
+   career:["생명과학","식품공학","의학","약학"],
+   q:"단맛을 느끼는 것은 혀인가, 뇌인가?",
+   reason:"감각과 수용체 개념을 과학 지문 방식으로 읽는 연습에 적합.",
+   url:"https://blog.naver.com/foredu0813/224313104956"},
+  {n:16,domain:"독서",sub:"인문",    author:"",         title:"행동주의, 스키너, 블룸필드, 촘스키, 토마셀로",
+   round:"실전4회",intro:false,classic:false,careerPick:false,
+   career:["언어학","심리학","교육학","인지과학"],
+   q:"언어는 학습되는 것인가, 타고나는 것인가?",
+   reason:"언어학과 인지과학의 핵심 논쟁을 다루는 인문 지문으로 완성도가 높음.",
+   url:"https://blog.naver.com/foredu0813/224313102350"},
+  {n:17,domain:"독서",sub:"사회",    author:"",         title:"헌법 21조, 언론 출판의 자유, 헌법재판소",
+   round:"실전4회",intro:false,classic:false,careerPick:true,
+   career:["법학","정치학","언론학","행정학"],
+   q:"표현의 자유는 어디까지 허용되어야 할까?",
+   reason:"헌법 조문과 판례 구조를 사회 지문 방식으로 읽는 핵심 훈련.",
+   url:"https://blog.naver.com/foredu0813/224313106514"},
+  {n:18,domain:"독서",sub:"과학",    author:"",         title:"데이터 암호화, 커버 오브젝트, 임베딩",
+   round:"실전4회",intro:false,classic:false,careerPick:true,
+   career:["컴퓨터공학","정보보안","AI/데이터"],
+   q:"보안 기술은 정보를 보호하는가, 숨기는가?",
+   reason:"정보보안 진로 희망자에게 필수. 개념 간 관계 파악 훈련.",
+   url:"https://blog.naver.com/foredu0813/224313105765"},
+  {n:19,domain:"독서",sub:"독서이론",author:"",         title:"축자적 의미, 의미 확장",
+   round:"실전5회",intro:false,classic:false,careerPick:false,
+   career:["언어학","국어교육","인지과학"],
+   q:"'은유'는 단순히 꾸미는 말인가, 사고 방식 그 자체인가?",
+   reason:"언어의 의미 구조를 이론적으로 이해하는 훈련.",
+   url:"https://blog.naver.com/foredu0813/224313103707"},
+  {n:20,domain:"독서",sub:"인문",    author:"",         title:"볼츠, 매체 의존적 사회",
+   round:"실전5회",intro:false,classic:false,careerPick:false,
+   career:["미디어학","사회학","철학"],
+   q:"우리는 미디어에 의존하는가, 미디어가 우리에게 의존하는가?",
+   reason:"미디어·사회학 진로 희망자에게 유용. 사회비판적 관점 지문.",
+   url:"https://blog.naver.com/foredu0813/224314078930"},
+  {n:21,domain:"독서",sub:"사회",    author:"",         title:"사회 과학, 사회 통제, 합의적·갈등 이론",
+   round:"실전5회",intro:false,classic:false,careerPick:false,
+   career:["사회학","정치학","행정학"],
+   q:"사회 질서는 사람들의 합의로 만들어지는가, 강제로 유지되는가?",
+   reason:"사회과학 지문의 핵심인 이론 간 대립 구조 이해에 적합.",
+   url:"https://blog.naver.com/foredu0813/224314076279"},
+  {n:22,domain:"독서",sub:"과학",    author:"",         title:"생분해성 플라스틱, 바이오 베이스 플라스틱",
+   round:"실전5회",intro:false,classic:false,careerPick:true,
+   career:["화학공학","환경공학","생명과학"],
+   q:"친환경 플라스틱은 정말 환경에 좋을까?",
+   reason:"환경·화학공학 진로 희망자에게 필수. 개념 구분 훈련.",
+   url:"https://blog.naver.com/foredu0813/224314077594"},
+  // ── 문학 41개 ──
+  {n:23,domain:"문학",sub:"현대시",  author:"서정주",   title:"자화상",
+   round:"유형편", intro:true, classic:false,careerPick:false,
+   career:["심리학","문예창작","상담"],
+   q:"나를 객관적으로 바라본다는 것은 어떤 느낌일까?",
+   reason:"현대시에서 화자의 자기 성찰 방식을 읽는 첫 훈련으로 이상적.",
+   url:"https://blog.naver.com/foredu0813/221125602857"},
+  {n:24,domain:"문학",sub:"현대시",  author:"신경림",   title:"목계장터",
+   round:"유형편", intro:false,classic:false,careerPick:false,
+   career:["사회학","문예창작","역사학"],
+   q:"장터라는 공간은 단순히 물건을 파는 곳 이상의 의미를 가질까?",
+   reason:"민중시의 특성과 시적 공간의 상징성을 파악하는 연습.",
+   url:"https://blog.naver.com/foredu0813/220007031978"},
+  {n:25,domain:"문학",sub:"현대소설",author:"이청준",   title:"줄",
+   round:"유형편", intro:true, classic:false,careerPick:false,
+   career:["심리학","사회학","문예창작"],
+   q:"관계는 자유를 주는가, 구속하는가?",
+   reason:"현대소설의 핵심인 인물 간 갈등과 상징 구조를 파악하기 좋은 작품.",
+   url:"https://blog.naver.com/foredu0813/221332581325"},
+  {n:26,domain:"문학",sub:"고전시가",author:"연안 이씨", title:"부여노정기",
+   round:"유형편", intro:false,classic:true, careerPick:false,
+   career:["국문학","역사학","문화유산"],
+   q:"낯선 땅을 여행하며 쓴 글에는 어떤 감정이 담길까?",
+   reason:"고전 기행 가사의 형식과 정서를 이해하는 훈련.",
+   url:"https://blog.naver.com/foredu0813/224307618563"},
+  {n:27,domain:"문학",sub:"고전소설",author:"작자미상", title:"장풍운전",
+   round:"유형편", intro:false,classic:true, careerPick:false,
+   career:["국문학","역사학","콘텐츠"],
+   q:"영웅이 성장하는 이야기에는 공통된 패턴이 있을까?",
+   reason:"고전소설 영웅 서사의 전형적 구조 이해에 적합.",
+   url:"https://blog.naver.com/foredu0813/224307040338"},
+  {n:28,domain:"문학",sub:"극",      author:"황석영",   title:"한씨 연대기(각색)",
+   round:"유형편", intro:false,classic:false,careerPick:false,
+   career:["역사학","미디어학","사회학","연극"],
+   q:"전쟁은 개인의 삶을 어떻게 바꾸는가?",
+   reason:"분단 문학의 역사·사회적 맥락과 극 형식의 특성을 함께 이해하는 데 좋음.",
+   url:"https://blog.naver.com/foredu0813/220325608618"},
+  {n:29,domain:"문학",sub:"고전시가",author:"정극인",   title:"상춘곡 ★",
+   round:"실전1회",intro:true, classic:true, careerPick:false,
+   career:["국문학","철학","문화유산"],
+   q:"자연을 즐기는 삶은 현실 도피일까, 가치 있는 선택일까?",
+   reason:"가사 문학의 핵심 작품. 강호가도 계열 전체의 기본기를 잡는 데 필수.",
+   url:"https://blog.naver.com/foredu0813/40210978806"},
+  {n:30,domain:"문학",sub:"고전산문",author:"이수광",   title:"침류대기",
+   round:"실전1회",intro:false,classic:true, careerPick:false,
+   career:["국문학","역사학","철학"],
+   q:"물 흐르는 소리를 벗 삼는다는 것은 어떤 삶의 태도일까?",
+   reason:"조선 시대 한문 산문의 간결한 구조와 자연관을 파악하는 데 적합.",
+   url:"https://blog.naver.com/foredu0813/224306873139"},
+  {n:31,domain:"문학",sub:"고전산문",author:"작자미상", title:"창선감의록",
+   round:"실전1회",intro:false,classic:true, careerPick:false,
+   career:["국문학","윤리학","역사학"],
+   q:"가족 내 갈등은 어떻게 해결될 수 있을까?",
+   reason:"조선 시대 가정 소설의 윤리 구조와 서사 패턴 파악.",
+   url:"https://blog.naver.com/foredu0813/224306881590"},
+  {n:32,domain:"문학",sub:"현대소설",author:"오정희",   title:"동경",
+   round:"실전1회",intro:false,classic:false,careerPick:false,
+   career:["심리학","상담","문예창작"],
+   q:"원하는 것을 갖지 못할 때 사람은 어떻게 살아가는가?",
+   reason:"내면 심리 묘사와 서술 시점의 특성을 파악하는 현대소설 훈련.",
+   url:"https://blog.naver.com/foredu0813/224307085431"},
+  {n:33,domain:"문학",sub:"현대시",  author:"백석",     title:"흰 바람벽이 있어",
+   round:"실전1회",intro:false,classic:false,careerPick:false,
+   career:["심리학","문예창작","국문학"],
+   q:"고독은 견뎌야 하는 것인가, 느껴야 하는 것인가?",
+   reason:"백석 시의 특유한 공간 감각과 감정 표현 방식 파악.",
+   url:"https://blog.naver.com/foredu0813/224307072926"},
+  {n:34,domain:"문학",sub:"현대시",  author:"안도현",   title:"연탄 한 장",
+   round:"실전1회",intro:false,classic:false,careerPick:false,
+   career:["사회학","윤리학","문예창작"],
+   q:"희생이란 무엇인가? 연탄이 상징하는 것은 무엇일까?",
+   reason:"일상적 소재에서 사회적 의미를 읽어내는 시적 감각 훈련.",
+   url:"https://blog.naver.com/foredu0813/223614698994"},
+  {n:35,domain:"문학",sub:"현대시",  author:"정한모",   title:"나비의 여행",
+   round:"실전2회",intro:false,classic:false,careerPick:false,
+   career:["문예창작","철학","국문학"],
+   q:"여행이라는 행위는 어디서 시작되고 어디서 끝나는가?",
+   reason:"시적 여정을 통한 내면 탐구 방식 파악.",
+   url:"https://blog.naver.com/foredu0813/224310735163"},
+  {n:36,domain:"문학",sub:"현대시",  author:"박남수",   title:"새1",
+   round:"실전2회",intro:false,classic:false,careerPick:false,
+   career:["문예창작","철학","국문학"],
+   q:"새가 나는 것과 자유는 어떻게 연결되는가?",
+   reason:"자유와 억압의 대립을 자연물 상징으로 읽는 연습.",
+   url:"https://blog.naver.com/foredu0813/223356411865"},
+  {n:37,domain:"문학",sub:"현대산문",author:"윤오영",   title:"까치",
+   round:"실전2회",intro:false,classic:false,careerPick:false,
+   career:["문예창작","수필","국문학"],
+   q:"일상의 사소한 장면이 글로 쓸 만한 이유는 무엇일까?",
+   reason:"수필의 서술 방식과 필자의 태도 파악 훈련.",
+   url:"https://blog.naver.com/foredu0813/224308704440"},
+  {n:38,domain:"문학",sub:"현대소설",author:"현기영",   title:"도령마루의 까마귀",
+   round:"실전2회",intro:false,classic:false,careerPick:false,
+   career:["역사학","사회학","문예창작"],
+   q:"역사적 비극은 개인의 삶을 어떻게 기억하는가?",
+   reason:"제주 4·3을 배경으로 역사와 문학의 교차를 이해하는 작품.",
+   url:"https://blog.naver.com/foredu0813/224307066307"},
+  {n:39,domain:"문학",sub:"고전소설",author:"작자미상", title:"운영전",
+   round:"실전2회",intro:true, classic:true, careerPick:false,
+   career:["국문학","역사학","윤리학"],
+   q:"제도와 감정이 충돌할 때 사람은 어떤 선택을 하는가?",
+   reason:"고전소설 중 낭만성과 비극성이 공존하는 대표 작품. 갈등 구조 파악에 좋음.",
+   url:"https://blog.naver.com/foredu0813/224307044191"},
+  {n:40,domain:"문학",sub:"고전시가",author:"작자미상", title:"상저가",
+   round:"실전2회",intro:false,classic:true, careerPick:false,
+   career:["국문학","역사학","문화유산"],
+   q:"노동하며 부르는 노래는 어떤 의미를 가질까?",
+   reason:"고려 가요의 노동요적 성격과 민중 정서 파악.",
+   url:"https://blog.naver.com/foredu0813/224307319015"},
+  {n:41,domain:"문학",sub:"고전시가",author:"작자미상", title:"베틀 노래",
+   round:"실전2회",intro:false,classic:true, careerPick:false,
+   career:["국문학","역사학","문화유산","여성학"],
+   q:"노동 속에 삶의 이야기를 담는 것은 어떤 행위인가?",
+   reason:"여성 노동요의 특성과 비유적 표현 이해 훈련.",
+   url:"https://blog.naver.com/foredu0813/224307608928"},
+  {n:42,domain:"문학",sub:"고전시가",author:"허난설헌", title:"빈녀음",
+   round:"실전2회",intro:false,classic:true, careerPick:false,
+   career:["국문학","여성학","역사학"],
+   q:"가난한 여성이 쓴 시는 무엇을 향해 있을까?",
+   reason:"고전시가에서 사회적 약자의 목소리를 읽는 훈련.",
+   url:"https://blog.naver.com/foredu0813/220959175146"},
+  {n:43,domain:"문학",sub:"고전소설",author:"작자미상", title:"두껍전",
+   round:"실전3회",intro:false,classic:true, careerPick:false,
+   career:["국문학","역사학","사회학"],
+   q:"동물 우화는 어떤 방식으로 사회를 비판하는가?",
+   reason:"우화 소설의 풍자 구조와 사회 비판 방식 파악.",
+   url:"https://blog.naver.com/foredu0813/224310735163"},
+  {n:44,domain:"문학",sub:"현대소설",author:"김성한",   title:"무명로",
+   round:"실전3회",intro:false,classic:false,careerPick:false,
+   career:["역사학","사회학","문예창작"],
+   q:"이름 없는 길을 걷는다는 것은 무엇을 의미하는가?",
+   reason:"전쟁과 이념의 시대를 살아간 인물의 내면 묘사 파악.",
+   url:"https://blog.naver.com/foredu0813/224308662189"},
+  {n:45,domain:"문학",sub:"극",      author:"이강백",   title:"물고기 남자",
+   round:"실전3회",intro:false,classic:false,careerPick:false,
+   career:["연극","미디어학","사회학"],
+   q:"현실과 상상의 경계를 허무는 것은 예술에서 어떤 의미일까?",
+   reason:"부조리극 방식의 극 구조와 대사 특성 파악 훈련.",
+   url:"https://blog.naver.com/foredu0813/224307595230"},
+  {n:46,domain:"문학",sub:"현대시",  author:"김수영",   title:"눈",
+   round:"실전3회",intro:false,classic:false,careerPick:false,
+   career:["정치학","사회학","문예창작"],
+   q:"눈이 내린다는 것은 왜 때로 혁명적인 이미지가 될까?",
+   reason:"김수영 시의 참여적 성격과 이미지 상징 구조 이해.",
+   url:"https://blog.naver.com/foredu0813/220858716810"},
+  {n:47,domain:"문학",sub:"현대시",  author:"문정희",   title:"한계령을 위한 연가",
+   round:"실전3회",intro:false,classic:false,careerPick:false,
+   career:["심리학","상담","문예창작"],
+   q:"이별의 감정은 공간과 어떻게 연결되는가?",
+   reason:"현대시에서 공간과 정서의 상관관계를 파악하는 훈련.",
+   url:"https://blog.naver.com/foredu0813/221654198126"},
+  {n:48,domain:"문학",sub:"고전시가",author:"권섭",     title:"황강구곡가",
+   round:"실전3회",intro:false,classic:true, careerPick:false,
+   career:["국문학","철학","역사학"],
+   q:"자연 속 구곡을 노래하는 것은 어떤 가치관을 담고 있을까?",
+   reason:"강호가도 계열 고전시가의 자연관과 유교적 가치 이해.",
+   url:"https://blog.naver.com/foredu0813/224307583514"},
+  {n:49,domain:"문학",sub:"현대소설",author:"염상섭",   title:"양과자갑",
+   round:"실전4회",intro:false,classic:false,careerPick:false,
+   career:["역사학","사회학","문예창작"],
+   q:"식민지 시대 일상적 소비는 어떤 의미를 담고 있을까?",
+   reason:"근대 소설에서 일상 소재가 사회적 맥락을 반영하는 방식 파악.",
+   url:"https://blog.naver.com/foredu0813/224310735163"},
+  {n:50,domain:"문학",sub:"고전소설",author:"권칙",     title:"강로전",
+   round:"실전4회",intro:false,classic:true, careerPick:false,
+   career:["역사학","국문학","윤리학"],
+   q:"전쟁 속에서 충과 의는 어떻게 충돌하는가?",
+   reason:"한문 소설의 구조와 충·의 주제 의식 파악.",
+   url:"https://blog.naver.com/foredu0813/224310735163"},
+  {n:51,domain:"문학",sub:"고전산문",author:"김상헌",   title:"호종상가사면상소",
+   round:"실전4회",intro:false,classic:true, careerPick:false,
+   career:["역사학","정치학","국문학"],
+   q:"신하가 왕에게 자신을 벌해 달라 청하는 이유는 무엇일까?",
+   reason:"조선 시대 상소문 형식과 정치·윤리적 의미 파악.",
+   url:"https://blog.naver.com/foredu0813/224310735163"},
+  {n:52,domain:"문학",sub:"고전시가",author:"이양원",   title:"높으나 높은 나무에",
+   round:"실전4회",intro:false,classic:true, careerPick:false,
+   career:["국문학","역사학","윤리학"],
+   q:"나무가 높다는 것은 시조에서 무엇을 상징하는가?",
+   reason:"시조의 단형 구조와 상징 표현 방식 이해.",
+   url:"https://blog.naver.com/foredu0813/224310735163"},
+  {n:53,domain:"문학",sub:"고전시가",author:"이항복",   title:"철령 높은 고개",
+   round:"실전4회",intro:false,classic:true, careerPick:false,
+   career:["역사학","국문학","정치학"],
+   q:"유배를 떠나는 신하는 임금에게 어떤 감정을 가질까?",
+   reason:"유배 시조의 충·애정 정서와 당대 정치 맥락 이해.",
+   url:"https://blog.naver.com/foredu0813/224310600244"},
+  {n:54,domain:"문학",sub:"고전시가",author:"이항복",   title:"시절도 저러하니",
+   round:"실전4회",intro:false,classic:true, careerPick:false,
+   career:["역사학","국문학","정치학"],
+   q:"세상이 어지러울 때 선비는 어떤 태도를 취해야 하는가?",
+   reason:"연시조의 맥락 파악과 유교적 처세관 이해.",
+   url:"https://blog.naver.com/foredu0813/224310606191"},
+  {n:55,domain:"문학",sub:"고전시가",author:"구인후",   title:"어전에 실언하고",
+   round:"실전4회",intro:false,classic:true, careerPick:false,
+   career:["역사학","정치학","국문학"],
+   q:"실수 이후의 반성을 노래하는 것은 어떤 행위인가?",
+   reason:"조선 시대 사대부 시조의 자기반성과 충성심 표현 방식.",
+   url:"https://blog.naver.com/foredu0813/224310612952"},
+  {n:56,domain:"문학",sub:"현대시",  author:"윤동주",   title:"쉽게 씌어진 시 🔥",
+   round:"실전4회",intro:true, classic:false,careerPick:false,
+   career:["심리학","역사학","윤리학","문예창작"],
+   q:"쉽게 쓴다는 것이 왜 부끄러운 일이 되는가?",
+   reason:"현대시 화자의 자기 성찰과 시대 인식을 함께 읽는 핵심 작품.",
+   url:"https://blog.naver.com/foredu0813/40210394646"},
+  {n:57,domain:"문학",sub:"현대시",  author:"황동규",   title:"기항지1",
+   round:"실전4회",intro:false,classic:false,careerPick:false,
+   career:["문예창작","심리학","국문학"],
+   q:"어딘가에 잠시 머문다는 것은 어떤 의미인가?",
+   reason:"시적 여정과 정박의 이미지를 읽는 감각 훈련.",
+   url:"https://blog.naver.com/foredu0813/224309403169"},
+  {n:58,domain:"문학",sub:"현대소설",author:"최인호",   title:"견습 환자",
+   round:"실전5회",intro:false,classic:false,careerPick:true,
+   career:["의학","사회학","문예창작"],
+   q:"아프다는 것은 몸의 문제인가, 관계의 문제인가?",
+   reason:"병원이라는 공간에서 인간 관계와 소통 구조를 읽는 소설. 의학계열 진로와 연결 가능.",
+   url:"https://blog.naver.com/foredu0813/224310735163"},
+  {n:59,domain:"문학",sub:"현대시",  author:"김소월",   title:"삼수갑산",
+   round:"실전5회",intro:false,classic:false,careerPick:false,
+   career:["심리학","문예창작","국문학"],
+   q:"돌아갈 수 없는 곳을 그리워하는 것은 어떤 감정인가?",
+   reason:"김소월의 민요적 율격과 한(恨)의 정서 파악 훈련.",
+   url:"https://blog.naver.com/foredu0813/224310735163"},
+  {n:60,domain:"문학",sub:"현대시",  author:"박목월",   title:"이별가",
+   round:"실전5회",intro:false,classic:false,careerPick:false,
+   career:["심리학","문예창작","국문학"],
+   q:"이별의 감정은 시에서 어떻게 승화되는가?",
+   reason:"박목월 시의 서정적 율격과 이별 정서 이해.",
+   url:"https://blog.naver.com/foredu0813/224310735163"},
+  {n:61,domain:"문학",sub:"고전시가",author:"조위",     title:"만분가 ★",
+   round:"실전5회",intro:false,classic:true, careerPick:false,
+   career:["국문학","역사학","정치학"],
+   q:"억울함을 긴 노래로 쏟아내는 것은 어떤 행위인가?",
+   reason:"유배 가사의 대표작. 가사 문학 전체 구조와 정서 파악의 핵심.",
+   url:"https://blog.naver.com/foredu0813/220121418646"},
+  {n:62,domain:"문학",sub:"고전소설",author:"작자미상", title:"이춘풍전",
+   round:"실전5회",intro:false,classic:true, careerPick:false,
+   career:["사회학","국문학","역사학"],
+   q:"놀부 같은 인물을 왜 이야기 속에 계속 등장시킬까?",
+   reason:"풍자 소설의 사회 비판적 성격과 해학 구조 파악.",
+   url:"https://blog.naver.com/foredu0813/222438093010"},
+  {n:63,domain:"문학",sub:"극",      author:"윤태호",   title:"미생",
+   round:"실전5회",intro:true, classic:false,careerPick:true,
+   career:["경영학","사회학","미디어학","문예창작"],
+   q:"바둑의 '미생'과 직장 생활은 어떤 점에서 닮아 있을까?",
+   reason:"현대 직장인의 삶을 통해 사회 구조를 읽는 작품. 진로 연결에 최적.",
+   url:"https://blog.naver.com/foredu0813/224307603810"},
+];
+
+// ── 상태 ──
+let state = {route:'all', domain:'all', sub:'all', round:'all'};
+let done = JSON.parse(localStorage.getItem(KEY_DONE)||'{}');
+let star = JSON.parse(localStorage.getItem(KEY_STAR)||'{}');
+let todayItem = null;
+
+function save(){
+  localStorage.setItem(KEY_DONE,JSON.stringify(done));
+  localStorage.setItem(KEY_STAR,JSON.stringify(star));
+}
+
+// ── 루트 판별 ──
+function inRoute(d){
+  if(state.route==='all')      return true;
+  if(state.route==='intro')    return d.intro;
+  if(state.route==='classic')  return d.classic;
+  if(state.route==='reading')  return d.domain==='독서';
+  if(state.route==='lit')      return d.domain==='문학';
+  if(state.route==='career')   return d.careerPick;
+  if(state.route==='star')     return !!star[d.n];
+  return true;
+}
+function inRouteStatic(d,r){
+  if(r==='intro')   return d.intro;
+  if(r==='classic') return d.classic;
+  if(r==='reading') return d.domain==='독서';
+  if(r==='lit')     return d.domain==='문학';
+  if(r==='career')  return d.careerPick;
+  return true;
+}
+
+// ── 필터링 ──
+function getFiltered(){
+  const q = document.getElementById('si').value.trim().toLowerCase();
+  return DATA.filter(d=>{
+    if(!inRoute(d)) return false;
+    if(state.domain!=='all' && d.domain!==state.domain) return false;
+    if(state.sub!=='all'    && d.sub!==state.sub)       return false;
+    if(state.round!=='all'  && d.round!==state.round)   return false;
+    if(q){
+      const hay=[d.title,d.author,d.domain,d.sub,d.round,d.q,d.reason,d.career.join(' ')].join(' ').toLowerCase();
+      if(!hay.includes(q)) return false;
+    }
+    return true;
+  });
+}
+
+// ── 루트 변경 ──
+function setRoute(r, btn){
+  state.route = r;
+  document.querySelectorAll('.rb').forEach(b=>b.classList.remove('ac'));
+  btn.classList.add('ac');
+  const rpWrap = document.getElementById('rpWrap');
+  if(r==='all'||r==='star'){ rpWrap.classList.remove('vis'); }
+  else{ rpWrap.classList.add('vis'); updateRouteProgress(r); }
+  render();
+}
+function updateRouteProgress(r){
+  const pool = DATA.filter(d=>inRouteStatic(d,r));
+  const cnt  = pool.filter(d=>done[d.n]).length;
+  const pct  = pool.length ? Math.round(cnt/pool.length*100) : 0;
+  const names = {intro:'입문 10선',classic:'고전 집중',reading:'독서 집중',lit:'문학 집중',career:'진로 연결 10선'};
+  document.getElementById('rpTitle').textContent = (names[r]||r) + ' 진행률';
+  document.getElementById('rpBar').style.width   = pct+'%';
+  document.getElementById('rpLbl').textContent   = `${cnt} / ${pool.length}개 완료 (${pct}%)`;
+}
+
+// ── 세부 필터 ──
+function setSub(type, val, btn){
+  state[type] = val;
+  const row = btn.closest('.frow');
+  row.querySelectorAll('.fb').forEach(b=>b.className='fb');
+  if(type==='domain') btn.classList.add(val==='all'?'fa':val==='독서'?'fr':'fl');
+  else btn.classList.add(val==='all'?'fa':'fv');
+  render();
+}
+
+function chipSearch(kw){
+  document.getElementById('si').value = kw;
+  render();
+}
+
+// ── 오늘 하나만 ──
+function showToday(){
+  const pool = DATA.filter(d=>!done[d.n]);
+  const src  = pool.length ? pool : DATA;
+  todayItem  = src[Math.floor(Math.random()*src.length)];
+  fillPopup(todayItem);
+  document.getElementById('todayOv').classList.add('show');
+}
+function shuffleToday(){
+  const pool = DATA.filter(d=>!done[d.n]);
+  const src  = pool.length ? pool : DATA;
+  todayItem  = src[Math.floor(Math.random()*src.length)];
+  fillPopup(todayItem);
+}
+function fillPopup(d){
+  document.getElementById('p-title').textContent  = d.author ? `${d.author}, 「${d.title}」` : d.title;
+  document.getElementById('p-domain').textContent = `${d.domain} · ${d.sub} · ${d.round}`;
+  document.getElementById('p-q').textContent      = d.q;
+  document.getElementById('p-reason').textContent = d.reason;
+  document.getElementById('p-link').href          = d.url;
+}
+function closeToday(){ document.getElementById('todayOv').classList.remove('show'); }
+function doneFromToday(){
+  if(!todayItem) return;
+  done[todayItem.n] = true; save();
+  const cnt = Object.values(done).filter(Boolean).length;
+  checkMilestone(cnt);
+  render(); updateStats();
+  closeToday();
+  showToast('오늘의 자료를 완료했습니다! ✅');
+}
+
+// ── 토스트 & 마일스톤 ──
+const MILESTONES = [
+  [1,"첫 자료를 읽었습니다. 시작이 가장 어렵습니다."],
+  [3,"독서와 문학을 연결해 보기 시작했습니다."],
+  [5,"이제 낯선 작품을 피하지 않는 힘이 생기고 있습니다."],
+  [10,"입문 루트를 완성할 만큼 읽었습니다!"],
+  [20,"수능완성 자료를 꽤 넓게 훑었습니다. 취약 영역을 골라 보세요."],
+  [30,"절반이 넘었습니다. 이건 진짜 자랑해도 됩니다."],
+  [50,"50개! 거의 다 왔습니다."],
+  [63,"🎉 수능완성 문학·독서 전체 완성!"],
+];
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 3200);
+}
+function checkMilestone(cnt){
+  const m = MILESTONES.find(([n])=>n===cnt);
+  if(m) showToast(m[1]);
+}
+
+// ── 초기화 ──
+function resetProgress(){
+  if(confirm('읽었어요 / 다시 볼래요 기록을 모두 지울까요?')){
+    localStorage.removeItem(KEY_DONE);
+    localStorage.removeItem(KEY_STAR);
+    done={}; star={};
+    render(); updateStats();
+    showToast('기록이 초기화되었습니다.');
+  }
+}
+
+// ── 체크 액션 ──
+function toggleDone(n){
+  done[n] = !done[n]; save();
+  if(done[n]) checkMilestone(Object.values(done).filter(Boolean).length);
+  const card = document.getElementById('c'+n);
+  const btn  = document.getElementById('bd'+n);
+  if(done[n]){ card.classList.add('dc');    btn.classList.add('db');    btn.textContent='✓'; }
+  else        { card.classList.remove('dc'); btn.classList.remove('db'); btn.textContent='✅'; }
+  if(state.route==='star') render();
+  updateStats();
+  if(state.route!=='all'&&state.route!=='star') updateRouteProgress(state.route);
+}
+function toggleStar(n){
+  star[n] = !star[n]; save();
+  const card = document.getElementById('c'+n);
+  const btn  = document.getElementById('bs'+n);
+  if(star[n]){ card.classList.add('sc');    btn.classList.add('sb');    btn.textContent='★'; }
+  else        { card.classList.remove('sc'); btn.classList.remove('sb'); btn.textContent='⭐'; }
+  if(state.route==='star') render();
+  updateStats();
+}
+
+// ── 렌더 ──
+function render(){
+  const container = document.getElementById('cardContainer');
+  const filtered  = getFiltered();
+  if(!filtered.length){
+    container.innerHTML='<div class="empty">😅 해당 조건의 자료가 없습니다.<br>다른 루트나 키워드로 찾아보세요.</div>';
+    updateStats(); return;
+  }
+  const groups = {};
+  filtered.forEach(d=>{ if(!groups[d.round]) groups[d.round]=[]; groups[d.round].push(d); });
+  let html='';
+  ROUND_ORDER.forEach(rnd=>{
+    if(!groups[rnd]) return;
+    html+=`<div class="sec-hd"><span class="sec-hd-t">${rnd} (${groups[rnd].length})</span><div class="sec-div"></div></div>`;
+    groups[rnd].forEach(d=>{
+      const isR   = d.domain==='독서';
+      const isDone= !!done[d.n];
+      const isStar= !!star[d.n];
+      html+=`<div class="card ${isR?'rc':'lc'}${isDone?' dc':''}${isStar?' sc':''}" id="c${d.n}">
+        <div class="cc">
+          <button class="cbtn${isDone?' db':''}" id="bd${d.n}" aria-label="읽었어요" title="읽었어요" onclick="toggleDone(${d.n})">${isDone?'✓':'✅'}</button>
+          <button class="cbtn${isStar?' sb':''}" id="bs${d.n}" aria-label="다시 볼래요" title="다시 볼래요" onclick="toggleStar(${d.n})">${isStar?'★':'⭐'}</button>
+        </div>
+        <div class="cb">
+          <div class="ct">
+            <span class="badge ${isR?'br':'bl'}">${d.domain}</span>
+            <span class="badge bs">${d.sub}</span>
+            ${d.author?`<span class="badge bs">${d.author}</span>`:''}
+            ${d.intro?'<span class="badge bi">🎯 입문</span>':''}
+          </div>
+          <div class="card-title">${d.title}</div>
+          <div class="pre-q">💬 ${d.q}</div>
+          <div class="rec-reason">✅ ${d.reason}</div>
+          <div class="ctags">${d.career.map(c=>`<span class="ctag">🎯 ${c}</span>`).join('')}</div>
+          <a class="clink" href="${d.url}" target="_blank" rel="noopener">📖 해설 보기</a>
+        </div>
+      </div>`;
+    });
+  });
+  container.innerHTML = html;
+  updateStats();
+}
+
+function updateStats(){
+  const doneCount = Object.values(done).filter(Boolean).length;
+  const starCount = Object.values(star).filter(Boolean).length;
+  const pct = Math.round(doneCount/63*100);
+  document.getElementById('pg-txt').textContent  = `오늘 하나씩 쌓는 중 · ${doneCount}개 읽음`;
+  document.getElementById('pg-pct').textContent  = `${doneCount} / 63`;
+  document.getElementById('pg-bar').style.width  = pct+'%';
+  document.getElementById('s-d').textContent     = doneCount;
+  document.getElementById('s-s').textContent     = starCount;
+}
+
+render();
+</script>
+</body>
+</html>
