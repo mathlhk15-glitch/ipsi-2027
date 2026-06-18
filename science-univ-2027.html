@@ -1,0 +1,2981 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>2027학년도 이공계 특성화대 입시 안내</title>
+<meta name="description" content="KAIST · POSTECH · GIST · DGIST · UNIST · KENTECH 6개교 2027학년도 입시 안내">
+
+<!-- 한글 웹폰트: Pretendard (CDN 실패 시 시스템 폰트로 자동 대체됨) -->
+<link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+
+<style>
+/* ============================================================
+   0. 디자인 토큰 (Design Tokens)
+   ------------------------------------------------------------
+   배경: 옅은 청사진(blueprint) 도트그리드 — "이공계 데이터" 컨셉
+   타이포: Pretendard(국문 본문/제목) + 모노스페이스(수치·영문 라벨)
+   대학 컬러: STEP02 데이터의 UNIVERSITY_COLORS와 1:1 매칭
+============================================================ */
+:root{
+  /* 색상 — 라이트 모드 */
+  --bg:        #FAFAF8;
+  --bg-dot:    #E7E4DC;
+  --surface:   #FFFFFF;
+  --surface-2: #F2F0EA;
+  --ink:       #1C1D22;
+  --ink-soft:  #5A5D68;
+  --ink-faint: #8C8F99;
+  --border:    #E4E1D9;
+  --accent:    #2B3A55;       /* 안내/탐색을 위한 중립 네이비 — 대학 고유색과 분리 */
+  --accent-ink:#FFFFFF;
+  --focus:     #2B3A55;
+
+  /* 배지 시스템 (STEP01 정의) */
+  --badge-warn-bg:  #FBE8E6; --badge-warn-ink:  #9A2D1F;
+  --badge-memo-bg:  #ECEBE6; --badge-memo-ink:  #5A5D68;
+  --badge-tip-bg:   #E6EEFA; --badge-tip-ink:   #1F4E8C;
+  --badge-change-bg:#FBEEE0; --badge-change-ink:#9A5A12;
+
+  /* 레이아웃 */
+  --radius-s: 6px;
+  --radius-m: 12px;
+  --radius-l: 18px;
+  --shadow-card: 0 1px 2px rgba(28,29,34,0.04), 0 4px 14px rgba(28,29,34,0.05);
+  --shadow-pop:  0 8px 28px rgba(28,29,34,0.12);
+  --maxw: 1180px;
+
+  /* 폰트 */
+  --font-kr: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
+             "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", "Roboto Mono", ui-monospace, SFMono-Regular,
+             Menlo, Consolas, monospace;
+}
+
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:        #14151A;
+    --bg-dot:    #232530;
+    --surface:   #1C1E26;
+    --surface-2: #20222B;
+    --ink:       #ECEDEF;
+    --ink-soft:  #A6A9B4;
+    --ink-faint: #767A86;
+    --border:    #2C2F3A;
+    --accent:    #7E9DC9;
+    --accent-ink:#10131A;
+    --focus:     #7E9DC9;
+
+    --badge-warn-bg:  #3A2220; --badge-warn-ink:  #F0A99B;
+    --badge-memo-bg:  #262833; --badge-memo-ink:  #B7BAC4;
+    --badge-tip-bg:   #1E2A3D; --badge-tip-ink:   #9DC0F2;
+    --badge-change-bg:#332615; --badge-change-ink:#F0C089;
+
+    --shadow-card: 0 1px 2px rgba(0,0,0,0.3), 0 4px 14px rgba(0,0,0,0.35);
+    --shadow-pop:  0 8px 28px rgba(0,0,0,0.5);
+  }
+}
+
+/* ============================================================
+   1. 리셋 & 베이스
+============================================================ */
+*,*::before,*::after{ box-sizing:border-box; }
+html{ -webkit-text-size-adjust:100%; }
+body{
+  margin:0;
+  font-family:var(--font-kr);
+  color:var(--ink);
+  background-color:var(--bg);
+  /* 청사진 도트그리드 — 본문 전역에 옅게 적용 */
+  background-image: radial-gradient(var(--bg-dot) 1px, transparent 1.4px);
+  background-size: 22px 22px;
+  line-height:1.7;
+  font-size:15px;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,p,ul,ol,dl{ margin:0; }
+ul,ol{ padding:0; list-style:none; }
+button{ font-family:inherit; }
+a{ color:inherit; text-decoration:none; }
+img,svg{ display:block; max-width:100%; }
+
+button, [role="button"], input[type="text"], input[type="search"]{
+  font-size:15px;
+}
+button{ cursor:pointer; border:none; background:none; }
+
+:focus-visible{
+  outline:2px solid var(--focus);
+  outline-offset:2px;
+  border-radius:4px;
+}
+
+@media (prefers-reduced-motion: reduce){
+  *{ animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; }
+}
+
+/* ============================================================
+   2. 앱 셸 레이아웃
+   모바일: 세로 1열 (header → nav → main → footer)
+   PC(1024+): 좌측 고정 사이드바 + 우측 메인
+============================================================ */
+.app-shell{
+  display:grid;
+  grid-template-areas:
+    "header"
+    "nav"
+    "main"
+    "footer";
+  grid-template-columns: 1fr;
+  min-height:100vh;
+}
+
+.app-header{ grid-area:header; }
+.app-nav{ grid-area:nav; }
+.app-main{ grid-area:main; min-width:0; }
+.app-footer{ grid-area:footer; }
+
+@media (min-width:1024px){
+  .app-shell{
+    grid-template-areas:
+      "header header"
+      "nav    main"
+      "nav    footer";
+    grid-template-columns: 264px 1fr;
+    align-items:start;
+  }
+  .app-nav{
+    position:sticky;
+    top:0;
+    height:100vh;
+    overflow-y:auto;
+  }
+}
+
+/* ============================================================
+   3. 헤더
+============================================================ */
+.app-header{
+  padding:20px 18px 14px;
+  border-bottom:1px solid var(--border);
+  background:var(--surface);
+}
+@media (min-width:1024px){
+  .app-header{ padding:22px 32px 18px; }
+}
+
+.app-header__eyebrow{
+  font-family:var(--font-mono);
+  font-size:11px;
+  letter-spacing:0.06em;
+  color:var(--ink-faint);
+  text-transform:uppercase;
+}
+
+.app-header__title{
+  margin-top:6px;
+  font-size:21px;
+  font-weight:700;
+  letter-spacing:-0.01em;
+  line-height:1.35;
+}
+@media (min-width:1024px){
+  .app-header__title{ font-size:24px; }
+}
+
+.app-header__sub{
+  margin-top:6px;
+  font-size:13.5px;
+  color:var(--ink-soft);
+}
+
+.app-header__meta{
+  margin-top:14px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+}
+
+.meta-chip{
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  font-size:11.5px;
+  padding:4px 9px;
+  border-radius:999px;
+  background:var(--surface-2);
+  color:var(--ink-soft);
+  border:1px solid var(--border);
+}
+.meta-chip__num{ font-family:var(--font-mono); font-weight:600; color:var(--ink); }
+
+/* ============================================================
+   4. 모드 네비게이션 (학생 / 학부모 / 교사)
+============================================================ */
+.app-nav{
+  background:var(--surface);
+  border-bottom:1px solid var(--border);
+  padding:14px 18px;
+}
+@media (min-width:1024px){
+  .app-nav{
+    border-bottom:none;
+    border-right:1px solid var(--border);
+    padding:22px 18px;
+    display:flex;
+    flex-direction:column;
+    gap:22px;
+  }
+}
+
+.nav-label{
+  font-family:var(--font-mono);
+  font-size:11px;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  color:var(--ink-faint);
+  margin-bottom:8px;
+  display:block;
+  padding:0 2px;
+}
+
+.mode-switch{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:8px;
+}
+@media (min-width:480px){
+  .mode-switch{ grid-template-columns:repeat(4,1fr); }
+}
+@media (min-width:1024px){
+  .mode-switch{ grid-template-columns:1fr; gap:6px; }
+}
+
+.mode-btn{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:4px;
+  padding:11px 6px;
+  border-radius:var(--radius-m);
+  border:1px solid var(--border);
+  background:var(--surface);
+  color:var(--ink-soft);
+  text-align:center;
+  transition:border-color .15s, color .15s, background .15s;
+}
+@media (min-width:1024px){
+  .mode-btn{ flex-direction:row; justify-content:flex-start; gap:10px; padding:10px 12px; }
+}
+.mode-btn:hover{ border-color:var(--accent); color:var(--ink); }
+.mode-btn__icon{ font-size:18px; line-height:1; }
+.mode-btn__label{ font-size:12.5px; font-weight:600; }
+@media (min-width:1024px){ .mode-btn__label{ font-size:13.5px; } }
+
+.mode-btn[aria-pressed="true"]{
+  background:var(--accent);
+  border-color:var(--accent);
+  color:var(--accent-ink);
+}
+
+.univ-quicklist{ display:none; }
+@media (min-width:1024px){
+  .univ-quicklist{ display:flex; flex-direction:column; gap:3px; }
+  .univ-quicklist__item{
+    display:flex; align-items:center; gap:9px;
+    padding:7px 10px; border-radius:var(--radius-s);
+    font-size:13px; color:var(--ink-soft);
+  }
+  .univ-quicklist__item:hover{ background:var(--surface-2); color:var(--ink); }
+}
+
+.color-dot{
+  width:9px; height:9px; border-radius:50%; flex:none;
+  box-shadow:0 0 0 2px var(--surface) inset;
+}
+
+/* ============================================================
+   5. 메인 컨텐츠
+============================================================ */
+.app-main{ padding:20px 18px 40px; }
+@media (min-width:1024px){ .app-main{ padding:28px 32px 56px; } }
+
+.view{ display:none; }
+.view.is-active{ display:block; }
+
+.section-heading{
+  display:flex;
+  align-items:baseline;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:14px;
+}
+.section-heading h2{
+  font-size:17px;
+  font-weight:700;
+  letter-spacing:-0.005em;
+}
+.section-heading__hint{
+  font-size:12px;
+  color:var(--ink-faint);
+  font-family:var(--font-mono);
+}
+
+/* 검색 바 */
+.search-bar{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius-m);
+  padding:11px 14px;
+  margin-bottom:16px;
+}
+.search-bar:focus-within{ border-color:var(--accent); }
+.search-bar__icon{ color:var(--ink-faint); font-size:15px; flex:none; }
+.search-bar input{
+  flex:1; border:none; outline:none; background:none;
+  color:var(--ink); font-size:14.5px;
+}
+.search-bar input::placeholder{ color:var(--ink-faint); }
+.search-bar__clear{
+  font-size:12px; color:var(--ink-faint); padding:4px 8px;
+  border-radius:999px; background:var(--surface-2); display:none;
+}
+.search-bar__clear.is-visible{ display:inline-flex; }
+
+.tag-row{
+  display:flex; flex-wrap:wrap; gap:6px; margin-bottom:22px;
+}
+.tag-chip{
+  font-size:12px; padding:6px 11px; border-radius:999px;
+  background:var(--surface-2); color:var(--ink-soft);
+  border:1px solid transparent;
+}
+.tag-chip:hover{ border-color:var(--accent); color:var(--ink); }
+
+/* 대학 카드 그리드 */
+.univ-grid{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:12px;
+}
+@media (min-width:560px){
+  .univ-grid{ grid-template-columns:repeat(2,1fr); }
+}
+@media (min-width:1024px){
+  .univ-grid{ grid-template-columns:repeat(3,1fr); gap:14px; }
+}
+
+.univ-card{
+  display:block;
+  width:100%;
+  text-align:left;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius-l);
+  padding:16px 16px 14px;
+  box-shadow:var(--shadow-card);
+  transition:transform .15s, box-shadow .15s, border-color .15s;
+  border-top:3px solid var(--univ-color, var(--accent));
+}
+.univ-card:hover{
+  transform:translateY(-2px);
+  box-shadow:var(--shadow-pop);
+  border-color:var(--univ-color, var(--accent));
+}
+
+.univ-card__top{
+  display:flex; align-items:center; justify-content:space-between;
+  margin-bottom:8px;
+}
+.univ-card__name{
+  font-family:var(--font-mono);
+  font-weight:700;
+  font-size:15px;
+  letter-spacing:0.01em;
+  color:var(--univ-color, var(--ink));
+}
+.univ-card__nameFull{
+  font-size:12px; color:var(--ink-faint); margin-top:1px;
+}
+.univ-card__summary{
+  font-size:13px; color:var(--ink-soft); line-height:1.6;
+  margin:8px 0 10px;
+}
+.univ-card__keywords{
+  display:flex; flex-wrap:wrap; gap:5px;
+}
+.kw-chip{
+  font-size:11px; padding:3px 8px; border-radius:999px;
+  background:var(--surface-2); color:var(--ink-soft);
+}
+
+/* 배지 시스템 */
+.badge{
+  display:inline-flex; align-items:center; gap:4px;
+  font-size:11px; font-weight:600;
+  padding:3px 8px; border-radius:999px; white-space:nowrap;
+}
+.badge--warn{ background:var(--badge-warn-bg); color:var(--badge-warn-ink); }
+.badge--memo{ background:var(--badge-memo-bg); color:var(--badge-memo-ink); }
+.badge--tip{ background:var(--badge-tip-bg); color:var(--badge-tip-ink); }
+.badge--change{ background:var(--badge-change-bg); color:var(--badge-change-ink); }
+
+/* 플레이스홀더(추후 STEP에서 내용 채워질 화면) */
+.placeholder-panel{
+  background:var(--surface);
+  border:1px dashed var(--border);
+  border-radius:var(--radius-l);
+  padding:34px 20px;
+  text-align:center;
+  color:var(--ink-soft);
+}
+.placeholder-panel__icon{ font-size:26px; margin-bottom:10px; }
+.placeholder-panel__title{ font-weight:700; color:var(--ink); margin-bottom:6px; font-size:15px; }
+.placeholder-panel__desc{ font-size:13px; line-height:1.7; }
+.placeholder-panel__back{
+  margin-top:18px;
+  display:inline-flex;
+  padding:9px 16px;
+  border-radius:999px;
+  background:var(--accent);
+  color:var(--accent-ink);
+  font-size:13px;
+  font-weight:600;
+}
+
+/* ============================================================
+   5-1. 공통 버튼 (STEP04부터 사용)
+============================================================ */
+.btn-primary{
+  display:inline-flex; align-items:center; justify-content:center; gap:6px;
+  padding:13px 24px; border-radius:999px;
+  background:var(--accent); color:var(--accent-ink);
+  font-size:14.5px; font-weight:700;
+  transition:opacity .15s, transform .15s;
+}
+.btn-primary:hover{ opacity:.9; transform:translateY(-1px); }
+
+.btn-secondary{
+  display:inline-flex; align-items:center; justify-content:center; gap:6px;
+  padding:11px 20px; border-radius:999px;
+  background:var(--surface); color:var(--ink);
+  border:1px solid var(--border);
+  font-size:13.5px; font-weight:600;
+}
+.btn-secondary:hover{ border-color:var(--accent); color:var(--accent); }
+
+.btn-ghost{
+  display:inline-flex; align-items:center; justify-content:center; gap:6px;
+  padding:11px 16px; border-radius:999px;
+  background:none; color:var(--ink-soft);
+  font-size:13px; font-weight:600;
+}
+.btn-ghost:hover{ color:var(--ink); }
+
+/* ============================================================
+   5-2. 학생 모드 — 자가진단 (STEP04)
+============================================================ */
+.diag-intro{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius-l);
+  box-shadow:var(--shadow-card);
+  padding:36px 22px 30px;
+  text-align:center;
+}
+.diag-intro__icon{ font-size:30px; margin-bottom:12px; }
+.diag-intro__title{ font-size:18.5px; font-weight:700; margin-bottom:10px; }
+.diag-intro__desc{
+  font-size:13.5px; color:var(--ink-soft); line-height:1.75;
+  max-width:420px; margin:0 auto 22px;
+}
+.diag-intro__note{
+  margin-top:20px; font-size:11.5px; color:var(--ink-faint); line-height:1.6;
+}
+
+.diag-quiz{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius-l);
+  box-shadow:var(--shadow-card);
+  padding:22px 18px 26px;
+}
+@media (min-width:768px){ .diag-quiz{ padding:30px 36px 32px; } }
+
+.diag-progress__bar{
+  height:6px; border-radius:999px; background:var(--surface-2); overflow:hidden;
+}
+.diag-progress__fill{
+  height:100%; border-radius:999px; background:var(--accent);
+  transition:width .25s ease;
+}
+.diag-progress__label{
+  display:block; margin-top:8px;
+  font-family:var(--font-mono); font-size:11.5px; color:var(--ink-faint);
+}
+
+.diag-step{ margin-top:22px; }
+.diag-step__q{ font-size:16.5px; font-weight:700; line-height:1.55; margin-bottom:6px; }
+.diag-step__hint{ font-size:12.5px; color:var(--ink-soft); margin-bottom:18px; }
+
+.diag-options{ display:grid; grid-template-columns:1fr; gap:10px; }
+@media (min-width:560px){
+  .diag-options{ grid-template-columns:repeat(2,1fr); }
+  .diag-options--3{ grid-template-columns:repeat(3,1fr); }
+}
+.diag-option{
+  display:flex; flex-direction:column; gap:5px; text-align:left;
+  padding:16px 16px; border:1px solid var(--border); border-radius:var(--radius-m);
+  background:var(--surface);
+  transition:border-color .15s, transform .15s, background .15s;
+}
+.diag-option:hover{ border-color:var(--accent); transform:translateY(-1px); }
+.diag-option.is-selected{ border-color:var(--accent); background:var(--surface-2); }
+.diag-option__title{ font-size:14.5px; font-weight:700; }
+.diag-option__desc{ font-size:12px; color:var(--ink-soft); line-height:1.55; }
+
+.diag-multi{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:24px; }
+.diag-chip{
+  font-size:13.5px; padding:10px 16px; border-radius:999px;
+  border:1px solid var(--border); background:var(--surface); color:var(--ink-soft);
+  transition:border-color .15s, background .15s, color .15s;
+}
+.diag-chip:hover{ border-color:var(--accent); }
+.diag-chip.is-selected{ background:var(--accent); border-color:var(--accent); color:var(--accent-ink); }
+
+.diag-next-btn{ width:100%; }
+@media (min-width:480px){ .diag-next-btn{ width:auto; } }
+
+.diag-back-btn{
+  display:inline-flex; margin-top:20px;
+  font-size:12.5px; color:var(--ink-faint); font-weight:600;
+}
+.diag-back-btn:hover{ color:var(--ink-soft); }
+
+/* 결과 */
+.diag-result__head{ margin-bottom:22px; }
+.diag-result__head h2{ font-size:19px; font-weight:700; margin-bottom:6px; }
+.diag-result__hint{ font-size:12px; color:var(--ink-faint); line-height:1.6; }
+
+.result-group{ margin-bottom:26px; }
+.result-group__label{
+  display:inline-flex; align-items:center; gap:6px;
+  font-size:12.5px; font-weight:700;
+  padding:5px 13px; border-radius:999px; margin-bottom:12px;
+}
+.result-group__label--first{ background:var(--badge-tip-bg); color:var(--badge-tip-ink); }
+.result-group__label--consider{ background:var(--badge-memo-bg); color:var(--badge-memo-ink); }
+.result-group__label--caution{ background:var(--badge-change-bg); color:var(--badge-change-ink); }
+
+.result-group__list{ display:grid; grid-template-columns:1fr; gap:12px; }
+@media (min-width:560px){ .result-group__list{ grid-template-columns:repeat(2,1fr); } }
+
+.result-card{
+  border:1px solid var(--border); border-radius:var(--radius-l);
+  background:var(--surface); box-shadow:var(--shadow-card);
+  padding:16px 16px 14px;
+  border-left:4px solid var(--univ-color, var(--accent));
+}
+.result-card__top{ display:flex; align-items:center; gap:8px; margin-bottom:7px; }
+.result-card__name{
+  font-family:var(--font-mono); font-weight:700; font-size:15px;
+  color:var(--univ-color, var(--ink));
+}
+.result-card__nameFull{ font-size:11.5px; color:var(--ink-faint); }
+.result-card__summary{ font-size:12.5px; color:var(--ink-soft); line-height:1.65; margin-bottom:10px; }
+.result-card__reasons{ display:flex; flex-direction:column; gap:5px; margin-bottom:12px; }
+.result-card__reason{
+  font-size:12px; color:var(--ink-soft); line-height:1.55;
+  padding-left:13px; position:relative;
+}
+.result-card__reason::before{ content:"·"; position:absolute; left:2px; color:var(--ink-faint); }
+.result-card__link{
+  font-size:12.5px; font-weight:700;
+  color:var(--univ-color, var(--accent));
+}
+.result-card__link:hover{ text-decoration:underline; }
+
+.checklist-section{
+  margin-top:30px; padding-top:24px; border-top:1px solid var(--border);
+}
+.checklist-category{ margin-bottom:18px; }
+.checklist-category__title{ font-size:14px; font-weight:700; margin-bottom:10px; }
+.checklist-list{ display:flex; flex-direction:column; gap:8px; }
+.checklist-item{
+  display:flex; align-items:flex-start; gap:11px;
+  padding:11px 13px; border:1px solid var(--border); border-radius:var(--radius-m);
+  background:var(--surface); cursor:pointer;
+}
+.checklist-item__box{
+  flex:none; width:18px; height:18px; margin-top:1px;
+  border-radius:5px; border:1.5px solid var(--border);
+  display:flex; align-items:center; justify-content:center;
+  font-size:11px; color:transparent; background:var(--surface);
+}
+.checklist-item__text{ font-size:12.5px; line-height:1.6; color:var(--ink); }
+.checklist-item.is-checked .checklist-item__box{
+  background:var(--accent); border-color:var(--accent); color:var(--accent-ink);
+}
+.checklist-item.is-checked .checklist-item__text{
+  color:var(--ink-faint); text-decoration:line-through;
+}
+
+.diag-result__actions{ display:flex; flex-wrap:wrap; gap:10px; margin-top:28px; }
+
+
+
+/* ============================================================
+   5-5. STEP07 — 대학 상세 / 통합 검색 / 비교 선택
+============================================================ */
+.compare-bar{
+  display:none;
+  align-items:center; justify-content:space-between; gap:12px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius-l);
+  box-shadow:var(--shadow-card);
+  padding:12px 14px;
+  margin:0 0 18px;
+}
+.compare-bar.is-visible{ display:flex; flex-wrap:wrap; }
+.compare-bar__text{ font-size:13px; color:var(--ink-soft); line-height:1.55; }
+.compare-bar__chips{ display:flex; flex-wrap:wrap; gap:6px; margin-top:5px; }
+.compare-chip{ display:inline-flex; align-items:center; gap:5px; font-size:11.5px; padding:4px 8px; border-radius:999px; background:var(--surface-2); color:var(--ink); border:1px solid var(--border); }
+.compare-bar__actions{ display:flex; flex-wrap:wrap; gap:7px; }
+.univ-card__actions{ display:flex; align-items:center; justify-content:space-between; gap:8px; margin-top:12px; }
+.univ-card__open{ font-size:12.5px; font-weight:700; color:var(--univ-color, var(--accent)); }
+.compare-toggle{ display:inline-flex; align-items:center; gap:5px; font-size:12px; color:var(--ink-soft); user-select:none; }
+.compare-toggle input{ width:15px; height:15px; accent-color:var(--univ-color, var(--accent)); }
+.detail-shell{ display:grid; gap:16px; }
+.detail-hero{
+  background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-l);
+  box-shadow:var(--shadow-card); padding:22px 18px; border-top:4px solid var(--univ-color, var(--accent));
+}
+@media (min-width:768px){ .detail-hero{ padding:28px 30px; } }
+.detail-hero__top{ display:flex; justify-content:space-between; align-items:flex-start; gap:14px; flex-wrap:wrap; }
+.detail-hero__eyebrow{ font-family:var(--font-mono); font-size:11px; letter-spacing:.08em; color:var(--ink-faint); text-transform:uppercase; }
+.detail-hero__title{ margin-top:5px; font-size:22px; font-weight:850; color:var(--univ-color, var(--ink)); line-height:1.3; }
+.detail-hero__full{ color:var(--ink-faint); font-size:13px; margin-top:2px; }
+.detail-hero__summary{ margin-top:12px; color:var(--ink-soft); font-size:14px; line-height:1.75; max-width:900px; }
+.detail-badges{ display:flex; flex-wrap:wrap; gap:6px; margin-top:14px; }
+.detail-actions{ display:flex; flex-wrap:wrap; gap:8px; margin-top:18px; }
+.detail-grid{ display:grid; grid-template-columns:1fr; gap:14px; }
+@media (min-width:900px){ .detail-grid{ grid-template-columns:repeat(2,1fr); } }
+.detail-card{ background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-l); box-shadow:var(--shadow-card); padding:17px; break-inside:avoid; }
+.detail-card--wide{ grid-column:1 / -1; }
+.detail-card__title{ font-size:15.5px; font-weight:850; margin-bottom:10px; display:flex; align-items:center; gap:7px; }
+.detail-list{ display:grid; gap:7px; }
+.detail-list li{ font-size:13px; color:var(--ink-soft); line-height:1.65; padding-left:15px; position:relative; }
+.detail-list li::before{ content:""; width:5px; height:5px; border-radius:50%; background:var(--univ-color, var(--accent)); position:absolute; left:0; top:.72em; }
+.detail-kv{ display:grid; grid-template-columns:110px 1fr; gap:7px 10px; font-size:13px; }
+.detail-kv dt{ color:var(--ink-faint); font-weight:700; }
+.detail-kv dd{ color:var(--ink-soft); margin:0; line-height:1.6; }
+.quote-box{ border-left:4px solid var(--univ-color, var(--accent)); background:var(--surface-2); border-radius:0 var(--radius-m) var(--radius-m) 0; padding:13px 14px; color:var(--ink-soft); font-size:13px; line-height:1.75; margin-top:9px; }
+.detail-compare{ background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-l); box-shadow:var(--shadow-card); padding:17px; }
+.detail-compare__header{ display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:10px; flex-wrap:wrap; }
+.detail-compare-table-wrap{ overflow-x:auto; }
+.detail-compare table{ width:100%; min-width:760px; border-collapse:collapse; font-size:12.3px; }
+.detail-compare th,.detail-compare td{ padding:9px 10px; border:1px solid var(--border); vertical-align:top; text-align:left; }
+.detail-compare th{ background:var(--surface-2); font-weight:850; }
+.detail-empty{ padding:22px; text-align:center; color:var(--ink-faint); border:1px dashed var(--border); border-radius:var(--radius-l); background:var(--surface); }
+@media print{
+  .compare-bar, .detail-actions, .compare-toggle, .univ-card__actions{ display:none !important; }
+  .detail-card,.detail-hero,.detail-compare{ box-shadow:none; border:1px solid #ccc; }
+  .detail-grid{ display:block; }
+  .detail-card{ margin-bottom:8px; }
+}
+
+
+
+/* ============================================================
+   6. 푸터
+============================================================ */
+.app-footer{
+  border-top:1px solid var(--border);
+  background:var(--surface-2);
+  padding:20px 18px 28px;
+}
+@media (min-width:1024px){ .app-footer{ padding:22px 32px 32px; } }
+
+.app-footer__row{
+  display:flex; flex-wrap:wrap; gap:8px 16px; align-items:center;
+  font-size:12px; color:var(--ink-faint); margin-bottom:10px;
+}
+.app-footer__disclaimer{
+  font-size:12.5px; color:var(--ink-soft); line-height:1.7;
+  max-width:760px;
+}
+.app-footer__disclaimer strong{ color:var(--ink); }
+
+
+
+/* ============================================================
+   5-3. 학부모 모드 — Q&A / 장학·생활비 / 진로 안내 (STEP05)
+============================================================ */
+.parent-hero{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius-l);
+  box-shadow:var(--shadow-card);
+  padding:24px 20px;
+  margin-bottom:18px;
+}
+@media (min-width:768px){ .parent-hero{ padding:30px 34px; } }
+.parent-hero__eyebrow{
+  display:inline-flex; align-items:center; gap:6px;
+  font-family:var(--font-mono); font-size:11px; color:var(--ink-faint);
+  letter-spacing:.06em; text-transform:uppercase; margin-bottom:8px;
+}
+.parent-hero__title{ font-size:20px; font-weight:800; line-height:1.45; letter-spacing:-.01em; }
+.parent-hero__desc{ margin-top:8px; color:var(--ink-soft); font-size:13.5px; line-height:1.75; max-width:760px; }
+.parent-hero__actions{ margin-top:16px; display:flex; flex-wrap:wrap; gap:8px; }
+
+.parent-tabs{
+  display:grid; grid-template-columns:repeat(3,1fr); gap:8px;
+  margin-bottom:16px;
+}
+.parent-tab{
+  padding:10px 8px; border-radius:var(--radius-m);
+  border:1px solid var(--border); background:var(--surface);
+  color:var(--ink-soft); font-size:12.5px; font-weight:700; text-align:center;
+}
+.parent-tab:hover{ border-color:var(--accent); color:var(--ink); }
+.parent-tab[aria-selected="true"]{ background:var(--accent); border-color:var(--accent); color:var(--accent-ink); }
+
+.parent-panel{ display:none; }
+.parent-panel.is-active{ display:block; }
+.parent-toolbar{
+  display:flex; flex-direction:column; gap:10px; margin-bottom:14px;
+}
+@media (min-width:768px){ .parent-toolbar{ flex-direction:row; align-items:center; justify-content:space-between; } }
+.parent-filter-row{ display:flex; flex-wrap:wrap; gap:6px; }
+.parent-filter{
+  display:inline-flex; align-items:center; gap:5px;
+  padding:6px 10px; border-radius:999px;
+  background:var(--surface-2); border:1px solid transparent;
+  color:var(--ink-soft); font-size:12px; font-weight:600;
+}
+.parent-filter:hover{ border-color:var(--accent); color:var(--ink); }
+.parent-filter.is-active{ background:var(--accent); color:var(--accent-ink); border-color:var(--accent); }
+
+.parent-qa-grid{ display:grid; grid-template-columns:1fr; gap:10px; }
+@media (min-width:768px){ .parent-qa-grid{ grid-template-columns:repeat(2,1fr); } }
+.parent-qa-card{
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:var(--radius-l); box-shadow:var(--shadow-card);
+  padding:15px 15px 14px; break-inside:avoid;
+}
+.parent-qa-card__top{ display:flex; align-items:flex-start; justify-content:space-between; gap:10px; margin-bottom:8px; }
+.parent-qa-card__num{ font-family:var(--font-mono); font-size:11px; color:var(--ink-faint); }
+.parent-qa-card__q{ font-size:14.5px; font-weight:800; line-height:1.55; }
+.parent-qa-card__a{ font-size:13px; color:var(--ink-soft); line-height:1.75; }
+.parent-qa-card__meta{ margin-top:10px; display:flex; flex-wrap:wrap; gap:5px; }
+
+.parent-table-wrap{
+  overflow-x:auto; background:var(--surface); border:1px solid var(--border);
+  border-radius:var(--radius-l); box-shadow:var(--shadow-card); margin-bottom:14px;
+}
+.parent-table{ width:100%; min-width:760px; border-collapse:collapse; font-size:12.5px; }
+.parent-table th, .parent-table td{ padding:11px 12px; border-bottom:1px solid var(--border); vertical-align:top; text-align:left; }
+.parent-table th{ background:var(--surface-2); color:var(--ink); font-weight:800; white-space:nowrap; }
+.parent-table td:first-child{ font-family:var(--font-mono); font-weight:800; color:var(--univ-color, var(--ink)); white-space:nowrap; }
+.parent-table tr:last-child td{ border-bottom:none; }
+.parent-note{ font-size:12px; color:var(--ink-faint); line-height:1.7; margin:8px 2px 18px; }
+
+.parent-card-grid{ display:grid; grid-template-columns:1fr; gap:12px; }
+@media (min-width:720px){ .parent-card-grid{ grid-template-columns:repeat(2,1fr); } }
+@media (min-width:1100px){ .parent-card-grid{ grid-template-columns:repeat(3,1fr); } }
+.parent-univ-card{
+  background:var(--surface); border:1px solid var(--border); border-top:3px solid var(--univ-color, var(--accent));
+  border-radius:var(--radius-l); box-shadow:var(--shadow-card); padding:16px;
+}
+.parent-univ-card__name{ font-family:var(--font-mono); color:var(--univ-color, var(--ink)); font-size:15px; font-weight:800; }
+.parent-univ-card__full{ color:var(--ink-faint); font-size:12px; margin-top:1px; }
+.parent-univ-card__summary{ color:var(--ink-soft); font-size:13px; line-height:1.65; margin:10px 0; }
+.parent-univ-card__list{ display:grid; gap:6px; margin-top:10px; }
+.parent-univ-card__item{ font-size:12.5px; color:var(--ink-soft); line-height:1.6; padding-left:14px; position:relative; }
+.parent-univ-card__item::before{ content:""; width:5px; height:5px; border-radius:50%; background:var(--univ-color, var(--accent)); position:absolute; left:0; top:.72em; }
+.parent-univ-card__link{ margin-top:12px; color:var(--univ-color, var(--accent)); font-size:12.5px; font-weight:800; }
+
+@media print{
+  .parent-hero__actions, .parent-tabs, .parent-toolbar{ display:none !important; }
+  .parent-panel{ display:block !important; margin-bottom:22px; }
+  .parent-qa-card, .parent-univ-card, .parent-table-wrap{ box-shadow:none; border:1px solid #ccc; break-inside:avoid; }
+  .parent-qa-grid{ grid-template-columns:1fr; }
+}
+
+
+
+/* ============================================================
+   5-4. 교사 모드 — 비교표 / 상담 포인트 / 인쇄 (STEP06)
+============================================================ */
+.teacher-hero{
+  background:linear-gradient(135deg, var(--surface), var(--surface-2));
+  border:1px solid var(--border); border-radius:var(--radius-l);
+  box-shadow:var(--shadow-card); padding:26px 20px; margin-bottom:16px;
+}
+@media (min-width:768px){ .teacher-hero{ padding:30px 34px; } }
+.teacher-hero__eyebrow{ font-family:var(--font-mono); font-size:11px; letter-spacing:.08em; color:var(--ink-faint); text-transform:uppercase; }
+.teacher-hero__title{ margin-top:7px; font-size:20px; font-weight:800; line-height:1.45; letter-spacing:-.01em; }
+.teacher-hero__desc{ margin-top:8px; color:var(--ink-soft); font-size:13.5px; line-height:1.75; max-width:850px; }
+.teacher-hero__actions{ margin-top:16px; display:flex; flex-wrap:wrap; gap:8px; }
+.teacher-tabs{ display:flex; flex-wrap:wrap; gap:7px; margin:16px 0 18px; }
+.teacher-tab{ padding:9px 13px; border-radius:999px; background:var(--surface); color:var(--ink-soft); border:1px solid var(--border); font-size:13px; font-weight:700; }
+.teacher-tab:hover{ border-color:var(--accent); color:var(--ink); }
+.teacher-tab[aria-selected="true"]{ background:var(--accent); border-color:var(--accent); color:var(--accent-ink); }
+.teacher-panel{ display:none; }
+.teacher-panel.is-active{ display:block; }
+.teacher-table-wrap{ overflow-x:auto; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-l); box-shadow:var(--shadow-card); margin-bottom:10px; }
+.teacher-table{ width:100%; min-width:1050px; border-collapse:collapse; font-size:12.3px; }
+.teacher-table th, .teacher-table td{ padding:10px 11px; border-bottom:1px solid var(--border); border-right:1px solid var(--border); vertical-align:top; text-align:left; }
+.teacher-table th:last-child, .teacher-table td:last-child{ border-right:none; }
+.teacher-table th{ position:sticky; top:0; background:var(--surface-2); color:var(--ink); font-weight:800; z-index:1; white-space:nowrap; }
+.teacher-table tr:last-child td{ border-bottom:none; }
+.teacher-table td:first-child{ font-family:var(--font-mono); font-weight:800; color:var(--univ-color, var(--ink)); white-space:nowrap; }
+.teacher-note{ font-size:12px; color:var(--ink-faint); line-height:1.7; margin:8px 2px 18px; }
+.teacher-fit-grid{ display:grid; grid-template-columns:1fr; gap:12px; }
+@media (min-width:860px){ .teacher-fit-grid{ grid-template-columns:repeat(2,1fr); } }
+.teacher-fit-card{ background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-l); box-shadow:var(--shadow-card); padding:16px; }
+.teacher-fit-card__title{ font-size:15px; font-weight:800; margin-bottom:6px; }
+.teacher-fit-card__desc{ color:var(--ink-soft); font-size:12.8px; line-height:1.65; margin-bottom:10px; }
+.teacher-fit-card__univs{ display:flex; flex-wrap:wrap; gap:5px; margin-bottom:10px; }
+.teacher-fit-card__list{ display:grid; gap:6px; }
+.teacher-fit-card__item{ font-size:12.5px; color:var(--ink-soft); line-height:1.6; padding-left:14px; position:relative; }
+.teacher-fit-card__item::before{ content:""; width:5px; height:5px; border-radius:50%; background:var(--accent); position:absolute; left:0; top:.72em; }
+.teacher-notes-grid{ display:grid; grid-template-columns:1fr; gap:12px; }
+@media (min-width:900px){ .teacher-notes-grid{ grid-template-columns:repeat(2,1fr); } }
+@media (min-width:1180px){ .teacher-notes-grid{ grid-template-columns:repeat(3,1fr); } }
+.teacher-note-card{ background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-l); box-shadow:var(--shadow-card); padding:16px; border-top:3px solid var(--univ-color, var(--accent)); break-inside:avoid; }
+.teacher-note-card__name{ font-family:var(--font-mono); color:var(--univ-color, var(--ink)); font-size:15px; font-weight:800; }
+.teacher-note-card__full{ color:var(--ink-faint); font-size:12px; margin-top:1px; }
+.teacher-note-list{ display:grid; gap:7px; margin-top:11px; }
+.teacher-note-list li{ font-size:12.5px; color:var(--ink-soft); line-height:1.65; padding-left:15px; position:relative; }
+.teacher-note-list li::before{ content:"•"; position:absolute; left:2px; color:var(--univ-color, var(--accent)); font-weight:800; }
+.teacher-sheet{ background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-l); box-shadow:var(--shadow-card); padding:18px; }
+.teacher-sheet__grid{ display:grid; grid-template-columns:1fr; gap:10px; margin:12px 0 14px; }
+@media (min-width:720px){ .teacher-sheet__grid{ grid-template-columns:repeat(3,1fr); } }
+.teacher-input, .teacher-select, .teacher-textarea{ width:100%; border:1px solid var(--border); border-radius:var(--radius-m); background:var(--surface); color:var(--ink); padding:10px 12px; font-family:var(--font-kr); font-size:13px; }
+.teacher-textarea{ min-height:92px; resize:vertical; }
+.teacher-sheet-preview{ margin-top:14px; border:1px dashed var(--border); border-radius:var(--radius-l); padding:16px; background:var(--surface-2); }
+.teacher-sheet-preview h3{ font-size:16px; margin-bottom:8px; }
+.teacher-sheet-preview__meta{ font-size:12.5px; color:var(--ink-soft); line-height:1.65; }
+.teacher-sheet-preview__body{ margin-top:10px; display:grid; gap:7px; font-size:13px; color:var(--ink-soft); line-height:1.7; }
+.teacher-summary-pages{ display:none; }
+.teacher-summary-page{ break-after:page; padding:10mm 0; }
+.teacher-summary-page h2{ font-size:20px; margin-bottom:8px; }
+.teacher-summary-page .summary-grid{ display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+.teacher-summary-page .summary-box{ border:1px solid #ccc; padding:9px; break-inside:avoid; }
+.teacher-summary-page .summary-box h3{ font-size:13px; margin-bottom:4px; }
+.teacher-summary-page .summary-box p, .teacher-summary-page .summary-box li{ font-size:11.5px; line-height:1.55; }
+
+@media print{
+  .teacher-hero__actions, .teacher-tabs, .teacher-sheet__grid + .teacher-hero__actions{ display:none !important; }
+  .teacher-panel{ display:block !important; margin-bottom:18px; }
+  .teacher-table-wrap, .teacher-fit-card, .teacher-note-card, .teacher-sheet, .teacher-sheet-preview{ box-shadow:none; border:1px solid #ccc; break-inside:avoid; }
+  .teacher-table-wrap{ overflow:visible; }
+  .teacher-table{ min-width:0; font-size:9.5px; }
+  .teacher-table th, .teacher-table td{ padding:5px 6px; }
+
+  body.print-teacher-master .teacher-panel{ display:none !important; }
+  body.print-teacher-master #teacher-panel-master{ display:block !important; }
+  body.print-teacher-master .teacher-tabs,
+  body.print-teacher-master .teacher-hero__actions{ display:none !important; }
+  body.print-teacher-summary #view-teacher > *:not(.teacher-summary-pages){ display:none !important; }
+  body.print-teacher-summary .teacher-summary-pages{ display:block !important; }
+  body.print-teacher-sheet #teacher-panel-master, body.print-teacher-sheet #teacher-panel-fit, body.print-teacher-sheet #teacher-panel-notes, body.print-teacher-sheet .teacher-tabs{ display:none !important; }
+  body.print-teacher-sheet #teacher-panel-sheet{ display:block !important; }
+}
+
+/* ============================================================
+   7. 인쇄 스타일 (추후 STEP06/08에서 비교표·상담결과지에 확장)
+============================================================ */
+@media print{
+  .app-nav, .mode-switch, .search-bar, .tag-row, .app-header__meta{ display:none !important; }
+  body{ background:#fff; }
+  .app-shell{ grid-template-columns:1fr; grid-template-areas:"header" "main" "footer"; }
+  .univ-card{ box-shadow:none; border:1px solid #ccc; }
+  a{ text-decoration:none; }
+
+  /* 학생 모드 진단 결과 인쇄 (STEP04) */
+  .diag-intro, .diag-quiz, .diag-result__actions, .diag-back-btn{ display:none !important; }
+  .result-card, .checklist-item{ box-shadow:none; border:1px solid #ccc; break-inside:avoid; }
+  .result-group{ break-inside:avoid; }
+  .checklist-item__box{ -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+}
+
+/* 작은 화면 보호 */
+@media (max-width:359px){
+  .app-header__title{ font-size:18px; }
+}
+</style>
+</head>
+<body>
+
+<div class="app-shell">
+
+  <!-- ============== 헤더 ============== -->
+  <header class="app-header">
+    <span class="app-header__eyebrow">SCIENCE & TECHNOLOGY UNIVERSITIES · ADMISSION GUIDE</span>
+    <h1 class="app-header__title">2027학년도 이공계 특성화대<br>6개교 입시 안내</h1>
+    <p class="app-header__sub">KAIST · POSTECH · GIST · DGIST · UNIST · KENTECH — 2027학년도 입시 안내</p>
+    <div class="app-header__meta">
+      <span class="meta-chip">기준 <span class="meta-chip__num">2027학년도</span></span>
+      <span class="meta-chip">대상 <span class="meta-chip__num">6개교</span></span>
+      <span class="badge badge--memo">📋 설명회 메모</span>
+      <span class="badge badge--warn">⚠️ 공식요강 확인 필요</span>
+      <button class="meta-chip" type="button" onclick="window.print()">🖨️ 인쇄</button>
+    </div>
+  </header>
+
+  <!-- ============== 모드 네비게이션 ============== -->
+  <nav class="app-nav" aria-label="모드 및 대학 선택">
+    <div>
+      <span class="nav-label">모드 선택</span>
+      <div class="mode-switch" id="modeSwitch" role="tablist">
+        <button class="mode-btn" data-mode="home" role="tab" aria-pressed="true">
+          <span class="mode-btn__icon">🏠</span><span class="mode-btn__label">홈</span>
+        </button>
+        <button class="mode-btn" data-mode="student" role="tab" aria-pressed="false">
+          <span class="mode-btn__icon">🎓</span><span class="mode-btn__label">학생</span>
+        </button>
+        <button class="mode-btn" data-mode="parent" role="tab" aria-pressed="false">
+          <span class="mode-btn__icon">👨‍👩‍👧</span><span class="mode-btn__label">학부모</span>
+        </button>
+        <button class="mode-btn" data-mode="teacher" role="tab" aria-pressed="false">
+          <span class="mode-btn__icon">🗂️</span><span class="mode-btn__label">교사</span>
+        </button>
+      </div>
+    </div>
+
+    <div>
+      <span class="nav-label">대학별 보기</span>
+      <ul class="univ-quicklist" id="univQuicklist"><!-- JS가 채움 --></ul>
+    </div>
+  </nav>
+
+  <!-- ============== 메인 ============== -->
+  <main class="app-main">
+
+    <!-- 홈 화면 -->
+    <section class="view is-active" id="view-home">
+      <div class="search-bar">
+        <span class="search-bar__icon">🔍</span>
+        <input type="text" id="homeSearch" placeholder="대학 이름, 전공, 장학금, 면접 등으로 검색">
+        <span class="search-bar__clear" id="homeSearchClear">지우기</span>
+      </div>
+      <div class="tag-row" id="homeTagRow"><!-- JS가 채움 --></div>
+      <div class="compare-bar" id="compareBar">
+        <div>
+          <div class="compare-bar__text"><b>비교 선택</b> · 2~3개 대학을 선택하면 핵심 항목을 한 표로 비교합니다.</div>
+          <div class="compare-bar__chips" id="compareChips"></div>
+        </div>
+        <div class="compare-bar__actions">
+          <button class="btn-secondary" id="compareOpenBtn" type="button">선택 대학 비교</button>
+          <button class="btn-ghost" id="compareClearBtn" type="button">선택 해제</button>
+        </div>
+      </div>
+
+      <div class="section-heading">
+        <h2>대학별 보기</h2>
+        <span class="section-heading__hint" id="univCountHint">6 / 6</span>
+      </div>
+      <div class="univ-grid" id="univGrid"><!-- JS가 채움 --></div>
+</section>
+
+    <!-- 학생 모드 (STEP04) -->
+    <section class="view" id="view-student">
+
+      <!-- 인트로 -->
+      <div class="diag-intro" id="diagIntro">
+        <div class="diag-intro__icon">🧭</div>
+        <h2 class="diag-intro__title">나에게 맞는 대학 찾기</h2>
+        <p class="diag-intro__desc">5가지 질문에 답하면 6개교 중 나와 잘 맞는 대학을<br>1순위 · 함께 검토 · 신중검토로 나누어 추천해드립니다. 약 1분이면 충분해요.</p>
+        <button class="btn-primary" id="diagStartBtn" type="button">자가진단 시작하기 →</button>
+        <p class="diag-intro__note">📋 이 진단은 입시설명회 메모를 기반으로 한 참고 자료입니다. 실제 지원 여부는 반드시 각 대학 공식 모집요강을 확인한 뒤 결정하세요.</p>
+      </div>
+
+      <!-- 진단 퀴즈 -->
+      <div class="diag-quiz" id="diagQuiz" hidden>
+        <div class="diag-progress">
+          <div class="diag-progress__bar"><div class="diag-progress__fill" id="diagProgressFill" style="width:20%"></div></div>
+          <span class="diag-progress__label" id="diagProgressLabel">질문 1 / 5</span>
+        </div>
+
+        <div class="diag-step" data-step="1">
+          <h3 class="diag-step__q">Q1. 전공을 이미 정했나요?</h3>
+          <p class="diag-step__hint">입학 후 전공을 정하는 자유도가 대학마다 크게 다릅니다.</p>
+          <div class="diag-options">
+            <button class="diag-option" data-q="q1" data-v="탐색형" type="button">
+              <span class="diag-option__title">아직 탐색 중이에요</span>
+              <span class="diag-option__desc">여러 분야를 넓게 보고 입학 후 정하고 싶어요</span>
+            </button>
+            <button class="diag-option" data-q="q1" data-v="확정형" type="button">
+              <span class="diag-option__title">전공을 확실히 정했어요</span>
+              <span class="diag-option__desc">관심 분야가 분명하고 깊게 파고들고 싶어요</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="diag-step" data-step="2" hidden>
+          <h3 class="diag-step__q">Q2. 면접과 서류, 어느 쪽이 더 강한가요?</h3>
+          <p class="diag-step__hint">대학마다 면접 비중과 방식이 크게 다릅니다.</p>
+          <div class="diag-options">
+            <button class="diag-option" data-q="q2" data-v="면접형" type="button">
+              <span class="diag-option__title">면접·발표·토론이 편해요</span>
+              <span class="diag-option__desc">말로 표현하고 즉석에서 생각하는 게 강점이에요</span>
+            </button>
+            <button class="diag-option" data-q="q2" data-v="서류형" type="button">
+              <span class="diag-option__title">학생부·자소서 등 서류가 강해요</span>
+              <span class="diag-option__desc">꾸준히 쌓아온 기록과 글로 보여주는 게 편해요</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="diag-step" data-step="3" hidden>
+          <h3 class="diag-step__q">Q3. 관심 있는 분야를 모두 골라보세요</h3>
+          <p class="diag-step__hint">복수 선택 가능하며, 선택하지 않아도 다음으로 넘어갈 수 있어요.</p>
+          <div class="diag-multi" id="diagQ3Multi">
+            <button class="diag-chip" data-q3="AI" type="button">🤖 AI · 인공지능</button>
+            <button class="diag-chip" data-q3="반도체" type="button">🔬 반도체</button>
+            <button class="diag-chip" data-q3="에너지" type="button">⚡ 에너지</button>
+            <button class="diag-chip" data-q3="연구" type="button">🧪 연구 · 실험</button>
+            <button class="diag-chip" data-q3="창업" type="button">🚀 창업</button>
+          </div>
+          <button class="btn-primary diag-next-btn" id="diagQ3NextBtn" type="button">다음 →</button>
+        </div>
+
+        <div class="diag-step" data-step="4" hidden>
+          <h3 class="diag-step__q">Q4. 영어로 진행되는 수업, 부담이 되나요?</h3>
+          <p class="diag-step__hint">예: UNIST는 100% 영어 수업, KAIST는 1학년 P/NR 제도로 부담을 줄여줍니다.</p>
+          <div class="diag-options">
+            <button class="diag-option" data-q="q4" data-v="부담없음" type="button">
+              <span class="diag-option__title">부담 없어요</span>
+              <span class="diag-option__desc">영어 수업도 자신 있어요</span>
+            </button>
+            <button class="diag-option" data-q="q4" data-v="부담있음" type="button">
+              <span class="diag-option__title">부담돼요</span>
+              <span class="diag-option__desc">한국어 수업 비중이 높거나 적응 제도가 있는 곳이 좋아요</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="diag-step" data-step="5" hidden>
+          <h3 class="diag-step__q">Q5. 수학·과학 내신은 어느 정도인가요?</h3>
+          <p class="diag-step__hint">대략적인 수준으로 골라주세요. 정확한 합격선은 공식 자료로 다시 확인하세요.</p>
+          <div class="diag-options diag-options--3">
+            <button class="diag-option" data-q="q5" data-v="최상" type="button">
+              <span class="diag-option__title">최상위권</span>
+              <span class="diag-option__desc">1점대 초중반</span>
+            </button>
+            <button class="diag-option" data-q="q5" data-v="중상" type="button">
+              <span class="diag-option__title">상위권</span>
+              <span class="diag-option__desc">1점대 후반 ~ 2점대 초반</span>
+            </button>
+            <button class="diag-option" data-q="q5" data-v="중하" type="button">
+              <span class="diag-option__title">중상위권</span>
+              <span class="diag-option__desc">2점대 중후반 이상</span>
+            </button>
+          </div>
+        </div>
+
+        <button class="diag-back-btn" id="diagBackBtn" type="button" hidden>← 이전 질문</button>
+      </div>
+
+      <!-- 진단 결과 -->
+      <div class="diag-result" id="diagResult" hidden>
+
+        <div class="diag-result__head">
+          <h2>진단 결과</h2>
+          <p class="diag-result__hint">⚠️ 이 결과는 설명회 메모 기반 참고용입니다. 실제 지원은 반드시 각 대학 공식 모집요강을 확인한 뒤 결정하세요.</p>
+        </div>
+
+        <div class="result-group" id="resultFirst">
+          <div class="result-group__label result-group__label--first">⭐ 1순위 추천</div>
+          <div class="result-group__list" id="resultFirstList"></div>
+        </div>
+
+        <div class="result-group" id="resultConsider">
+          <div class="result-group__label result-group__label--consider">🔎 함께 검토해볼 대학</div>
+          <div class="result-group__list" id="resultConsiderList"></div>
+        </div>
+
+        <div class="result-group" id="resultCaution">
+          <div class="result-group__label result-group__label--caution">🤔 신중히 검토할 대학</div>
+          <div class="result-group__list" id="resultCautionList"></div>
+        </div>
+
+        <!-- 준비 체크리스트 -->
+        <div class="checklist-section">
+          <div class="section-heading">
+            <h2>준비 체크리스트</h2>
+            <span class="section-heading__hint">눌러서 체크해보세요</span>
+          </div>
+
+          <div class="checklist-category">
+            <h3 class="checklist-category__title">📂 학생부 관리</h3>
+            <ul class="checklist-list" id="checklistRecord"><!-- JS가 채움 --></ul>
+          </div>
+          <div class="checklist-category">
+            <h3 class="checklist-category__title">🗣️ 면접 준비</h3>
+            <ul class="checklist-list" id="checklistInterview"><!-- JS가 채움 --></ul>
+          </div>
+          <div class="checklist-category">
+            <h3 class="checklist-category__title">✍️ 자기소개서 준비</h3>
+            <ul class="checklist-list" id="checklistEssay"><!-- JS가 채움 --></ul>
+          </div>
+        </div>
+
+        <div class="diag-result__actions">
+          <button class="btn-secondary" id="diagPrintBtn" type="button">🖨️ 결과 인쇄하기</button>
+          <button class="btn-ghost" id="diagRestartBtn" type="button">↺ 다시 진단하기</button>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- 학부모 모드 (STEP05) -->
+    <section class="view" id="view-parent">
+      <div class="parent-hero">
+        <span class="parent-hero__eyebrow">PARENT MODE · 20 Questions</span>
+        <h2 class="parent-hero__title">학부모가 가장 자주 묻는 질문을<br>지원 전략 기준으로 정리했습니다</h2>
+        <p class="parent-hero__desc">수시 6회 제한, 정시 가능 여부, 등록금·생활비, 전공 선택, 면접 방식, 일반고 지원 가능성처럼 상담 현장에서 바로 필요한 내용을 20문답·비교표·대학별 진로 안내로 나누어 제공합니다.</p>
+        <div class="parent-hero__actions">
+          <button class="btn-primary" id="parentPrintBtn" type="button">🖨️ 학부모 안내자료 인쇄</button>
+          <button class="btn-secondary" data-mode="student" type="button">🎓 학생 자가진단으로 이동</button>
+        </div>
+      </div>
+
+      <div class="parent-tabs" role="tablist" aria-label="학부모 정보 보기">
+        <button class="parent-tab" data-parent-tab="qa" aria-selected="true" type="button">20문답 Q&A</button>
+        <button class="parent-tab" data-parent-tab="support" aria-selected="false" type="button">장학·생활비 비교</button>
+        <button class="parent-tab" data-parent-tab="career" aria-selected="false" type="button">대학별 진로 안내</button>
+      </div>
+
+      <div class="parent-panel is-active" id="parent-panel-qa">
+        <div class="parent-toolbar">
+          <div class="section-heading" style="margin-bottom:0;">
+            <h2>학부모 Q&A 20문답</h2>
+            <span class="section-heading__hint" id="parentQaCount">20 / 20</span>
+          </div>
+          <div class="parent-filter-row" id="parentQaFilters"></div>
+        </div>
+        <div class="parent-qa-grid" id="parentQaGrid"></div>
+      </div>
+
+      <div class="parent-panel" id="parent-panel-support">
+        <div class="section-heading">
+          <h2>장학·생활비·기숙사 비교</h2>
+          <span class="section-heading__hint">6개교 핵심만 비교</span>
+        </div>
+        <div class="parent-table-wrap">
+          <table class="parent-table" id="parentSupportTable"></table>
+        </div>
+        <p class="parent-note">※ 장학금·생활비·기숙사 조건은 학년도, 성적 기준, 개인 상황에 따라 달라질 수 있으므로 최종 지원 전 각 대학 공식 모집요강과 장학 안내를 확인해야 합니다.</p>
+      </div>
+
+      <div class="parent-panel" id="parent-panel-career">
+        <div class="section-heading">
+          <h2>대학별 진로 안내 요약</h2>
+          <span class="section-heading__hint">강점·주의점 중심</span>
+        </div>
+        <div class="parent-card-grid" id="parentCareerGrid"></div>
+      </div>
+    </section>
+
+    <!-- 교사 모드 (STEP06) -->
+    <section class="view" id="view-teacher">
+      <div class="teacher-hero">
+        <span class="teacher-hero__eyebrow">TEACHER MODE · Master Table & Counseling Print</span>
+        <h2 class="teacher-hero__title">상담실에서 바로 쓰는<br>6개교 비교표와 학생 유형별 추천표</h2>
+        <p class="teacher-hero__desc">KAIST·POSTECH·GIST·DGIST·UNIST·KENTECH의 전형 구조, 면접, 전공 선택, 장학, 추천 학생 유형을 교사용 상담 언어로 재구성했습니다. 가로 스크롤 비교표는 PC 상담 화면에, 인쇄 기능은 학부모 상담·교내 추천 협의에 맞춰 설계했습니다.</p>
+        <div class="teacher-hero__actions">
+          <button class="btn-primary" id="teacherPrintMasterBtn" type="button">🖨️ 전체 비교표 인쇄</button>
+          <button class="btn-secondary" id="teacherPrintSummaryBtn" type="button">📄 대학별 1쪽 요약 인쇄</button>
+          <button class="btn-secondary" id="teacherPrintParentBtn" type="button">👪 학부모 Q&A 인쇄</button>
+          <button class="btn-secondary" id="teacherPrintSheetBtn" type="button">📝 상담 결과지 인쇄</button>
+        </div>
+      </div>
+
+      <div class="teacher-tabs" role="tablist" aria-label="교사 정보 보기">
+        <button class="teacher-tab" data-teacher-tab="master" aria-selected="true" type="button">6개교 마스터 비교표</button>
+        <button class="teacher-tab" data-teacher-tab="fit" aria-selected="false" type="button">학생 유형별 추천표</button>
+        <button class="teacher-tab" data-teacher-tab="notes" aria-selected="false" type="button">상담 포인트</button>
+        <button class="teacher-tab" data-teacher-tab="sheet" aria-selected="false" type="button">상담 결과지</button>
+      </div>
+
+      <div class="teacher-panel is-active" id="teacher-panel-master">
+        <div class="section-heading">
+          <h2>6개 대학 마스터 비교표</h2>
+          <span class="section-heading__hint">가로 스크롤 · PC 상담 최적화</span>
+        </div>
+        <div class="teacher-table-wrap">
+          <table class="teacher-table" id="teacherMasterTable"></table>
+        </div>
+        <p class="teacher-note">※ 표의 내용은 설명회 메모 기반입니다. 실제 원서 접수 전에는 모집요강, 전형별 중복지원 가능 여부, 수능최저, 추천서·자소서 여부를 공식 홈페이지에서 재확인해야 합니다.</p>
+      </div>
+
+      <div class="teacher-panel" id="teacher-panel-fit">
+        <div class="section-heading">
+          <h2>학생 유형별 추천표</h2>
+          <span class="section-heading__hint">상담 첫 분류용</span>
+        </div>
+        <div class="teacher-fit-grid" id="teacherFitGrid"></div>
+      </div>
+
+      <div class="teacher-panel" id="teacher-panel-notes">
+        <div class="section-heading">
+          <h2>대학별 상담 포인트</h2>
+          <span class="section-heading__hint">핵심 질문 예시 포함</span>
+        </div>
+        <div class="teacher-notes-grid" id="teacherNotesGrid"></div>
+      </div>
+
+      <div class="teacher-panel" id="teacher-panel-sheet">
+        <div class="section-heading">
+          <h2>상담 결과지</h2>
+          <span class="section-heading__hint">학생 이름 입력 후 출력</span>
+        </div>
+        <div class="teacher-sheet">
+          <p class="teacher-note" style="margin-top:0;">학생 정보와 상담 메모를 입력하면 아래 미리보기 영역이 상담 결과지로 출력됩니다.</p>
+          <div class="teacher-sheet__grid">
+            <input class="teacher-input" id="teacherStudentName" type="text" placeholder="학생 이름">
+            <select class="teacher-select" id="teacherStudentType">
+              <option value="탐색형">탐색형</option>
+              <option value="면접형">면접형</option>
+              <option value="서류형">서류형</option>
+              <option value="반도체 확정형">반도체 확정형</option>
+              <option value="에너지 특화형">에너지 특화형</option>
+              <option value="영어·글로벌형">영어·글로벌형</option>
+            </select>
+            <select class="teacher-select" id="teacherPriorityUniv">
+              <option value="">우선 검토 대학 선택</option>
+            </select>
+          </div>
+          <textarea class="teacher-textarea" id="teacherMemo" placeholder="상담 메모: 학생부 강점, 보완점, 추천 전형, 다음 준비 과제 등을 입력"></textarea>
+          <div class="teacher-hero__actions" style="margin-top:12px;">
+            <button class="btn-secondary" id="teacherUpdateSheetBtn" type="button">미리보기 갱신</button>
+            <button class="btn-primary" id="teacherPrintSheetBtn2" type="button">📝 상담 결과지 인쇄</button>
+          </div>
+          <div class="teacher-sheet-preview" id="teacherSheetPreview"></div>
+        </div>
+      </div>
+
+      <div class="teacher-summary-pages" id="teacherSummaryPages"></div>
+    </section>
+
+    <!-- 대학 상세 + 비교 (STEP07) -->
+    <section class="view" id="view-university">
+      <div class="detail-shell" id="univDetailShell"><!-- JS가 채움 --></div>
+    </section>
+
+  </main>
+
+  <!-- ============== 푸터 ============== -->
+  <footer class="app-footer">
+    <div class="app-footer__row">
+      <span id="footerSchool">이공계 특성화대 입시 안내</span>
+      <span>·</span>
+      <span id="footerUpdated">최종 수정 2027학년도</span>
+      <span>·</span>
+      <span id="footerVersion">배포용</span>
+    </div>
+    <p class="app-footer__disclaimer">
+      <strong>안내:</strong> <span id="footerDisclaimer"></span>
+    </p>
+  </footer>
+
+</div>
+
+<script>
+/* ============================================================
+   STEP02_대학데이터.js 전체 인라인 포함 (수정 없이 그대로)
+============================================================ */
+/**
+ * STEP02_대학데이터.js
+ * 2027학년도 이공계 특성화대 6개교 입시 안내 HTML 프로그램
+ * 
+ * 출처: 각 대학 입학사정관/입학팀장 설명회 직접 청취 메모
+ * 기준: 2027학년도 대입 (일부 2028 변경사항 포함)
+ * 작성: 진로진학 상담자료
+ * 
+ * ⚠️ 주의: 이 자료는 설명회 메모 기반으로, 공식 모집요강과 다를 수 있습니다.
+ *          반드시 각 대학 공식 홈페이지에서 최종 확인하세요.
+ */
+
+const UNIVERSITIES = [
+
+  // ──────────────────────────────────────────────
+  // 1. KAIST 한국과학기술원
+  // ──────────────────────────────────────────────
+  {
+    id: "kaist",
+    name: "KAIST",
+    nameFull: "한국과학기술원",
+    nameEn: "Korea Advanced Institute of Science & Technology",
+    color: "#0F6E56",
+    colorLight: "#E6F5F1",
+    homepage: "https://www.kaist.ac.kr",
+    admissionPage: "https://admission.kaist.ac.kr",
+    location: "대전광역시 유성구",
+
+    summary: "이공계 자유도와 창업·연구 몰입 환경, 무학과 입학으로 2학년에 전공 선택",
+    tags: ["무학과", "창업", "P/NR", "블라인드면접", "수시6회제한없음", "자소서있음", "추천서선택"],
+    keywords: ["자유도", "창업", "무학과", "블라인드면접", "P/NR제도"],
+
+    admissionInfo: {
+      sixTimeLimit: false,                        // 수시 6회 제한 해당 없음 (과기원)
+      hasSusi: true,
+      hasJeongsi: true,                           // ⚠️ 수능우수자전형: 올해(2027학년도)까지만
+      jeongsiNote: "수능우수자전형 — 2027학년도까지만 운영, 이후 폐지 예정",
+      overlap: "창의도전+일반전형만 중복지원 가능 (영과고 학생 주로 활용)",
+      units: "무학과 단일 선발 (학부 구분 없이 입학 후 전공 선택)",
+      selfStatement: true,
+      selfStatementNote: "1문항: 과학을 경험하는 태도와 이유 (답이 아닌 탐구 이유·과정 중심)",
+      recommendation: "선택",
+      recommendationNote: "올해부터 선택 변경 (기존 필수 → 선택, 미제출로 인한 불합격 민원 방지)",
+      schoolRecommendation: "학교당 2명 제한, 영과고 지원 불가",
+      suneungMinimum: false,
+    },
+
+    interview: {
+      hasInterview: true,
+      method: "블라인드 면접. 수학·과학·영어 영역별로 시간차를 두고 제시문 제공 (한 번에 주지 않음). 각 영역을 골고루 평가하기 위한 구조.",
+      duration: "영역별 시간차 제시문 방식",
+      weight: null,
+      note2028: "2028대입부터 고급 과학과목(물리학2, 화학2 등) 면접에 반영 추가. 공동교육과정이라도 고급 과학과목 이수 권장.",
+    },
+
+    majorSystem: {
+      type: "무학과 입학",
+      selectionTime: "2학년 진입 시",
+      freedom: "50% 이상이 희망학과와 실제 진입학과 불일치. 당해년도 과학기술 트렌드에 따라 전공 선택 경향. 전산학부 감소, 전기전자공학부 증가 추세. 전공을 하나만 이수하는 학생은 4.3%에 불과 (최근 3개년).",
+      semiconductor: "반도체시스템공학과(삼성 계약학과)는 전과 불가, 부전공·복수전공은 자유.",
+      pnrSystem: "1학년 첫 두 학기 P/NR(Pass/No Record) 운영 — 성적 부담 없이 듣고 싶은 과목 자유 수강. 일반고 출신의 초기 적응 격차 방지 목적.",
+    },
+
+    scholarship: {
+      tuition: "1학년 전액 장학금",
+      tuitionDetail: "2학년부터는 직전 학기 평점 2.7 이상 시 전액 (현재 2학년 이상의 95%가 전액 장학금 수혜)",
+      livingCost: "별도 생활비 지원 없음 (장학금 활용)",
+      dormitory: "교내 기숙사 운영",
+      special: "해외 파견 교육 지원 (뉴욕대 등 세계 상위권 대학 교환학생). 창업 지원 — 창업 생존율 91%.",
+    },
+
+    studentFit: {
+      recommended: [
+        "탐구 과정과 이유를 즐기는 학생 (결과보다 과정 중심 탐구형)",
+        "창업이나 도전적 연구에 관심 있는 학생",
+        "전공을 미리 확정하지 않고 넓게 탐색하고 싶은 학생",
+        "자소서에서 과학 경험의 이유와 태도를 잘 표현할 수 있는 학생",
+        "일반고 출신으로 영어 수업 적응을 원하는 학생 (P/NR 제도 혜택)",
+      ],
+      caution: [
+        "자소서 1번에 '답을 찾는' 방식으로 작성하는 학생 (태도·이유 중심으로 써야 함)",
+        "자소서에 다른 과기원 이름을 실수로 적는 경우 — 치명적 감점",
+        "고급 과학과목을 전혀 이수하지 않은 학생 (2028학년도부터 면접 영향)",
+        "반도체시스템공학과 지원 후 전과를 원하는 학생 (전과 불가)",
+      ],
+    },
+
+    parentFAQ: [
+      { q: "수시 6회 제한에 들어가나요?", a: "해당 없습니다. KAIST는 과기원으로 교육부 소관이 아니어서 수시 6회 제한을 받지 않습니다." },
+      { q: "정시로도 지원 가능한가요?", a: "수능우수자전형으로 정시 지원이 가능하나, 2027학년도까지만 운영될 예정입니다. 2028학년도부터는 폐지될 수 있으니 반드시 공식 요강을 확인하세요.", officialCheck: true },
+      { q: "등록금은 얼마인가요?", a: "1학년은 전액 장학금으로 등록금 부담이 없습니다. 2학년부터는 직전 학기 평점 2.7 이상이면 전액, 현재 95%의 학생이 전액 장학금을 받고 있습니다." },
+      { q: "추천서는 필수인가요?", a: "2027학년도부터 추천서가 선택으로 바뀌었습니다. 미제출로 인한 불합격은 없습니다." },
+      { q: "일반고 학생도 경쟁이 가능한가요?", a: "1학년 P/NR 제도를 통해 영과고 학생과의 초기 격차를 줄여줍니다. 학교장추천전형은 일반고 위주로 학교당 2명까지 지원 가능합니다." },
+      { q: "전공은 언제 정하나요?", a: "무학과로 입학하고 2학년 진입 시 전공을 선택합니다. 희망 전공과 실제 진입 전공이 50% 이상 불일치할 만큼 대학 입학 후 생각이 많이 바뀝니다." },
+      { q: "창업을 생각하는데 지원이 있나요?", a: "카이스트는 창업을 적극 지원합니다. 창업 생존율이 91%에 달하며, 창업 지원 프로그램이 활성화되어 있습니다." },
+    ],
+
+    teacherNotes: [
+      "자소서 1번 핵심: '과학적 탐구의 답'이 아니라 '왜 그 질문을 하게 됐는지, 과학을 경험하는 태도'를 씀",
+      "학교장추천전형은 학교당 2명 제한, 영과고는 지원 불가 → 일반고에 유리한 전형",
+      "창의도전+일반전형만 중복지원 가능 (영과고 학생이 주로 활용)",
+      "6월 모평 성적은 학교장추천전형에서 선택 제출 가능 — 합격자의 약 절반이 제출했으나 필수 아님",
+      "면접은 블라인드 평가, 수학·과학·영어 시간차 제시문 방식 (한 번에 주지 않음)",
+      "자소서에 타 과기원 이름 오타 → 합격 불가 수준의 감점",
+      "2028학년도부터 고급 과학과목 면접 반영 → 물리2, 화학2 등 공동교육과정 이수 적극 권장",
+      "반도체시스템공학과: 삼성 계약학과, 전과 불가, 부/복수전공만 자유",
+    ],
+
+    officialCheck: [
+      "수능우수자(정시) 전형 2027학년도 이후 운영 여부",
+      "추천서 선택 전환 후 실제 반영 방식",
+      "고급 과학과목 면접 반영 상세 기준 (2028학년도)",
+      "반도체시스템공학과 모집인원 및 지원 자격",
+    ],
+
+    highlights: [
+      "\"대학 입학 후에도 진로 바뀌는 학생들 많음. 50% 이상이 희망학과와 실제 진입학과 불일치\" (정유리 사정관)",
+      "\"1번은 학생의 과학을 경험하는 태도를 보고자 함. 왜 그 질문을 하게 되었는지 답 말고 이유를 적어달라\" (정유리 사정관)",
+      "\"카이스트 창업 생존율 91%\"",
+      "\"전공을 하나만 이수하는 학생은 4.3%밖에 안됨\" (최근 3개년)",
+      "특임교수: 조수미(성악가), 권지용(G-Dragon)",
+      "패스트트랙으로 7년 만에 박사학위 취득 가능",
+    ],
+
+    diagnosisMatch: {
+      탐색형: true,
+      확정형: false,
+      면접형: true,
+      서류형: true,
+      AI관심: true,
+      반도체관심: true,
+      에너지관심: false,
+      연구지향: true,
+      창업지향: true,
+      영어부담적음: true,
+      영어부담있음: true,   // P/NR로 적응 가능
+      내신최상: true,
+      내신중상: true,
+    },
+
+    lastUpdated: "2027",
+    sourceNote: "KAIST 입학설명회 (정유리 사정관 강연 메모)",
+  },
+
+  // ──────────────────────────────────────────────
+  // 2. POSTECH 포항공과대학교
+  // ──────────────────────────────────────────────
+  {
+    id: "postech",
+    name: "POSTECH",
+    nameFull: "포항공과대학교",
+    nameEn: "Pohang University of Science and Technology",
+    color: "#185FA5",
+    colorLight: "#E8F0FA",
+    homepage: "https://www.postech.ac.kr",
+    admissionPage: "https://admission.postech.ac.kr",
+    location: "경상북도 포항시 남구",
+
+    summary: "교육부 소관 유일 이공계 특성화대, 200분 대면 면접 중심 선발, 전원 등록금 면제 + 1100만원 특별장학금",
+    tags: ["수시6회제한있음", "교육부소관", "면접중심", "자소서없음", "추천서없음", "서류중심전형별도", "정시없음"],
+    keywords: ["200분면접", "그룹토론", "전원등록금면제", "특별장학금1100만원", "6년박사반도체"],
+
+    admissionInfo: {
+      sixTimeLimit: true,                         // ⚠️ 교육부 소관 — 수시 6회 제한 적용
+      sixTimeLimitNote: "교육부 소관 대학으로 이공계 특성화대 중 유일하게 수시 6회 제한 적용. KENTECH도 해당 없음.",
+      hasSusi: true,
+      hasJeongsi: false,                          // 수시 100% 선발
+      overlap: null,
+      units: "자연과학부, 컴퓨터공학과, 반도체공학과 등 (전공 계열별 모집)",
+      selfStatement: false,                       // 교육부 산하 → 자소서 폐지
+      selfStatementNote: "교육부 소관 대학이라 자소서·추천서 없이 서류 평가",
+      recommendation: false,
+      schoolRecommendation: "없음",
+      suneungMinimum: "일반전형2만 적용 — 수학 필수 포함 2합4등급",
+    },
+
+    interview: {
+      hasInterview: true,
+      method: [
+        "일반전형1: 개인과제면접 100분 (제시문 사전열람·메모 가능) + 그룹토론 80분 (4대4 협상·윈윈 도출) + 개인면접 20분 = 총 200분",
+        "일반전형2: 서류 중심 + 개인면접 20분",
+        "반도체공학과: 일반전형1 면접 전체 + 반도체 제시문 면접 30분 추가 = 총 50분(반도체 부분)",
+        "기회균형전형: 면접 없음",
+      ],
+      duration: "일반전형1 기준 200분",
+      weight: "일반전형1: 면접 중심 (2028학년도부터 50%→60%로 강화 예정)",
+      note2028: "일반전형1 면접 비중 50%에서 60%로 강화",
+      interviewExamples: [
+        "무인도에서 일주일~한 달간 생존 전략 수립 (섬 지도·자원 정보 활용)",
+        "작년: 놀이공원 테마 출제",
+        "반도체 제시문: 생산량 극대화 vs. 불량률 최소화 기업 의사결정",
+      ],
+    },
+
+    majorSystem: {
+      type: "전공별 모집 (단, 입학 후 충분한 탐색 프로그램 제공)",
+      selectionTime: "2학년 2학기 전공 선택",
+      freedom: "전공 선택 전까지 다양한 탐색 프로그램 제공. 사정관 재량권이 큰 편.",
+      semiconductor: "반도체공학과: 6년 박사과정 (계약학과 중 박사까지 운영하는 유일 사례). 월 100만원 학업지원금.",
+    },
+
+    scholarship: {
+      tuition: "전원 등록금 면제",
+      tuitionDetail: "성적 조건 없이 전원 면제",
+      livingCost: "패스파인더 바우처: 특별장학금 1100만원 (노트북 구입·해외활동 등 자유 사용)",
+      dormitory: "교내 기숙사 운영",
+      special: "연구 지원 팍팍. CES 전시회 한 학년 전체 견학. 2029년 대규모 캠퍼스 확장(축구장 6개 규모) 예정.",
+    },
+
+    studentFit: {
+      recommended: [
+        "200분 장시간 면접을 잘 준비할 수 있는 학생",
+        "그룹 토론·협상·소통 역량이 뛰어난 학생",
+        "연구에 대한 열정이 분명한 학생 (연구실 관심도를 면접에서 봄)",
+        "수시 6회 제한이 전략에 큰 영향이 없는 학생",
+        "반도체 분야를 깊게 연구해 박사까지 가고 싶은 학생",
+      ],
+      caution: [
+        "수시 6회 제한으로 지원 전략이 빠듯한 학생",
+        "면접 공포가 큰 학생 (일반전형1 경쟁률이 낮은 원인이 200분 면접 부담)",
+        "자소서·추천서 기반 서류 전략으로만 준비한 학생 (포스텍은 해당 없음)",
+      ],
+    },
+
+    parentFAQ: [
+      { q: "수시 6회 제한에 들어가나요?", a: "네, 포스텍은 교육부 소관 대학이라 이공계 특성화대 중 유일하게 수시 6회 제한이 적용됩니다. 지원 시 수시 카운트에 포함됩니다." },
+      { q: "정시로도 지원 가능한가요?", a: "아니요. 포스텍은 수시 100%로만 선발합니다. 정시 전형이 없습니다." },
+      { q: "등록금은 얼마인가요?", a: "전원 등록금 면제입니다. 성적 조건 없이 전원에게 적용됩니다. 추가로 패스파인더 바우처 1100만원의 특별장학금도 지급합니다." },
+      { q: "면접이 200분이라고 들었는데 어떻게 준비하나요?", a: "일반전형1 기준으로 개인과제면접 100분, 그룹토론 80분, 개인면접 20분입니다. 정답 맞추기보다 열정, 소통, 협상 능력을 봅니다. 작년 기출이 공개되어 있으니 참고하세요.", officialCheck: true },
+      { q: "자소서·추천서 없이 어떻게 평가하나요?", a: "교육부 소관 대학이라 자소서·추천서 없이 학생부만으로 서류를 평가합니다. 사정관 1인이 학생 1명당 약 40분을 투자해 꼼꼼히 평가합니다." },
+    ],
+
+    teacherNotes: [
+      "수시 6회 카운트 포함 — 지원 전략 설계 시 반드시 고려",
+      "일반전형1: 면접이 핵심, 200분 (개인과제 100분 + 그룹토론 80분 + 개인면접 20분)",
+      "일반전형2: 서류 중심 + 수능최저 (수학 필수, 2합4등급)",
+      "반도체공학과: 6년 박사, 월 100만원 지원금 — 연구 지향 학생에게 강력 추천",
+      "기회균형전형: 면접 없음 — 서류 역량이 탄탄한 저소득층·지역 학생 유리",
+      "학생부 절대 숙지 필요 (면접에서 학생부 기반 연구실 관심도 질문)",
+      "2028학년도부터 일반전형1 면접 비중 60%로 강화 — 현재도 면접 중심이나 더욱 강화됨",
+      "3배수 서류 선발 후 면접 진행",
+    ],
+
+    officialCheck: [
+      "2028학년도 면접 비중 50%→60% 확정 여부",
+      "수능최저 기준 (수학 포함 2합4) 유지 여부",
+      "반도체공학과 월 학업지원금 금액",
+      "패스파인더 바우처 사용 조건",
+    ],
+
+    highlights: [
+      "\"면접이 작년에 많이 바뀜. 정답 맞추기에서 열정·소통·협상으로 방향 전환\" (서호윤 사정관)",
+      "\"내가 열정이 있는 분야의 리더가 되도록 학교가 키우겠다\"",
+      "\"CES 전시회 한 학년 전체 다 보내줬었음\"",
+      "\"연구하겠다고 하면 지원 팍팍 해줌\"",
+      "계약학과 중 박사(6년)까지 운영하는 유일한 사례",
+      "2029년 축구장 6개 규모 캠퍼스 확장 예정",
+    ],
+
+    diagnosisMatch: {
+      탐색형: false,
+      확정형: true,
+      면접형: true,
+      서류형: false,
+      AI관심: true,
+      반도체관심: true,
+      에너지관심: false,
+      연구지향: true,
+      창업지향: false,
+      영어부담적음: true,
+      영어부담있음: false,
+      내신최상: true,
+      내신중상: false,
+    },
+
+    lastUpdated: "2027",
+    sourceNote: "POSTECH 입학설명회 (서호윤 사정관 강연 메모)",
+  },
+
+  // ──────────────────────────────────────────────
+  // 3. GIST 광주과학기술원
+  // ──────────────────────────────────────────────
+  {
+    id: "gist",
+    name: "GIST",
+    nameFull: "광주과학기술원",
+    nameEn: "Gwangju Institute of Science and Technology",
+    color: "#534AB7",
+    colorLight: "#EEEDFB",
+    homepage: "https://www.gist.ac.kr",
+    admissionPage: "https://admission.gist.ac.kr",
+    location: "광주광역시 북구",
+
+    summary: "전원 면접 실시, 일반고 합격 비율 72%, AI단과대학 신설로 2027학년도 100명 증원",
+    tags: ["수시6회제한없음", "전원면접", "자소서있음", "추천서있음", "11개전공자유", "일반고친화", "AI단과대학"],
+    keywords: ["전원면접", "일반고72%", "AI단과대학", "딴짓활동지원", "통합7년석박"],
+
+    admissionInfo: {
+      sixTimeLimit: false,
+      hasSusi: true,
+      hasJeongsi: true,
+      jeongsiNote: "⚠️ 허수 지원자가 많아 실질 경쟁률 왜곡됨 — 사정관도 비추",
+      overlap: null,
+      units: "기초교육학부 단일 (입학 후 11개 전공 자유 선택)",
+      selfStatement: true,
+      selfStatementNote: "2027학년도 변경: 3문항 3100자 → 1문항 1800자로 축소. 질문: '과학기술 분야 진로 결정 계기 + GIST 선택 이유 + 향후 목표'. 특기자전형은 1문항 2000자.",
+      recommendation: true,
+      recommendationNote: "2027학년도 변경: 항목별 세분화 체크리스트 형태로 변경. 담임 외 학생을 잘 아는 선생님도 가능.",
+      schoolRecommendation: "학교당 2명 제한, 영과고 지원 불가 (일반고 위주)",
+      suneungMinimum: false,
+    },
+
+    interview: {
+      hasInterview: true,
+      method: "전원 면접 실시 (전형 불문). 면접 답변 태도와 진학 의지도 함께 평가. '면접 기회를 받았다면 열망 있는 태도를 보여달라'",
+      duration: null,
+      weight: "2027학년도 변경: 40%→50%로 면접 비중 확대",
+      note2027: "면접 비중 40%→50% 확대 — 학생 개인 역량 평가 강화",
+    },
+
+    majorSystem: {
+      type: "기초교육학부 단일 입학",
+      selectionTime: "입학 후 자유 선택",
+      freedom: "11개 전공 자유롭게 선택 가능. 학석박 통합 7년 과정(패스트트랙) — 27살에 교수 된 사례도 있음. 이공 외에 인문학적 소양 적극 지원.",
+      semiconductor: "반도체공학과 계약학과: 학석 5년 (박사 미운영, POSTECH과 차이)",
+    },
+
+    scholarship: {
+      tuition: "등록금 면제",
+      tuitionDetail: "학석박 통합과정 진입 시 1000만원 입학장려금 지급",
+      livingCost: "방학 중 연구활동비(용돈) 제공. '딴짓' 활동 200~300만원 지원금.",
+      dormitory: "사감 없음, 통금 없음 (자율 운영)",
+      special: "1년에 80명 해외 명문대 파견. 딴짓 활동 지원 (도서 출판 사례 등 자유로운 탐구 지원). 70% 이상 소규모 강의.",
+    },
+
+    studentFit: {
+      recommended: [
+        "내신 우상향 추세인 학생 (성적 안정보다 성장 서사 있는 학생 선호)",
+        "일반고 출신으로 면접 준비를 잘 한 학생 (72% 일반고 합격)",
+        "학추전형 지원 가능한 학교 추천 받은 일반고 학생",
+        "자소서에서 GIST를 선택한 명확한 이유를 쓸 수 있는 학생",
+        "학석박 통합 7년 패스트트랙으로 연구자 커리어를 목표로 하는 학생",
+        "AI, 에너지, 바이오 분야에 관심이 있는 학생",
+      ],
+      caution: [
+        "정시 허수 지원자로 경쟁률 착시 가능 — 실질 경쟁 분석 필요",
+        "자소서에 'GIST가 이래서 좋다'만 쓰는 학생 (나 자신의 이유·목표 중심으로 써야 함)",
+        "내신이 하락 추세인 학생 (우상향 선호)",
+      ],
+    },
+
+    parentFAQ: [
+      { q: "수시 6회 제한에 들어가나요?", a: "해당 없습니다. GIST는 과기원으로 수시 6회 제한을 받지 않습니다." },
+      { q: "일반고 학생도 합격할 수 있나요?", a: "직전 학년도 기준 합격자의 72%가 일반고 출신입니다. 과기원 중 일반고 비율이 가장 높은 편입니다." },
+      { q: "면접이 얼마나 중요한가요?", a: "2027학년도부터 면접 비중이 40%에서 50%로 강화됩니다. 모든 전형에서 전원 면접을 실시합니다." },
+      { q: "자소서가 있나요?", a: "있습니다. 2027학년도부터 1문항 1800자로 간소화됩니다. GIST를 선택한 이유와 목표를 나 자신의 관점에서 쓰는 것이 핵심입니다." },
+      { q: "기숙사는 어떤가요?", a: "사감도 없고 통금도 없는 자율 운영입니다. 학생 자율성을 최대한 존중하는 환경입니다." },
+      { q: "딴짓 활동이란 무엇인가요?", a: "학업 외 자신이 하고 싶은 도전적 활동에 200~300만원을 지원해주는 프로그램입니다. 실제로 이 지원금으로 도서를 출판한 학생도 있습니다." },
+    ],
+
+    teacherNotes: [
+      "일반고 합격 비율 72% — 과기원 중 일반고에 가장 친화적",
+      "내신 등급 합격선: 학추 1.54, 고른기회 1.69, 일반전형 1.98 (직전 학년도 일반고 기준)",
+      "자소서 핵심: 'GIST가 이래서 좋습니다'가 아닌 '저는 이러하기 때문에 GIST가 좋습니다'",
+      "추천서: 항목별 세분화 체크리스트로 변경, 담임 외 선생님도 가능",
+      "학추전형: 일반고 위주, 2명 제한, 영과고 불가",
+      "2027학년도: 정원 100명 증원 (200→300명), AI단과대학 설립",
+      "반도체공학과: 학석 5년 (포스텍과 달리 박사 없음)",
+      "우상향 성적 학생 선호 — 성적 추이를 반드시 확인",
+    ],
+
+    officialCheck: [
+      "2027학년도 증원 300명 확정 여부 및 전형별 모집인원",
+      "면접 비중 50% 적용 시기 및 전형별 세부 반영 비율",
+      "자소서 1문항 1800자 정확한 질문 내용",
+      "AI단과대학 세부 모집 구조",
+    ],
+
+    highlights: [
+      "\"카포지디유 순으로 일반고 출신 선발 비율 높아짐. 72%가 일반고\" (김민아 사정관)",
+      "\"면접 기회를 받았다면 열망 있는 태도를 보여달라!\"",
+      "\"지스트가 이래서 좋습니다 보다는, 지스트는 이래서 좋고 저는 이러하기 때문에 좋습니다!\"",
+      "딴짓 활동 200~300만원 지원 — 도서 출판 사례 존재",
+      "기숙사 통금 없음, 사감 없음",
+      "패스트트랙으로 27살에 고려대 교수가 된 졸업생 사례",
+    ],
+
+    diagnosisMatch: {
+      탐색형: true,
+      확정형: false,
+      면접형: true,
+      서류형: false,
+      AI관심: true,
+      반도체관심: true,
+      에너지관심: false,
+      연구지향: true,
+      창업지향: false,
+      영어부담적음: true,
+      영어부담있음: false,
+      내신최상: true,
+      내신중상: true,
+    },
+
+    lastUpdated: "2027",
+    sourceNote: "GIST 입학설명회 (김민아 사정관 강연 메모)",
+  },
+
+  // ──────────────────────────────────────────────
+  // 4. DGIST 대구경북과학기술원
+  // ──────────────────────────────────────────────
+  {
+    id: "dgist",
+    name: "DGIST",
+    nameFull: "대구경북과학기술원",
+    nameEn: "Daegu Gyeongbuk Institute of Science & Technology",
+    color: "#993C1D",
+    colorLight: "#FAEDE9",
+    homepage: "https://www.dgist.ac.kr",
+    admissionPage: "https://admission.dgist.ac.kr",
+    location: "대구광역시 달성군",
+
+    summary: "4년간 자유 전공 탐색 가능, QS 논문 피인용률 세계 4위, 경쟁률 과기원 1위",
+    tags: ["수시6회제한없음", "4년전공탐색", "면접일부전형만", "자소서있음", "추천서확인필요", "영과고학추가능", "AI대학분리선발"],
+    keywords: ["4년전공탐색", "진학의지중시", "논문피인용세계4위", "AI대학분리선발", "경쟁률1위"],
+
+    admissionInfo: {
+      sixTimeLimit: false,
+      hasSusi: true,
+      hasJeongsi: true,
+      jeongsiNote: "2027학년도 수능우수자전형 소수 선발. 2028학년도부터 4대 과기원 정시 폐지 예정 여부 공식 확인 필요",
+      overlap: "AI대학-일반대학 중복지원 불가 (선발 당시 분리 모집, 첫해라 대학도 정책 확정 안 됨)",
+      units: "기초학부 단일 + AI대학 분리 모집 (중복지원 불가)",
+      selfStatement: true,
+      selfStatementNote: "진학 의지 매우 중요. 1번 문항이 서류평가 필터 역할 — 자소서부터 보고 학생부 확인. 타 과기원 이름 오타 = 진학 의지 부족으로 판단 → 합격 어려움.",
+      recommendation: "확인 필요",
+      recommendationNote: "⚠️ 공식 확인 필요",
+      schoolRecommendation: "영과고도 학교장추천 지원 가능 (타 과기원과 다름)",
+      suneungMinimum: false,
+    },
+
+    interview: {
+      hasInterview: true,
+      method: "과학인재전형만 면접 있음. 과학활동 우수성 입증자료 3건을 사전 업로드 후 면접 진행.",
+      duration: null,
+      weight: null,
+      note: "다른 전형은 면접 없음. 과학인재전형은 입증자료 3건 업로드 필수.",
+    },
+
+    majorSystem: {
+      type: "기초학부 단일 입학",
+      selectionTime: "4년간 자유 탐색 (타 과기원은 2학년에 선택 — DGIST는 가장 긴 탐색 기간)",
+      freedom: "자율적 트랙 선택. 27학점 이상 이수 시 전공 인정, 18학점 이상 이수 시 부전공 인정.",
+      semiconductor: "반도체공학과: 5년 석사 후 삼성전자 입사",
+      aiUniversity: "AI대학: 선발 당시 분리 모집 (타 과기원은 입학 후 100명 선발). 중복지원 불가. 첫 시행으로 세부 정보 유동적.",
+    },
+
+    scholarship: {
+      tuition: "8학기 등록금 전액 면제",
+      tuitionDetail: "8학기 면제",
+      livingCost: "등록금 외 학기 중 월 33만원 학생지원금",
+      dormitory: "교내 기숙사",
+      special: "영어 성적 준비되면 해외 파견 (150명 이상 참여). 학생부 우상향 평가 선호.",
+    },
+
+    studentFit: {
+      recommended: [
+        "전공 선택을 오래 탐색하고 싶은 학생 (4년 자유 탐색 — 과기원 최장)",
+        "진학 의지를 자소서에 강하게 표현할 수 있는 학생",
+        "과학 활동 입증자료 3건을 준비할 수 있는 학생 (과학인재전형)",
+        "영과고이지만 학교장추천을 활용하고 싶은 학생 (타 과기원과 다르게 가능)",
+        "내신 1점대~2점 초중반의 수학·과학 강점 학생",
+      ],
+      caution: [
+        "자소서에 다른 과기원 이름 오타 내는 경우 → 합격 불가 수준",
+        "진학 의지가 자소서에 드러나지 않는 경우",
+        "AI대학-일반대학 중복지원 원하는 경우 (불가)",
+        "2028학년도부터 정시 폐지 예정 → 정시 기대 불가",
+      ],
+    },
+
+    parentFAQ: [
+      { q: "수시 6회 제한에 들어가나요?", a: "해당 없습니다. DGIST는 과기원으로 수시 6회 제한을 받지 않습니다." },
+      { q: "4년 동안 전공을 안 정해도 되나요?", a: "네, DGIST는 과기원 중 유일하게 4년 내내 전공 탐색이 가능합니다. 다른 과기원은 2학년에 선택해야 합니다." },
+      { q: "AI대학은 뭔가요?", a: "2027학년도부터 AI대학을 분리 모집합니다. 입학 당시부터 AI대학으로 지원해야 하며, 일반대학과 중복 지원이 불가합니다.", officialCheck: true },
+      { q: "경쟁률이 높다던데 맞나요?", a: "네, 최근 입시에서 과기원 중 경쟁률 1위를 기록했습니다. QS 논문 피인용률 세계 4위라는 연구 역량도 주목받고 있습니다." },
+      { q: "영과고인데 학교장추천 지원이 가능한가요?", a: "DGIST는 다른 과기원과 달리 영과고도 학교장추천전형에 지원할 수 있습니다.", officialCheck: true },
+    ],
+
+    teacherNotes: [
+      "자소서 1번이 필터 역할 — 평가자가 자소서 먼저 보고 학생부 확인하는 경향",
+      "진학 의지가 핵심 평가 요소 — 타 과기원 이름 오타 = 합격 불가",
+      "과학인재전형: 면접 있음 + 과학활동 입증자료 3건 업로드 필수",
+      "AI대학: 선발 시 분리 모집, 일반대학과 중복지원 불가 — 전략 선택 필요",
+      "영과고도 학교장추천 가능 — 타 과기원과 차별점",
+      "내신 합격선: 일반고 기준 1점대 다수, 수학·과학 강점이면 2점 초중반도 가능",
+      "우상향 성적 선호, 구체성·일관성·연결성·확장성 있는 활동 기록 좋게 평가",
+      "2028학년도 정시 폐지 예정 — 수시 전략 집중 필요",
+    ],
+
+    officialCheck: [
+      "AI대학 세부 모집인원 및 전형 방법",
+      "AI대학-일반대학 중복지원 불가 정책 확정 여부",
+      "추천서 필요 여부",
+      "2028학년도 정시 폐지 확정 여부",
+    ],
+
+    highlights: [
+      "\"다른 과기원은 2학년에 전공 선택해야 하는데 DGIST는 4년간 탐색 가능\" (황경철 사정관)",
+      "\"자소서에 다른 과기원 이름이 실수로 오타 낸 경우, 진학의지 부족으로 합격 어려움\"",
+      "\"최근 QS 평가 논문 피인용률 세계 4위\"",
+      "\"지원 경쟁률 과기원 중 1위\"",
+      "\"고른기회 지원자격에 다자녀 추가로 경쟁률 증가\"",
+    ],
+
+    diagnosisMatch: {
+      탐색형: true,
+      확정형: false,
+      면접형: false,
+      서류형: true,
+      AI관심: true,
+      반도체관심: true,
+      에너지관심: false,
+      연구지향: true,
+      창업지향: false,
+      영어부담적음: true,
+      영어부담있음: false,
+      내신최상: true,
+      내신중상: true,
+    },
+
+    lastUpdated: "2027",
+    sourceNote: "DGIST 입학설명회 (황경철 사정관 강연 메모)",
+  },
+
+  // ──────────────────────────────────────────────
+  // 5. UNIST 울산과학기술원
+  // ──────────────────────────────────────────────
+  {
+    id: "unist",
+    name: "UNIST",
+    nameFull: "울산과학기술원",
+    nameEn: "Ulsan National Institute of Science and Technology",
+    color: "#1D9E75",
+    colorLight: "#E7F7F2",
+    homepage: "https://www.unist.ac.kr",
+    admissionPage: "https://admission.unist.ac.kr",
+    location: "울산광역시 울주군",
+
+    summary: "100% 전공 자유 선택, 과기원 유일 경영학부, GRIT 그릿인재 융합학부 신설",
+    tags: ["수시6회제한없음", "100%전공자유", "경영학부", "GRIT그릿인재", "부울경지역인재", "100%영어수업", "자소서있음"],
+    keywords: ["100%전공자유", "그릿인재융합학부", "경영학부", "논문피인용9년1위", "부울경지역인재"],
+
+    admissionInfo: {
+      sixTimeLimit: false,
+      hasSusi: true,
+      hasJeongsi: true,
+      jeongsiNote: "⚠️ 공식 확인 필요",
+      overlap: "반도체공학과 중복지원 가능 (지원 시 체크박스 추가 선택 방식)",
+      units: "무학과 + 반도체공학과(중복지원) + 경영학부 + GRIT 그릿인재 융합학부",
+      selfStatement: true,
+      selfStatementNote: "반도체공학과 지원 시 꼭 반도체로 자소서 안 써도 됨. 무학과·반도체 구분 없이 같은 기준으로 평가.",
+      recommendation: "확인 필요",
+      recommendationNote: "⚠️ 공식 확인 필요",
+      schoolRecommendation: "⚠️ 공식 확인 필요",
+      suneungMinimum: false,
+    },
+
+    interview: {
+      hasInterview: true,
+      method: [
+        "전형별 상이",
+        "탐구우수자전형: 제시문 없이 생기부·자소서·입증자료 기반 면접",
+        "GRIT 그릿인재전형: 포트폴리오 발표 면접 OR 소규모 팀(5명 내외) 기반 1~2시간 노트북 프로젝트 면접 (P/NR 적용)",
+      ],
+      duration: "전형별 상이",
+      weight: null,
+      gritNote: "GRIT 면접은 역량보다 덕후 기질·협업 능력을 봄",
+    },
+
+    majorSystem: {
+      type: "무학과 입학",
+      selectionTime: "입학 후 100% 자유 선택",
+      freedom: "과별 정원 없음. 학년에 정원만 있어 전과도 신청서만 쓰면 가능. 복수전공·부전공 자유. 100% 영어 수업.",
+      semiconductor: "반도체공학과: 학석사 통합 5년. 학사부터 월 70만원 지원금. 최종 합격 후 반도체/무학과 선택 가능.",
+      grit: "GRIT 그릿인재 융합학부: 10명 선발. 포트폴리오 30쪽 필수. 전과목 P/NR 운영. 지도교수 1대1 매칭. 덕후적 기질 + 과학기술 융합 목표.",
+      management: "경영학부: 30명 선발. 4년 전액 장학금. 교수 20~30명. 이공계 융합 기대.",
+    },
+
+    scholarship: {
+      tuition: "전액 장학금 (경영학부 4년 전액 확정)",
+      tuitionDetail: "이공계 전공 상세 조건 ⚠️ 공식 확인 필요",
+      livingCost: "반도체공학과: 학사부터 월 70만원",
+      dormitory: "교내 기숙사",
+      special: "학부생 연구 참여 프로그램 (석사 수준 연구를 학부 때부터). 피인용 상위 10% 논문 비율 9년 연속 국내 1위. 박사 졸업생 12%가 국내외 교수 임용.",
+    },
+
+    studentFit: {
+      recommended: [
+        "전공을 완전히 자유롭게 선택하고 싶은 학생",
+        "경영학에 관심 있는 이공계 학생 (과기원 유일 경영학부)",
+        "부울경 지역 학생 (지역인재 전형 혜택)",
+        "자신만의 독특한 분야에 덕후적 기질이 있는 학생 (GRIT 전형)",
+        "반도체를 연구하고 싶지만 전공 자유도도 원하는 학생",
+      ],
+      caution: [
+        "GRIT 전형은 포트폴리오 30쪽을 준비 못 하면 지원 불가",
+        "100% 영어 수업 환경에 부담이 큰 학생",
+        "탐구우수자전형: 제시문 면접이 아닌 생기부·자소서 기반이므로 서류 준비가 탄탄해야 함",
+      ],
+    },
+
+    parentFAQ: [
+      { q: "수시 6회 제한에 들어가나요?", a: "해당 없습니다. UNIST는 과기원으로 수시 6회 제한을 받지 않습니다." },
+      { q: "전공을 나중에 바꿀 수 있나요?", a: "네, 과별 정원이 없어 신청서만 쓰면 언제든 전과가 가능합니다. 복수전공·부전공도 자유입니다." },
+      { q: "경영학과도 있다고 들었는데요?", a: "과기원 중 유일하게 경영학부가 있습니다. 30명을 선발하며 4년 전액 장학금을 받습니다." },
+      { q: "GRIT 그릿인재 전형이 뭔가요?", a: "예술, 콘텐츠, 어떤 분야든 덕후적 기질이 있는 학생이 그 분야를 과학기술과 융합해 새로운 것을 만들어내도록 지원하는 전형입니다. 10명만 선발하고 포트폴리오 30쪽이 필요합니다." },
+      { q: "울산이라 거리가 걱정됩니다.", a: "부울경(부산·울산·경남) 지역인재 전형이 있어 지역 학생에게 유리합니다. 연구 환경과 논문 질 면에서는 국내 최상위권입니다." },
+    ],
+
+    teacherNotes: [
+      "무학과 100% 자유 전공 선택 — 전공 선택 고민이 많은 학생에게 최적",
+      "반도체공학과: 체크박스 방식 중복지원 가능, 자소서는 반도체로 안 써도 됨",
+      "GRIT 그릿인재전형: 포트폴리오 30쪽, P/NR 전과목 적용, 성적 거의 안 봄 — 덕후 기질 학생에게 추천",
+      "경영학부: 이공계 + 경영 융합 희망 학생, 4년 전액 장학금",
+      "탐구우수자전형: 일반고도 지원 가능하나 지원율 낮음, 제시문 아닌 서류 기반 면접",
+      "부울경 지역인재 전형 활용 가능 — 경남 지역 학생 해당 여부 확인",
+      "피인용 상위 10% 논문 9년 연속 국내 1위 — 연구 역량 최상위",
+      "특임교수: 이세돌(바둑기사), 김아영(미디어아트 작가)",
+    ],
+
+    officialCheck: [
+      "이공계 전공 장학금 조건 및 금액",
+      "정시 전형 운영 여부",
+      "추천서 필요 여부",
+      "GRIT 전형 세부 면접 방식 확정 내용",
+      "탐구우수자전형 서류 평가 비중",
+    ],
+
+    highlights: [
+      "\"과별 정원이 없음. 100% 자유로운 전공 선택. 전과도 신청서만 쓰면 얼마든지 가능\" (백승민 입학팀장)",
+      "\"GRIT: 덕후적인 기질이 있는 사람 선발 목표. 성적 높지 않아도 됨!\"",
+      "\"피인용 상위 10% 논문 비율 9년 연속 국내 1위\"",
+      "\"전체 박사 졸업생의 12%가 국내외 대학 교수로 활동 중\"",
+      "특임교수: 이세돌, 김아영(미디어아트)",
+      "\"반도체 자소서 꼭 반도체로 안 써도 됨. 따로 구분하지 않고 평가함\"",
+    ],
+
+    diagnosisMatch: {
+      탐색형: true,
+      확정형: false,
+      면접형: true,
+      서류형: true,
+      AI관심: true,
+      반도체관심: true,
+      에너지관심: false,
+      연구지향: true,
+      창업지향: false,
+      영어부담적음: true,
+      영어부담있음: false,  // 100% 영어 수업 — 영어 수업 부담이 적은 학생에게 적합
+      내신최상: true,
+      내신중상: true,
+    },
+
+    lastUpdated: "2027",
+    sourceNote: "UNIST 입학설명회 (백승민 입학팀장 강연 메모)",
+  },
+
+  // ──────────────────────────────────────────────
+  // 6. KENTECH 한국에너지공과대학교
+  // ──────────────────────────────────────────────
+  {
+    id: "kentech",
+    name: "KENTECH",
+    nameFull: "한국에너지공과대학교",
+    nameEn: "Korea Institute of Energy Technology",
+    color: "#BA7517",
+    colorLight: "#FAF0DE",
+    homepage: "https://www.kentech.ac.kr",
+    admissionPage: "https://admission.kentech.ac.kr",
+    location: "전라남도 나주시",
+
+    summary: "미래 에너지 특화 대학, 등록금·기숙사·식사 지원, 생활비·연구장려금 지원이 강점",
+    tags: ["수시6회제한없음", "정시제한없음", "에너지단일학부", "자소서없음", "추천서없음", "등록금0원", "기숙사무료", "창의성면접"],
+    keywords: ["에너지공학부단일", "등록금0원", "기숙사무료식사무료", "창의성면접", "수시정시제한없음"],
+
+    admissionInfo: {
+      sixTimeLimit: false,
+      hasSusi: true,
+      hasJeongsi: true,
+      jeongsiNote: "정시 10명 내외 선발. 설명회에서는 연고대 낮은 공대 수준이라는 표현이 있었으나, 실제 합격선은 해당 연도 수능 결과와 경쟁률에 따라 달라짐. 공식 확인 필요.",
+      overlap: "수시 6회·정시 3회 제한 없음",
+      overlapNote: "이 자료 범위의 이공계 특성화대 중 수시·정시 제한이 모두 없는 대학으로 정리됨",
+      units: "에너지공학부 단일 학부 (전공 구분 없음)",
+      selfStatement: false,
+      recommendation: false,
+      schoolRecommendation: "없음",
+      suneungMinimum: false,
+    },
+
+    interview: {
+      hasInterview: true,
+      method: "30분 준비 + 15분 창의성 면접. 문제풀이가 아닌 발상·해결 능력 평가. 매년 다양한 창의성 문항 구성.",
+      duration: "30분 준비 + 15분 면접",
+      weight: null,
+      note: "수학·과학 지식 확인이 아닌 창의적 발상과 해결 접근법을 봄",
+    },
+
+    majorSystem: {
+      type: "에너지공학부 단일 학부",
+      selectionTime: "전공 구분 없음 (2학년 전공 선택 없음)",
+      freedom: "에너지 베이스의 AI, 전기전자, 화학 등 에너지 관련 전 분야를 학습. 정부 국가 에너지 연구 과제에 학생 직접 참여 가능.",
+      semiconductor: "없음 (반도체 계약학과 미운영)",
+    },
+
+    scholarship: {
+      tuition: "등록금 0원",
+      tuitionDetail: "전원 무료",
+      livingCost: "학기 중 월 50만원 생활비 지원 (세후). 랩실 연구 장려금 월 50만원 (세전, 실수령 약 44만원). 합계 월 약 94만원.",
+      dormitory: "1인 1실 (기숙사 0원). 식사 무료.",
+      special: "대부분 절대평가. 정부 정책 과제 연구 직접 참여. 110명 소수 정예 운영.",
+    },
+
+    studentFit: {
+      recommended: [
+        "에너지·기후·전력·수소 등 에너지 분야에 명확한 관심이 있는 학생",
+        "물리·화학 중심 이수 학생 (물화 이수자 우대)",
+        "창의성 면접(발상·해결 능력)에 강한 학생",
+        "수시·정시 제한 없는 지원 전략이 필요한 학생",
+        "최소 비용으로 최대 지원을 받고 싶은 학생 (등록금+기숙사+식사+생활비 모두 지원)",
+        "소규모 환경에서 정부 연구 과제에 직접 참여하고 싶은 학생",
+      ],
+      caution: [
+        "생명과학 위주로 과학 과목을 이수한 학생 — 사정관이 명시적으로 비선호 표현",
+        "에너지 분야에 관심이 없고 AI·반도체만 원하는 학생",
+        "대규모 캠퍼스 환경을 원하는 학생 (110명 소수 정예)",
+      ],
+    },
+
+    parentFAQ: [
+      { q: "수시 6회 제한에 들어가나요?", a: "해당 없습니다. 정시 3회 제한도 없습니다. 이 자료 범위의 이공계 특성화대 중 수시·정시 제한이 모두 없는 대학으로 정리됩니다." },
+      { q: "등록금은 얼마인가요?", a: "0원입니다. 등록금, 기숙사비, 식비 모두 무료이며, 학기 중 생활비 월 50만원과 연구 장려금 월 44만원을 추가로 지원받아 합계 약 월 94만원을 받습니다." },
+      { q: "에너지 공부 하면 취업은 어떻게 되나요?", a: "KENTECH 측은 6~7년 후에는 에너지가 반도체보다 더 주목받는 분야가 될 것이라고 강조합니다. 국가 에너지 정책 과제를 직접 수행하므로 정부 기관·연구소 진출에 강점이 있습니다.", officialCheck: true },
+      { q: "자소서·추천서가 없으면 어떻게 평가하나요?", a: "서류는 교과 성적 중심으로 평가합니다. 수학·과학 성적을 중점으로 보며, 특히 물리·화학 선택 과목이 많을수록 유리합니다." },
+      { q: "학교 규모가 너무 작지 않나요?", a: "110명 소수 정예로 운영됩니다. 미래 에너지에 특화된 대학으로, 규모 대비 정부 지원과 연구 기회가 많습니다." },
+    ],
+
+    teacherNotes: [
+      "수시 6회 + 정시 3회 제한 모두 해당 없음 — 지원 전략에 유연성 최대",
+      "자소서·추천서·수능최저 모두 없음 — 서류(내신)+면접만으로 평가",
+      "서류: 수학·과학 중심, 2028년부터 물화 진로선택 과목 이수자 우대 강화",
+      "생명과학 위주 이수 학생은 비선호 — 명시적으로 언급됨",
+      "창의성 면접: 문제풀이 아님, 발상·해결 접근법 중심",
+      "등록금 0원 + 기숙사+식사 무료 + 생활비 94만원 — 경제적 지원 최상",
+      "정시 10명 내외, 실제 합격선은 해당 연도 수능 결과와 경쟁률에 따라 달라짐",
+      "올해 고른기회 저소득층 예비 2명 — 경쟁 낮음",
+    ],
+
+    officialCheck: [
+      "2028학년도 물화 진로선택 과목 우대 기준 상세",
+      "정시 합격선 관련 설명회 메모의 공식 확인",
+      "졸업 후 취업 현황 (초기 졸업생 데이터)",
+      "랩실 연구 장려금 지급 조건",
+    ],
+
+    highlights: [
+      "\"지금은 반도체가 가장 핫한데 6~7년 뒤에는 에너지다!\" (홍정기 입학팀장)",
+      "\"생명과학 위주로 이수한 사람은 보내지 말라. 여기는 에너지 공부하는 데다\"",
+      "\"설명회에서는 미래 에너지 특화성을 강하게 강조함\"",
+      "\"국가 에너지 연구 과제 켄텍이 맡아서, 정부 정책 과제 연구에 학생이 직접 참여 가능\"",
+      "등록금 0원 + 기숙사 1인 1실 + 식사 무료 + 월 94만원 지원",
+      "수시 6회 + 정시 3회 제한이 모두 없는 이공계 특성화대",
+    ],
+
+    diagnosisMatch: {
+      탐색형: false,
+      확정형: true,
+      면접형: true,
+      서류형: true,
+      AI관심: false,
+      반도체관심: false,
+      에너지관심: true,
+      연구지향: true,
+      창업지향: false,
+      영어부담적음: true,
+      영어부담있음: false,
+      내신최상: false,
+      내신중상: true,
+    },
+
+    lastUpdated: "2027",
+    sourceNote: "KENTECH 입학설명회 (홍정기 입학팀장 강연 메모)",
+  },
+
+]; // end UNIVERSITIES
+
+
+// ──────────────────────────────────────────────
+// 유틸리티 함수
+// ──────────────────────────────────────────────
+
+/** ID로 대학 데이터 조회 */
+function getUniversity(id) {
+  return UNIVERSITIES.find(u => u.id === id) || null;
+}
+
+/** 태그로 대학 필터링 */
+function filterByTag(tag) {
+  return UNIVERSITIES.filter(u => u.tags.includes(tag));
+}
+
+/** 진단 항목으로 추천 대학 조회 */
+function getRecommended(diagnosisKey) {
+  return UNIVERSITIES.filter(u => u.diagnosisMatch[diagnosisKey] === true);
+}
+
+/** 수시 6회 제한 여부별 분류 */
+function getBySixTimeLimit(hasLimit) {
+  return UNIVERSITIES.filter(u => u.admissionInfo.sixTimeLimit === hasLimit);
+}
+
+/** 공식 확인 필요 항목 전체 수집 */
+function getAllOfficialChecks() {
+  return UNIVERSITIES.map(u => ({
+    university: u.name,
+    items: u.officialCheck,
+  }));
+}
+
+// ──────────────────────────────────────────────
+// 자가진단 매칭 로직
+// ──────────────────────────────────────────────
+
+/**
+ * 5개 질문 응답을 받아 대학 추천 결과 반환
+ * @param {Object} answers { q1: '탐색형'|'확정형', q2: '면접형'|'서류형', q3: string[], q4: '부담없음'|'부담있음', q5: '최상'|'중상'|'중하' }
+ * @returns { first: [], consider: [], caution: [] }
+ */
+function getDiagnosisResult(answers) {
+  const scores = {};
+  UNIVERSITIES.forEach(u => { scores[u.id] = 0; });
+
+  // Q1: 전공 탐색/확정 여부
+  if (answers.q1 === '탐색형') {
+    UNIVERSITIES.filter(u => u.diagnosisMatch.탐색형).forEach(u => scores[u.id] += 2);
+  } else {
+    UNIVERSITIES.filter(u => u.diagnosisMatch.확정형).forEach(u => scores[u.id] += 2);
+  }
+
+  // Q2: 면접/서류 강점
+  if (answers.q2 === '면접형') {
+    UNIVERSITIES.filter(u => u.diagnosisMatch.면접형).forEach(u => scores[u.id] += 2);
+  } else {
+    UNIVERSITIES.filter(u => u.diagnosisMatch.서류형).forEach(u => scores[u.id] += 2);
+  }
+
+  // Q3: 관심 분야 (복수 선택)
+  const fieldMap = {
+    'AI': 'AI관심', '반도체': '반도체관심', '에너지': '에너지관심',
+    '연구': '연구지향', '창업': '창업지향',
+  };
+  (answers.q3 || []).forEach(field => {
+    const key = fieldMap[field];
+    if (key) UNIVERSITIES.filter(u => u.diagnosisMatch[key]).forEach(u => scores[u.id] += 1);
+  });
+
+  // Q4: 영어 수업 부담
+  if (answers.q4 === '부담없음') {
+    UNIVERSITIES.filter(u => u.diagnosisMatch.영어부담적음).forEach(u => scores[u.id] += 1);
+  } else {
+    UNIVERSITIES.filter(u => u.diagnosisMatch.영어부담있음).forEach(u => scores[u.id] += 1);
+  }
+
+  // Q5: 내신 수준
+  if (answers.q5 === '최상') {
+    UNIVERSITIES.filter(u => u.diagnosisMatch.내신최상).forEach(u => scores[u.id] += 1);
+  } else if (answers.q5 === '중상') {
+    UNIVERSITIES.filter(u => u.diagnosisMatch.내신중상).forEach(u => scores[u.id] += 1);
+  }
+
+  // 결과 분류
+  const sorted = UNIVERSITIES.map(u => ({ ...u, score: scores[u.id] }))
+    .sort((a, b) => b.score - a.score);
+  const maxScore = sorted[0].score;
+
+  return {
+    first: sorted.filter(u => u.score === maxScore),
+    consider: sorted.filter(u => u.score >= maxScore - 1 && u.score < maxScore),
+    caution: sorted.filter(u => u.score < maxScore - 1),
+  };
+}
+
+// ──────────────────────────────────────────────
+// 검색 태그 사전 (통합 검색 연결용)
+// ──────────────────────────────────────────────
+const TAG_DICTIONARY = {
+  "돈": "장학생활", "비용": "장학생활", "등록금": "장학생활",
+  "장학금": "장학생활", "지원금": "장학생활",
+  "전공 바꾸기": "전공자유", "전과": "전공자유",
+  "무학과": "전공자유", "탐색": "전공자유",
+  "면접": "면접", "구술": "면접", "발표": "면접", "토론": "면접",
+  "일반고": "일반고", "내신": "일반고",
+  "학교장추천": "일반고", "학추": "일반고",
+  "반도체": "반도체", "삼성": "반도체",
+  "SK": "반도체", "계약학과": "반도체",
+  "에너지": "에너지", "기후": "에너지",
+  "전력": "에너지", "수소": "에너지", "환경": "에너지",
+  "영어수업": "영어", "영어강의": "영어", "영어 부담": "영어",
+  "추천서": "제출서류", "자소서": "제출서류", "서류": "제출서류",
+  "연구": "연구", "실험실": "연구", "랩": "연구",
+  "창업": "창업", "스타트업": "창업",
+  "박사": "대학원", "대학원": "대학원", "석사": "대학원",
+  "기숙사": "생활환경", "생활": "생활환경", "숙소": "생활환경",
+  "6회 제한": "수시전략", "수시 제한": "수시전략",
+  "AI": "AI", "인공지능": "AI",
+};
+
+// ──────────────────────────────────────────────
+// 대학별 컬러 시스템 (CSS 변수용)
+// ──────────────────────────────────────────────
+const UNIVERSITY_COLORS = {
+  kaist:   { main: "#0F6E56", light: "#E6F5F1", text: "#ffffff" },
+  postech: { main: "#185FA5", light: "#E8F0FA", text: "#ffffff" },
+  gist:    { main: "#534AB7", light: "#EEEDFB", text: "#ffffff" },
+  dgist:   { main: "#993C1D", light: "#FAEDE9", text: "#ffffff" },
+  unist:   { main: "#1D9E75", light: "#E7F7F2", text: "#ffffff" },
+  kentech: { main: "#BA7517", light: "#FAF0DE", text: "#ffffff" },
+};
+
+// ──────────────────────────────────────────────
+// 메타데이터
+// ──────────────────────────────────────────────
+const META = {
+  title: "2027학년도 이공계 특성화대 6개교 입시 안내",
+  version: "2027학년도",
+  createdAt: "2027학년도",
+  basedOn: "각 대학 입학설명회 직접 청취 메모",
+  disclaimer: "이 자료는 설명회 메모를 기반으로 작성되었습니다. 공식 모집요강과 다를 수 있으므로 반드시 각 대학 공식 홈페이지에서 최종 확인하세요.",
+  school: "이공계 특성화대 입시 안내",
+  universities: ["KAIST", "POSTECH", "GIST", "DGIST", "UNIST", "KENTECH"],
+};
+
+</script>
+
+<script>
+/* ============================================================
+   STEP03 앱 로직 — 모드 전환 / 홈 화면 렌더링 / 기초 검색
+============================================================ */
+(function(){
+  "use strict";
+
+  var views = ["home","student","parent","teacher","university"];
+
+  function setMode(mode){
+    views.forEach(function(v){
+      var el = document.getElementById("view-" + v);
+      if(!el) return;
+      el.classList.toggle("is-active", v === mode);
+    });
+    document.querySelectorAll('.mode-btn[data-mode]').forEach(function(btn){
+      var m = btn.getAttribute("data-mode");
+      if(m === "home" || m === "student" || m === "parent" || m === "teacher"){
+        btn.setAttribute("aria-pressed", String(m === mode));
+      }
+    });
+    window.scrollTo({top:0, behavior:"instant"});
+  }
+
+  function openUniversity(id){
+    var u = getUniversity(id);
+    if(!u) return;
+    renderUniversityDetail(u, false);
+    setMode("university");
+  }
+
+  /* 헤더/네비/사이드바 클릭 위임 */
+  document.addEventListener("click", function(e){
+    var modeBtn = e.target.closest("[data-mode]");
+    if(modeBtn){ setMode(modeBtn.getAttribute("data-mode")); return; }
+
+    var univBtn = e.target.closest("[data-univ]");
+    if(univBtn){ openUniversity(univBtn.getAttribute("data-univ")); return; }
+  });
+
+  /* 대학 카드 렌더링 */
+  function univCardHTML(u){
+    var c = UNIVERSITY_COLORS[u.id] || { main: u.color };
+    var kws = (u.keywords || []).slice(0,3).map(function(k){
+      return '<span class="kw-chip">' + safe(k) + '</span>';
+    }).join("");
+    var checked = selectedCompare.indexOf(u.id) !== -1 ? ' checked' : '';
+    return (
+      '<article class="univ-card" style="--univ-color:' + safe(c.main) + '">' +
+        '<button type="button" data-univ="' + safe(u.id) + '" style="display:block;width:100%;text-align:left;padding:0;background:none;color:inherit;">' +
+          '<div class="univ-card__top">' +
+            '<div>' +
+              '<div class="univ-card__name">' + safe(u.name) + '</div>' +
+              '<div class="univ-card__nameFull">' + safe(u.nameFull) + '</div>' +
+            '</div>' +
+            '<span class="color-dot" style="background:' + safe(c.main) + '"></span>' +
+          '</div>' +
+          '<p class="univ-card__summary">' + safe(u.summary) + '</p>' +
+          '<div class="univ-card__keywords">' + kws + '</div>' +
+        '</button>' +
+        '<div class="univ-card__actions">' +
+          '<button type="button" class="univ-card__open" data-univ="' + safe(u.id) + '">상세 보기 →</button>' +
+          '<label class="compare-toggle"><input type="checkbox" data-compare-select="' + safe(u.id) + '"' + checked + '> 비교</label>' +
+        '</div>' +
+      '</article>'
+    );
+  }
+
+  function renderUnivGrid(list){
+    var grid = document.getElementById("univGrid");
+    grid.innerHTML = list.map(univCardHTML).join("");
+    document.getElementById("univCountHint").textContent = list.length + " / " + UNIVERSITIES.length;
+  }
+
+  function renderQuicklist(){
+    var ul = document.getElementById("univQuicklist");
+    ul.innerHTML = UNIVERSITIES.map(function(u){
+      var c = UNIVERSITY_COLORS[u.id] || { main: u.color };
+      return (
+        '<li><button class="univ-quicklist__item" data-univ="' + u.id + '" style="width:100%;">' +
+          '<span class="color-dot" style="background:' + c.main + '"></span>' +
+          '<span>' + u.name + '</span>' +
+        '</button></li>'
+      );
+    }).join("");
+  }
+
+  /* STEP07 통합 검색 — 이름/요약/전형/면접/전공/장학/추천·주의/교사용 메모까지 검색 */
+  function collectSearchText(u){
+    return [
+      u.name, u.nameFull, u.nameEn, u.location, u.summary,
+      (u.keywords||[]).join(" "), (u.tags||[]).join(" "),
+      u.admissionInfo && JSON.stringify(u.admissionInfo),
+      u.interview && JSON.stringify(u.interview),
+      u.majorSystem && JSON.stringify(u.majorSystem),
+      u.scholarship && JSON.stringify(u.scholarship),
+      u.studentFit && JSON.stringify(u.studentFit),
+      (u.parentFAQ||[]).map(function(x){ return x.q + ' ' + x.a; }).join(' '),
+      (u.teacherNotes||[]).join(' '), (u.officialCheck||[]).join(' '), (u.highlights||[]).join(' ')
+    ].join(" ").toLowerCase();
+  }
+
+  function themeMatch(u, tag){
+    var text = collectSearchText(u);
+    var m = {
+      "장학생활":["장학","등록금","생활비","기숙사","지원금","면제","무료","residential"],
+      "전공자유":["무학과","전공 자유","전공 선택","트랙","자유","탐색","전과"],
+      "면접":["면접","구술","토론","제시문","창의성"],
+      "일반고":["일반고","학교장","학추","우상향"],
+      "반도체":["반도체","삼성","sk","계약학과"],
+      "에너지":["에너지","수소","기후","전력","환경"],
+      "추천서":["추천서"],
+      "자소서":["자소서","자기소개서"],
+      "수시6회제한없음":["수시 6회 제한에 해당하지","수시6회제한없음"],
+      "연구":["연구","논문","랩","실험실","hcr"],
+      "창업":["창업","스타트업"],
+      "영어":["영어","영어 수업","영어 강의"],
+      "AI":["ai","인공지능"]
+    };
+    var keys = m[tag] || [tag];
+    return keys.some(function(k){ return text.indexOf(String(k).toLowerCase()) !== -1; }) || (u.tags||[]).indexOf(tag) !== -1;
+  }
+
+  function runSearch(query){
+    var original = (query || "").trim();
+    var q = original.toLowerCase();
+    if(!q){ renderUnivGrid(UNIVERSITIES); return; }
+    var mapped = TAG_DICTIONARY[original] || TAG_DICTIONARY[q] || null;
+    var filtered = UNIVERSITIES.filter(function(u){
+      if(mapped && themeMatch(u, mapped)) return true;
+      return collectSearchText(u).indexOf(q) !== -1;
+    });
+    renderUnivGrid(filtered);
+  }
+
+  function renderTagRow(){
+    var tags = ["면접","장학생활","전공자유","일반고","반도체","에너지","추천서","자소서","수시6회제한없음","연구","창업","영어","AI"];
+    var row = document.getElementById("homeTagRow");
+    row.innerHTML = tags.map(function(t){
+      return '<button type="button" class="tag-chip" data-tag="' + safe(t) + '">' + safe(t) + '</button>';
+    }).join("");
+    row.addEventListener("click", function(e){
+      var chip = e.target.closest(".tag-chip");
+      if(!chip) return;
+      var tag = chip.getAttribute("data-tag");
+      document.getElementById("homeSearch").value = tag;
+      document.getElementById("homeSearchClear").classList.add("is-visible");
+      var list = UNIVERSITIES.filter(function(u){ return themeMatch(u, tag); });
+      renderUnivGrid(list);
+      document.getElementById("univCountHint").textContent = list.length + " / " + UNIVERSITIES.length;
+    });
+  }
+
+  function renderFooter(){
+    document.getElementById("footerSchool").textContent = META.school;
+    document.getElementById("footerUpdated").textContent = "최종 수정 " + META.createdAt;
+    document.getElementById("footerVersion").textContent = "배포용 자료 (데이터: " + META.version + ")";
+    document.getElementById("footerDisclaimer").textContent = META.disclaimer;
+  }
+
+  /* 검색 입력 이벤트 */
+  var searchInput = document.getElementById("homeSearch");
+  var clearBtn = document.getElementById("homeSearchClear");
+  searchInput.addEventListener("input", function(){
+    clearBtn.classList.toggle("is-visible", !!searchInput.value);
+    runSearch(searchInput.value);
+  });
+  clearBtn.addEventListener("click", function(){
+    searchInput.value = "";
+    clearBtn.classList.remove("is-visible");
+    runSearch("");
+  });
+
+  /* ============================================================
+     STEP04 — 학생 모드: 자가진단 / 추천 결과 / 준비 체크리스트
+  ============================================================ */
+  var diagAnswers = { q1: null, q2: null, q3: [], q4: null, q5: null };
+  var diagStep = 1;
+  var diagTotalSteps = 5;
+
+  var diagIntroEl, diagQuizEl, diagResultEl, diagProgressFill, diagProgressLabel, diagBackBtn;
+
+  function diagRenderStep(){
+    document.querySelectorAll(".diag-step").forEach(function(panel){
+      panel.hidden = (parseInt(panel.getAttribute("data-step"), 10) !== diagStep);
+    });
+    diagProgressFill.style.width = (diagStep / diagTotalSteps * 100) + "%";
+    diagProgressLabel.textContent = "질문 " + diagStep + " / " + diagTotalSteps;
+    diagBackBtn.hidden = (diagStep <= 1);
+  }
+
+  function diagGoToStep(n){
+    diagStep = n;
+    diagRenderStep();
+  }
+
+  function diagGoBack(){
+    if(diagStep <= 1) return;
+    diagGoToStep(diagStep - 1);
+  }
+
+  function diagStart(){
+    diagAnswers = { q1: null, q2: null, q3: [], q4: null, q5: null };
+    diagStep = 1;
+    document.querySelectorAll(".diag-option.is-selected").forEach(function(b){ b.classList.remove("is-selected"); });
+    document.querySelectorAll(".diag-chip.is-selected").forEach(function(b){ b.classList.remove("is-selected"); });
+    diagIntroEl.hidden = true;
+    diagResultEl.hidden = true;
+    diagQuizEl.hidden = false;
+    diagRenderStep();
+  }
+
+  function diagRestart(){
+    diagResultEl.hidden = true;
+    diagIntroEl.hidden = false;
+  }
+
+  var CHECKLIST_ITEMS = {
+    record: [
+      "수학·과학 교과 성적과 세부능력특기사항(세특)을 학기마다 점검하기",
+      "탐구활동(과제연구·R&E·동아리 활동)을 학생부에 구체적으로 기록하기",
+      "진로 관련 독서·체험활동을 누가 기록으로 정리해두기",
+    ],
+    interview: [
+      "지원할 대학의 면접 방식(개인/그룹, 제시문 유무, 시간)을 미리 확인하기",
+      "최근 출제 경향을 찾아보고 모의면접으로 연습하기",
+      "블라인드 면접 여부, 대면/비대면 등 진행 방식을 사전 확인하기",
+    ],
+    essay: [
+      "지원 대학의 자소서 필요 여부 먼저 확인하기 (예: POSTECH·KENTECH는 자소서 없음)",
+      "1번 문항의 의도를 파악하고 결과보다 과정·이유 중심으로 초안 작성하기",
+      "타 대학명 오타 등 치명적인 실수를 최종 점검하기",
+    ],
+  };
+
+  function checklistItemHTML(text){
+    return (
+      '<li class="checklist-item">' +
+        '<span class="checklist-item__box">✓</span>' +
+        '<span class="checklist-item__text">' + text + '</span>' +
+      '</li>'
+    );
+  }
+
+  function renderChecklist(){
+    document.getElementById("checklistRecord").innerHTML = CHECKLIST_ITEMS.record.map(checklistItemHTML).join("");
+    document.getElementById("checklistInterview").innerHTML = CHECKLIST_ITEMS.interview.map(checklistItemHTML).join("");
+    document.getElementById("checklistEssay").innerHTML = CHECKLIST_ITEMS.essay.map(checklistItemHTML).join("");
+  }
+
+  function resultCardHTML(u, group){
+    var c = UNIVERSITY_COLORS[u.id] || { main: u.color };
+    var reasons = (group === "caution")
+      ? (u.studentFit.caution || []).slice(0, 2)
+      : (u.studentFit.recommended || []).slice(0, 2);
+    var reasonHTML = reasons.map(function(r){
+      return '<div class="result-card__reason">' + r + '</div>';
+    }).join("");
+    return (
+      '<div class="result-card" style="--univ-color:' + c.main + '">' +
+        '<div class="result-card__top">' +
+          '<span class="color-dot" style="background:' + c.main + '"></span>' +
+          '<span class="result-card__name">' + u.name + '</span>' +
+          '<span class="result-card__nameFull">' + u.nameFull + '</span>' +
+        '</div>' +
+        '<p class="result-card__summary">' + u.summary + '</p>' +
+        '<div class="result-card__reasons">' + reasonHTML + '</div>' +
+        '<button class="result-card__link" data-univ="' + u.id + '" type="button">대학 상세 보기 →</button>' +
+      '</div>'
+    );
+  }
+
+  function renderResultGroup(elId, list, group){
+    document.getElementById(elId).innerHTML = list.map(function(u){ return resultCardHTML(u, group); }).join("");
+  }
+
+  function diagShowResult(){
+    var result = getDiagnosisResult(diagAnswers);
+
+    renderResultGroup("resultFirstList", result.first, "first");
+    renderResultGroup("resultConsiderList", result.consider, "consider");
+    renderResultGroup("resultCautionList", result.caution, "caution");
+
+    document.getElementById("resultConsider").style.display = result.consider.length ? "" : "none";
+    document.getElementById("resultCaution").style.display = result.caution.length ? "" : "none";
+
+    renderChecklist();
+
+    diagQuizEl.hidden = true;
+    diagResultEl.hidden = false;
+    window.scrollTo({top:0, behavior:"instant"});
+  }
+
+  function diagInit(){
+    diagIntroEl = document.getElementById("diagIntro");
+    diagQuizEl = document.getElementById("diagQuiz");
+    diagResultEl = document.getElementById("diagResult");
+    diagProgressFill = document.getElementById("diagProgressFill");
+    diagProgressLabel = document.getElementById("diagProgressLabel");
+    diagBackBtn = document.getElementById("diagBackBtn");
+
+    document.getElementById("diagStartBtn").addEventListener("click", diagStart);
+    diagBackBtn.addEventListener("click", diagGoBack);
+    document.getElementById("diagQ3NextBtn").addEventListener("click", function(){ diagGoToStep(4); });
+    document.getElementById("diagPrintBtn").addEventListener("click", function(){ window.print(); });
+    document.getElementById("diagRestartBtn").addEventListener("click", diagRestart);
+
+    document.querySelectorAll(".diag-option").forEach(function(btn){
+      btn.addEventListener("click", function(){
+        var q = btn.getAttribute("data-q");
+        var v = btn.getAttribute("data-v");
+        diagAnswers[q] = v;
+        document.querySelectorAll('.diag-option[data-q="' + q + '"]').forEach(function(b){
+          b.classList.toggle("is-selected", b === btn);
+        });
+        var nextStep = parseInt(btn.closest(".diag-step").getAttribute("data-step"), 10) + 1;
+        window.setTimeout(function(){
+          if(nextStep > diagTotalSteps){ diagShowResult(); }
+          else{ diagGoToStep(nextStep); }
+        }, 150);
+      });
+    });
+
+    document.querySelectorAll(".diag-chip").forEach(function(chip){
+      chip.addEventListener("click", function(){
+        var v = chip.getAttribute("data-q3");
+        var idx = diagAnswers.q3.indexOf(v);
+        if(idx === -1){ diagAnswers.q3.push(v); chip.classList.add("is-selected"); }
+        else{ diagAnswers.q3.splice(idx, 1); chip.classList.remove("is-selected"); }
+      });
+    });
+
+    /* 체크리스트 항목 클릭 시 체크 토글 */
+    document.querySelectorAll(".checklist-section").forEach(function(section){
+      section.addEventListener("click", function(e){
+        var item = e.target.closest(".checklist-item");
+        if(item){ item.classList.toggle("is-checked"); }
+      });
+    });
+  }
+
+  var selectedCompare = [];
+
+  function safe(v){
+    return String(v == null ? "" : v).replace(/[&<>"']/g, function(ch){
+      return ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"})[ch];
+    });
+  }
+  function arr(v){ return Array.isArray(v) ? v : (v ? [v] : []); }
+  function compact(v){ return String(v == null ? "" : v); }
+  function ynText(v){ return v === true ? "해당" : (v === false ? "해당 없음" : compact(v)); }
+  function firstSentence(v, n){
+    var t = compact(v).replace(/\s+/g," ").trim();
+    if(!t) return "-";
+    return t.length > (n||120) ? t.slice(0,(n||120)-1) + "…" : t;
+  }
+  function kvRow(k,v){ return '<dt>' + safe(k) + '</dt><dd>' + safe(firstSentence(v, 220)) + '</dd>'; }
+  function listHTML(items){
+    var list = arr(items).filter(Boolean);
+    if(!list.length) return '<div class="detail-empty">정리된 항목이 없습니다.</div>';
+    return '<ul class="detail-list">' + list.map(function(x){ return '<li>' + safe(firstSentence(x, 260)) + '</li>'; }).join("") + '</ul>';
+  }
+  function badgeHTML(text, cls){ return '<span class="badge ' + (cls||'badge--memo') + '">' + safe(text) + '</span>'; }
+
+  function renderCompareBar(){
+    var bar = document.getElementById("compareBar");
+    if(!bar) return;
+    bar.classList.toggle("is-visible", selectedCompare.length > 0);
+    var chips = document.getElementById("compareChips");
+    chips.innerHTML = selectedCompare.map(function(id){ var u=getUniversity(id); return u ? '<span class="compare-chip">' + safe(u.name) + '</span>' : ''; }).join("");
+    document.querySelectorAll('[data-compare-select]').forEach(function(input){ input.checked = selectedCompare.indexOf(input.getAttribute('data-compare-select')) !== -1; });
+  }
+  function toggleCompare(id, checked){
+    if(checked){
+      if(selectedCompare.indexOf(id) === -1){
+        if(selectedCompare.length >= 3){ alert("비교는 최대 3개 대학까지 선택할 수 있습니다."); return false; }
+        selectedCompare.push(id);
+      }
+    }else{
+      selectedCompare = selectedCompare.filter(function(x){ return x !== id; });
+    }
+    renderCompareBar();
+    return true;
+  }
+  function compareTable(ids){
+    var list = ids.map(getUniversity).filter(Boolean);
+    if(list.length < 2) return '<div class="detail-empty">비교할 대학을 2개 이상 선택하세요.</div>';
+    var rows = [
+      ["한 줄 요약", function(u){return u.summary;}],
+      ["수시 6회 제한", function(u){return ynText(u.admissionInfo.sixTimeLimit) + (u.admissionInfo.sixTimeLimitNote ? ' · ' + u.admissionInfo.sixTimeLimitNote : '');}],
+      ["정시·수능최저", function(u){return (u.admissionInfo.hasJeongsi ? '정시 가능' : '정시 없음') + ' · 수능최저: ' + ynText(u.admissionInfo.suneungMinimum);}],
+      ["자소서·추천서", function(u){return '자소서: ' + ynText(u.admissionInfo.selfStatement) + ' · 추천서: ' + ynText(u.admissionInfo.recommendation);}],
+      ["면접", function(u){return firstSentence(arr(u.interview.method).join(' / '), 220);}],
+      ["전공 구조", function(u){return u.majorSystem.type + ' · ' + u.majorSystem.selectionTime + ' · ' + firstSentence(u.majorSystem.freedom, 140);}],
+      ["장학·생활", function(u){return [u.scholarship.tuition, u.scholarship.livingCost, u.scholarship.dormitory, u.scholarship.special].filter(Boolean).map(function(x){return firstSentence(x,90)}).join(' / ');}],
+      ["주의 포인트", function(u){return arr(u.studentFit.caution).slice(0,2).join(' / '); }]
+    ];
+    return '<div class="detail-compare-table-wrap"><table><thead><tr><th>항목</th>' + list.map(function(u){return '<th>' + safe(u.name) + '</th>';}).join('') + '</tr></thead><tbody>' + rows.map(function(r){ return '<tr><th>' + safe(r[0]) + '</th>' + list.map(function(u){ return '<td>' + safe(firstSentence(r[1](u), 260)) + '</td>'; }).join('') + '</tr>'; }).join('') + '</tbody></table></div>';
+  }
+
+  function renderUniversityDetail(u, compareOnly){
+    var c = UNIVERSITY_COLORS[u.id] || {main:u.color, light:"var(--surface-2)"};
+    var tags = (u.keywords||[]).concat((u.tags||[]).slice(0,6)).map(function(t){ return badgeHTML(t, 'badge--tip'); }).join('');
+    var official = arr(u.officialCheck).map(function(x){ return '공식 확인: ' + x; });
+    var highlights = arr(u.highlights).slice(0,4).map(function(x){ return '<div class="quote-box">“' + safe(String(x).replace(/^"|"$/g,'')) + '”</div>'; }).join('');
+    var html = '';
+    if(!compareOnly){
+      html += '<div class="detail-hero" style="--univ-color:' + safe(c.main) + '">' +
+        '<div class="detail-hero__top"><div><div class="detail-hero__eyebrow">UNIVERSITY DETAIL · ' + safe(u.location||'') + '</div>' +
+        '<h2 class="detail-hero__title">' + safe(u.name) + '</h2><div class="detail-hero__full">' + safe(u.nameFull) + ' · ' + safe(u.nameEn||'') + '</div></div>' +
+        '<span class="color-dot" style="width:18px;height:18px;background:' + safe(c.main) + '"></span></div>' +
+        '<p class="detail-hero__summary">' + safe(u.summary) + '</p>' +
+        '<div class="detail-badges">' + tags + (u.officialCheck && u.officialCheck.length ? badgeHTML('공식 확인 필요','badge--warn') : '') + badgeHTML('설명회 메모 기반','badge--memo') + '</div>' +
+        '<div class="detail-actions"><button class="btn-secondary" data-mode="home" type="button">← 홈으로</button><button class="btn-secondary" id="detailAddCompareBtn" data-id="' + safe(u.id) + '" type="button">비교에 추가</button><button class="btn-primary" onclick="window.print()" type="button">🖨️ 상세 인쇄</button></div>' +
+      '</div>';
+      html += '<div class="detail-grid" style="--univ-color:' + safe(c.main) + '">' +
+        '<article class="detail-card"><h3 class="detail-card__title">① 전형 구조</h3><dl class="detail-kv">' +
+          kvRow('수시 6회', ynText(u.admissionInfo.sixTimeLimit)) + kvRow('수시', ynText(u.admissionInfo.hasSusi)) + kvRow('정시', ynText(u.admissionInfo.hasJeongsi)) + kvRow('중복지원', u.admissionInfo.overlap || '대학별 전형 간 중복지원 공식 확인') + kvRow('모집단위', u.admissionInfo.units) + kvRow('수능최저', ynText(u.admissionInfo.suneungMinimum)) + kvRow('자소서', ynText(u.admissionInfo.selfStatement) + ' ' + (u.admissionInfo.selfStatementNote||'')) + kvRow('추천서', ynText(u.admissionInfo.recommendation) + ' ' + (u.admissionInfo.recommendationNote||'')) +
+        '</dl></article>' +
+        '<article class="detail-card"><h3 class="detail-card__title">② 면접 상세</h3>' + listHTML(arr(u.interview.method).concat([u.interview.duration ? '시간: ' + u.interview.duration : '', u.interview.weight ? '반영: ' + u.interview.weight : '', u.interview.note2028 ? '변경: ' + u.interview.note2028 : '']).concat(arr(u.interview.interviewExamples).map(function(x){ return '예시: ' + x; }))) + '</article>' +
+        '<article class="detail-card"><h3 class="detail-card__title">③ 전공 선택 구조</h3><dl class="detail-kv">' + kvRow('구조', u.majorSystem.type) + kvRow('선택 시기', u.majorSystem.selectionTime) + kvRow('자유도', u.majorSystem.freedom) + kvRow('특이사항', u.majorSystem.semiconductor || u.majorSystem.pnrSystem || u.majorSystem.note || '') + '</dl></article>' +
+        '<article class="detail-card"><h3 class="detail-card__title">④ 장학·생활 지원</h3><dl class="detail-kv">' + kvRow('등록금', u.scholarship.tuition) + kvRow('세부', u.scholarship.tuitionDetail || '') + kvRow('생활비', u.scholarship.livingCost) + kvRow('기숙사', u.scholarship.dormitory) + kvRow('특별지원', u.scholarship.special) + '</dl></article>' +
+        '<article class="detail-card"><h3 class="detail-card__title">⑤ 추천 학생 유형</h3>' + listHTML(u.studentFit.recommended) + '</article>' +
+        '<article class="detail-card"><h3 class="detail-card__title">⑥ 주의 학생 유형</h3>' + listHTML(u.studentFit.caution) + '</article>' +
+        '<article class="detail-card"><h3 class="detail-card__title">⑦ 공식 확인 필요 항목</h3>' + listHTML(official) + '</article>' +
+        '<article class="detail-card"><h3 class="detail-card__title">⑧ 생생한 설명회 멘트</h3>' + (highlights || '<div class="detail-empty">정리된 인용 메모가 없습니다.</div>') + '</article>' +
+      '</div>';
+    }
+    html += '<section class="detail-compare" style="--univ-color:' + safe(c.main) + '"><div class="detail-compare__header"><h3 class="detail-card__title" style="margin:0;">2~3개 대학 비교표</h3><span class="section-heading__hint">선택: ' + selectedCompare.length + '개</span></div>' + compareTable(selectedCompare) + '</section>';
+    document.getElementById("univDetailShell").innerHTML = html;
+    var add = document.getElementById("detailAddCompareBtn");
+    if(add){ add.addEventListener("click", function(){ toggleCompare(u.id, true); renderUniversityDetail(u, false); }); }
+  }
+
+  document.addEventListener("change", function(e){
+    var input = e.target.closest("[data-compare-select]");
+    if(!input) return;
+    var ok = toggleCompare(input.getAttribute("data-compare-select"), input.checked);
+    if(!ok) input.checked = false;
+  });
+  document.getElementById("compareClearBtn").addEventListener("click", function(){ selectedCompare = []; renderCompareBar(); renderUnivGrid(UNIVERSITIES); });
+  document.getElementById("compareOpenBtn").addEventListener("click", function(){
+    if(selectedCompare.length < 2){ alert("비교할 대학을 2개 이상 선택하세요."); return; }
+    renderUniversityDetail(getUniversity(selectedCompare[0]) || UNIVERSITIES[0], true);
+    setMode("university");
+  });
+
+  /* 초기 렌더 */
+  renderUnivGrid(UNIVERSITIES);
+  renderQuicklist();
+  renderTagRow();
+  renderFooter();
+  diagInit();
+
+})();
+</script>
+
+
+<script>
+/* ============================================================
+   STEP05 — 학부모 모드: 20문답 / 장학·생활비 비교 / 진로 안내
+============================================================ */
+(function(){
+  "use strict";
+
+  function esc(v){
+    return String(v == null ? "" : v).replace(/[&<>"']/g, function(ch){
+      return ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"})[ch];
+    });
+  }
+  function getU(id){ return UNIVERSITIES.find(function(u){ return u.id === id; }); }
+  function yn(v){ return v === true ? "예" : (v === false ? "아니오" : esc(v)); }
+  function sixLimitList(){
+    return UNIVERSITIES.map(function(u){ return u.name + " " + (u.admissionInfo.sixTimeLimit ? "해당" : "미해당"); }).join(" · ");
+  }
+  function jeongsiList(){
+    return UNIVERSITIES.map(function(u){ return u.name + " " + (u.admissionInfo.hasJeongsi ? "가능" : "불가"); }).join(" · ");
+  }
+  function univByNames(names){ return names.map(function(id){ var u=getU(id); return u ? u.name : id; }).join(" · "); }
+
+  var PARENT_QA = [
+    {cat:"지원전략", q:"수시 6회 제한에 들어가나요?", a:"POSTECH은 교육부 소관 대학이라 수시 6회 제한에 해당합니다. KAIST·GIST·DGIST·UNIST·KENTECH은 과기원/특별법 대학 성격으로 수시 6회 제한에 해당하지 않는 것으로 정리되어 있습니다. 단, 최종 지원 전 모집요강 확인이 필요합니다. (" + sixLimitList() + ")", univs:["postech","kaist","gist","dgist","unist","kentech"], check:true},
+    {cat:"지원전략", q:"정시로도 지원 가능한가요?", a:"정시 지원 가능 여부는 대학별로 다릅니다. KAIST·GIST·DGIST·UNIST·KENTECH은 정시 전형이 있고, POSTECH은 정시 없이 수시로만 선발하는 구조입니다. KAIST 정시 운영 여부는 향후 변동 가능성이 있어 공식 확인이 필요합니다. (" + jeongsiList() + ")", univs:["kaist","gist","dgist","unist","kentech","postech"], check:true},
+    {cat:"비용", q:"등록금은 얼마인가요?", a:"대부분 등록금 부담을 크게 낮추는 구조입니다. KAIST는 1학년 전액 장학금 및 2학년 이후 성적 기준 전액 장학, POSTECH은 전원 등록금 면제, DGIST는 8학기 등록금 면제, UNIST는 전액 장학금 성격의 지원, KENTECH도 장학 지원 구조가 핵심입니다. 세부 조건은 대학별 공식 장학 안내 확인이 필요합니다.", univs:["kaist","postech","dgist","unist","kentech"], check:true},
+    {cat:"비용", q:"생활비·기숙사 지원은 어느 정도인가요?", a:"DGIST는 학기 중 월 33만원 수준의 학생지원금 메모가 있고, POSTECH은 1100만원 특별장학금을 학교 활동·노트북·해외활동 등에 활용할 수 있다는 설명이 있습니다. UNIST는 신입생 100% 수용 가능한 residential college 환경을 강조합니다. 대학별 지원 방식이 달라 단순 금액 비교보다 체류비·기숙사·활동비를 함께 봐야 합니다.", univs:["dgist","postech","unist"], check:true},
+    {cat:"지원가능성", q:"일반고 학생도 가능한가요?", a:"가능합니다. 다만 과기원·POSTECH은 수학·과학 학업역량, 탐구 기록, 면접 대응력을 함께 봅니다. GIST 학교장추천은 일반고 위주 성격이 강하고, KAIST 학교장추천도 일반고 학생에게 의미가 큽니다. 일반고 학생은 내신 숫자만이 아니라 수학·과학 세특과 탐구의 깊이를 함께 준비해야 합니다.", univs:["gist","kaist","postech","dgist","unist","kentech"]},
+    {cat:"지원가능성", q:"영재고·과학고와 경쟁해도 되나요?", a:"일반전형에서는 영재고·과학고 학생과 함께 평가될 수 있습니다. 그래서 일반고 학생은 학교장추천, 고른기회, 일반고 친화 전형 여부를 함께 봐야 합니다. 핵심은 '불리하다'가 아니라 본인 학교 맥락 안에서 수학·과학 성취와 탐구 성장성을 얼마나 설득력 있게 보여주느냐입니다.", univs:["kaist","gist","dgist","unist","kentech","postech"]},
+    {cat:"전공", q:"전공을 나중에 바꿀 수 있나요?", a:"대학별 자유도가 다릅니다. KAIST는 무학과 입학 후 2학년에 전공 선택, DGIST는 4년간 자유롭게 트랙을 설계하는 구조, KENTECH은 에너지공학부 단일학부 구조입니다. POSTECH은 2학년 2학기에 전공 선택, UNIST는 무학과 100% 전공 선택권을 강조합니다. 전공 탐색형 학생은 KAIST·DGIST·UNIST를 우선 검토할 만합니다.", univs:["kaist","dgist","unist","kentech","postech"]},
+    {cat:"진로", q:"의대·약대 대신 가도 될까요?", a:"이 질문은 '대학 이름'보다 학생의 학업 정체성이 먼저입니다. 의약학의 안정성을 원하는 학생인지, 연구·공학·AI·반도체·에너지 문제 해결에 몰입하고 싶은 학생인지 구분해야 합니다. 과기원과 POSTECH은 대학원·연구·산업 연계가 강하므로, 장기적으로 이공계 연구자·엔지니어·창업가 경로를 원하는 학생에게 더 적합합니다.", univs:["kaist","postech","gist","dgist","unist","kentech"]},
+    {cat:"진로", q:"졸업 후 취업은 어떻게 되나요?", a:"AI·반도체·에너지·바이오·첨단소재 등 산업 수요가 큰 분야와 연결됩니다. POSTECH 반도체공학과, DGIST 반도체공학과처럼 계약학과 성격이 뚜렷한 경우 진로 연결성이 강합니다. 다만 과기원 계열은 학부 취업만이 아니라 석·박사 진학까지 포함해 보는 것이 현실적입니다.", univs:["postech","dgist","kaist","unist","kentech"]},
+    {cat:"진로", q:"대학원·박사는 어떻게 되나요?", a:"이공계 특성화대는 학부 이후 대학원 진학과 연구 연계가 강한 편입니다. KAIST는 빠른 박사 트랙 가능성을, POSTECH 반도체공학과는 6년 박사 및 월 100만원 수준 학업지원금 메모가 있습니다. 연구 몰입형 학생에게는 학부 4년 이후까지의 연구 계획을 함께 설계하는 것이 중요합니다.", univs:["kaist","postech","gist","dgist","unist"]},
+    {cat:"면접", q:"면접은 수학 문제 푸는 건가요?", a:"대학마다 다릅니다. POSTECH은 200분 면접에서 개인과제·그룹토론·개인면접을 통해 문제 해결, 협업, 사고 과정을 봅니다. GIST는 면접 비중이 50%로 확대되고 전원 면접을 실시합니다. KAIST는 수학·과학·영어 제시문 기반 블라인드 면접입니다. 단순 정답형보다 사고 과정 설명력이 중요해지는 흐름입니다.", univs:["postech","gist","kaist"], check:true},
+    {cat:"학생부", q:"학생부에서 무엇을 가장 봐야 하나요?", a:"수학·과학 성취, 성적 추세, 주요 교과 평균, 탐구 활동의 질, 세특의 구체성이 핵심입니다. GIST 메모에는 전체교과 평균, 주요교과 평균, 수학·과학 별도 확인, 성적 유지·우상향 여부를 종합 평가한다는 내용이 있습니다. 단순 활동량보다 질문-탐구-분석-성장 흐름이 중요합니다.", univs:["gist","postech","kaist","dgist","unist"]},
+    {cat:"제출서류", q:"자기소개서는 어떻게 써야 하나요?", a:"자소서가 있는 대학은 '왜 이 분야를 선택했는지'와 '왜 이 대학인지'가 핵심입니다. GIST는 1문항 1800자에서 과학기술 분야 선택 계기, GIST 선택 이유, 향후 목표와 계획을 묻습니다. KAIST는 답보다 과학을 경험하는 태도와 이유를 중시합니다. POSTECH·KENTECH처럼 자소서가 없는 대학도 있으므로 대학별 확인이 먼저입니다.", univs:["gist","kaist","postech","kentech"], check:true},
+    {cat:"지원전략", q:"중복 지원이 가능한가요?", a:"과기원은 수시 6회 제한과 별개로 대학 내부 전형 간 중복지원 제한이 있을 수 있습니다. GIST는 수시모집 각 전형 간 중복 지원이 불가하다고 정리되어 있고, KAIST는 창의도전+일반전형만 중복지원 가능하다는 메모가 있습니다. 대학별 전형 조합을 반드시 확인해야 합니다.", univs:["gist","kaist"], check:true},
+    {cat:"지원전략", q:"수능최저기준이 있나요?", a:"대학별·전형별로 다릅니다. POSTECH은 일반전형Ⅱ에서만 수능최저가 있고, 수학 필수 포함 2합4등급으로 정리되어 있습니다. KAIST·KENTECH 등은 수능최저 없음으로 정리되어 있습니다. 수능최저는 전형 선택의 중요한 분기점입니다.", univs:["postech","kaist","kentech"], check:true},
+    {cat:"지원전략", q:"학교장 추천은 어느 대학에 있나요?", a:"KAIST와 GIST 등에서 학교장추천 전형이 중요합니다. GIST 학교장추천은 일반고 위주 선발 성격이며 학교당 2명까지 지원 가능하고, 영과고 지원 불가로 정리되어 있습니다. 추천 인원 제한이 있으므로 교내 추천 기준과 학생의 지원 우선순위를 일찍 조율해야 합니다.", univs:["kaist","gist"], check:true},
+    {cat:"전공", q:"반도체 계약학과는 어떻게 다른가요?", a:"계약학과는 특정 기업·산업 진로와 강하게 연결된 전형입니다. POSTECH 반도체공학과는 박사까지 이어지는 구조와 월 100만원 수준 학업지원금 메모가 있고, DGIST 반도체공학과는 5년 석사 후 삼성전자 입사로 정리되어 있습니다. 대신 전과 제한, 이수 구조, 의무 조건을 반드시 확인해야 합니다.", univs:["postech","dgist"], check:true},
+    {cat:"생활", q:"영어 수업이 걱정됩니다", a:"UNIST는 100% 영어 수업을 강점으로 내세우므로 영어 수업 부담이 큰 학생은 사전 준비가 필요합니다. KAIST는 1학년 P/NR 제도로 초기 적응 부담을 줄이는 구조가 있습니다. 영어 수업은 단순 영어 점수보다 전공 내용을 영어로 듣고 질문할 수 있는 적응력이 중요합니다.", univs:["unist","kaist"]},
+    {cat:"생활", q:"지방에 있어서 불안합니다", a:"이공계 특성화대는 지역보다 연구 인프라, 실험실 접근성, 기숙형 생활, 산학·연구 연계가 핵심입니다. UNIST는 울산의 산업·연구 인프라, DGIST는 대구 기반 글로벌 프로그램, KENTECH은 에너지 특화 연구 과제를 강점으로 내세웁니다. 학생 성향이 기숙형 연구 환경에 맞는지 보는 것이 더 중요합니다.", univs:["unist","dgist","kentech","postech","gist"]},
+    {cat:"지원가능성", q:"어느 대학이 가장 경쟁률이 낮나요?", a:"경쟁률만으로 유불리를 판단하면 위험합니다. KENTECH은 모집 규모가 작고 다른 과기원보다 경쟁률이 다소 낮은 편이라는 메모가 있지만, 선발 인원이 110명 수준으로 작아 변동성이 큽니다. 경쟁률보다 모집인원, 전형 구조, 면접 비중, 학생부 적합성을 함께 봐야 합니다.", univs:["kentech"], check:true}
+  ];
+
+  var activeCat = "전체";
+  var cats = ["전체","지원전략","지원가능성","비용","전공","면접","학생부","제출서류","진로","생활"];
+
+  function qaCardHTML(item, i){
+    var meta = [];
+    if(item.univs && item.univs.length){ meta.push('<span class="badge badge--tip">' + esc(univByNames(item.univs)) + '</span>'); }
+    if(item.check){ meta.push('<span class="badge badge--warn">공식 확인 필요</span>'); }
+    meta.push('<span class="badge badge--memo">' + esc(item.cat) + '</span>');
+    return '<article class="parent-qa-card" data-cat="' + esc(item.cat) + '">' +
+      '<div class="parent-qa-card__top"><span class="parent-qa-card__num">Q' + String(i+1).padStart(2,"0") + '</span><span class="badge badge--memo">학부모 질문</span></div>' +
+      '<h3 class="parent-qa-card__q">' + esc(item.q) + '</h3>' +
+      '<p class="parent-qa-card__a">' + esc(item.a) + '</p>' +
+      '<div class="parent-qa-card__meta">' + meta.join("") + '</div>' +
+    '</article>';
+  }
+
+  function renderQa(){
+    var list = activeCat === "전체" ? PARENT_QA : PARENT_QA.filter(function(x){ return x.cat === activeCat; });
+    document.getElementById("parentQaGrid").innerHTML = list.map(qaCardHTML).join("");
+    document.getElementById("parentQaCount").textContent = list.length + " / " + PARENT_QA.length;
+  }
+  function renderFilters(){
+    var row = document.getElementById("parentQaFilters");
+    row.innerHTML = cats.map(function(c){ return '<button class="parent-filter' + (c===activeCat?' is-active':'') + '" data-cat="' + esc(c) + '" type="button">' + esc(c) + '</button>'; }).join("");
+    row.addEventListener("click", function(e){
+      var b = e.target.closest(".parent-filter"); if(!b) return;
+      activeCat = b.getAttribute("data-cat");
+      row.querySelectorAll(".parent-filter").forEach(function(x){ x.classList.toggle("is-active", x === b); });
+      renderQa();
+    });
+  }
+
+  function renderSupport(){
+    var rows = UNIVERSITIES.map(function(u){
+      var c = UNIVERSITY_COLORS[u.id] || {main:u.color};
+      return '<tr style="--univ-color:' + esc(c.main) + '">' +
+        '<td>' + esc(u.name) + '<br><span style="font-family:var(--font-kr);font-weight:500;color:var(--ink-faint);font-size:11px;">' + esc(u.nameFull) + '</span></td>' +
+        '<td>' + esc(u.scholarship && u.scholarship.tuition || '-') + '</td>' +
+        '<td>' + esc(u.scholarship && (u.scholarship.tuitionDetail || u.scholarship.special || '-') || '-') + '</td>' +
+        '<td>' + esc(u.scholarship && u.scholarship.livingCost || '-') + '</td>' +
+        '<td>' + esc(u.scholarship && u.scholarship.dormitory || '-') + '</td>' +
+      '</tr>';
+    }).join("");
+    document.getElementById("parentSupportTable").innerHTML = '<thead><tr><th>대학</th><th>등록금</th><th>특별 장학·조건</th><th>생활비</th><th>기숙사·생활</th></tr></thead><tbody>' + rows + '</tbody>';
+  }
+
+  function renderCareer(){
+    document.getElementById("parentCareerGrid").innerHTML = UNIVERSITIES.map(function(u){
+      var c = UNIVERSITY_COLORS[u.id] || {main:u.color};
+      var rec = (u.studentFit && u.studentFit.recommended || []).slice(0,2).map(function(x){ return '<div class="parent-univ-card__item">추천: ' + esc(x) + '</div>'; }).join("");
+      var cau = (u.studentFit && u.studentFit.caution || []).slice(0,1).map(function(x){ return '<div class="parent-univ-card__item">주의: ' + esc(x) + '</div>'; }).join("");
+      var major = u.majorSystem ? '<div class="parent-univ-card__item">전공: ' + esc(u.majorSystem.type) + ' · ' + esc(u.majorSystem.selectionTime || '') + '</div>' : '';
+      return '<article class="parent-univ-card" style="--univ-color:' + esc(c.main) + '">' +
+        '<div class="parent-univ-card__name">' + esc(u.name) + '</div>' +
+        '<div class="parent-univ-card__full">' + esc(u.nameFull) + '</div>' +
+        '<p class="parent-univ-card__summary">' + esc(u.summary) + '</p>' +
+        '<div class="parent-univ-card__list">' + major + rec + cau + '</div>' +
+        '<button class="parent-univ-card__link" data-univ="' + esc(u.id) + '" type="button">대학 상세 보기 →</button>' +
+      '</article>';
+    }).join("");
+  }
+
+  function initTabs(){
+    document.querySelectorAll(".parent-tab").forEach(function(tab){
+      tab.addEventListener("click", function(){
+        var id = tab.getAttribute("data-parent-tab");
+        document.querySelectorAll(".parent-tab").forEach(function(t){ t.setAttribute("aria-selected", String(t === tab)); });
+        document.querySelectorAll(".parent-panel").forEach(function(panel){ panel.classList.toggle("is-active", panel.id === "parent-panel-" + id); });
+      });
+    });
+  }
+
+  function initParentMode(){
+    renderFilters();
+    renderQa();
+    renderSupport();
+    renderCareer();
+    initTabs();
+    var printBtn = document.getElementById("parentPrintBtn");
+    if(printBtn){ printBtn.addEventListener("click", function(){ window.print(); }); }
+    var fv = document.getElementById("footerVersion");
+    if(fv){ fv.textContent = "STEP05 — 학부모 모드 추가 (데이터: " + META.version + ")"; }
+  }
+
+  if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", initParentMode);
+  else initParentMode();
+})();
+</script>
+
+
+
+<script>
+/* ============================================================
+   STEP06 — 교사 모드: 비교표 / 추천표 / 상담 포인트 / 인쇄
+============================================================ */
+(function(){
+  "use strict";
+  function esc(v){ return String(v == null ? "" : v).replace(/[&<>"']/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]; }); }
+  function yn(v){ return v === true ? "O" : v === false ? "X" : (v || "-"); }
+  function univName(id){ var u = UNIVERSITIES.find(function(x){ return x.id === id; }); return u ? u.name : id; }
+  function shortText(v, n){ v = Array.isArray(v) ? v.join(" / ") : String(v || "-"); return v.length > n ? v.slice(0,n) + "…" : v; }
+  function printWithClass(cls){
+    document.body.classList.add(cls);
+    setTimeout(function(){ window.print(); }, 50);
+    var done = function(){ document.body.classList.remove(cls); window.removeEventListener("afterprint", done); };
+    window.addEventListener("afterprint", done);
+    setTimeout(done, 1500);
+  }
+
+  function renderMaster(){
+    var rows = UNIVERSITIES.map(function(u){
+      var c = UNIVERSITY_COLORS[u.id] || {main:u.color};
+      var ai = u.admissionInfo || {}, it = u.interview || {}, ms = u.majorSystem || {}, sc = u.scholarship || {};
+      return '<tr style="--univ-color:' + esc(c.main) + '">' +
+        '<td>' + esc(u.name) + '<br><span style="font-family:var(--font-kr);font-weight:500;color:var(--ink-faint);font-size:11px;">' + esc(u.nameFull) + '</span></td>' +
+        '<td>' + esc(shortText(u.summary, 70)) + '</td>' +
+        '<td>' + esc(yn(ai.sixTimeLimit)) + '</td>' +
+        '<td>' + esc(ai.hasJeongsi ? "정시 있음" : "정시 없음") + '<br>' + esc(shortText(ai.suneungMinimum || "수능최저 없음/확인", 46)) + '</td>' +
+        '<td>' + esc(shortText(ai.overlap || "대학별 전형 간 제한 확인", 56)) + '</td>' +
+        '<td>자소서 ' + esc(yn(ai.selfStatement)) + '<br>추천서 ' + esc(yn(ai.recommendation)) + '</td>' +
+        '<td>' + esc(shortText(it.method || "-", 90)) + '<br><b>' + esc(it.duration || "") + '</b></td>' +
+        '<td>' + esc(ms.type || "-") + '<br>' + esc(ms.selectionTime || "") + '</td>' +
+        '<td>' + esc(shortText((sc.tuition || "-") + " / " + (sc.livingCost || sc.special || ""), 76)) + '</td>' +
+        '<td>' + esc(shortText((u.studentFit && u.studentFit.recommended || [])[0] || "-", 58)) + '</td>' +
+        '<td>' + esc(shortText((u.officialCheck || []).slice(0,2).join(" / "), 76)) + '</td>' +
+      '</tr>';
+    }).join("");
+    document.getElementById("teacherMasterTable").innerHTML = '<thead><tr><th>대학</th><th>한 줄 요약</th><th>수시 6회</th><th>정시·수능최저</th><th>중복지원</th><th>자소서·추천서</th><th>면접</th><th>전공 구조</th><th>장학·생활</th><th>추천 학생</th><th>공식 확인</th></tr></thead><tbody>' + rows + '</tbody>';
+  }
+
+  var FITS = [
+    {title:"전공 탐색형", desc:"입학 후 전공을 넓게 탐색하고 싶은 학생", univs:["kaist","dgist","unist"], items:["KAIST: 무학과 입학 후 2학년 전공 선택", "DGIST: 4년간 트랙을 유연하게 설계", "UNIST: 무학과 100% 전공 선택권 강조"]},
+    {title:"면접 승부형", desc:"성적만큼 사고 과정 설명, 토론, 문제 해결을 보여줄 수 있는 학생", univs:["postech","gist","kaist"], items:["POSTECH: 200분 면접 중심", "GIST: 면접 비중 50% 및 전원 면접", "KAIST: 수학·과학·영어 제시문 기반"]},
+    {title:"서류 안정형", desc:"학생부 수학·과학 성취와 탐구 흐름이 꾸준한 학생", univs:["kaist","unist","dgist","gist"], items:["성적 추세와 수학·과학 세특 질 점검", "탐구활동의 질문-분석-성장 흐름 확인", "면접형 대학 병행 시 구술 대비 필요"]},
+    {title:"반도체 확정형", desc:"반도체·전자공학 진로가 비교적 명확한 학생", univs:["postech","dgist","kaist","unist"], items:["POSTECH·DGIST 계약학과 조건 확인", "전과 제한·의무 조건 확인", "수학·물리·화학 기반 세특 정렬 필요"]},
+    {title:"에너지·기후 특화형", desc:"반도체보다 에너지·기후·수소·전력 문제 해결에 관심이 큰 학생", univs:["kentech","unist","dgist"], items:["KENTECH: 에너지공학부 단일학부", "UNIST: 연구 인프라와 융합 연구", "DGIST: 자유 트랙으로 에너지·재료 확장 가능"]},
+    {title:"영어·글로벌형", desc:"영어 강의와 해외 프로그램을 성장 기회로 볼 수 있는 학생", univs:["unist","dgist","kaist"], items:["UNIST: 100% 영어 수업", "DGIST: 해외 우수대학 프로그램", "KAIST: P/NR로 초기 적응 부담 완화"]},
+    {title:"일반고 추천전략형", desc:"학교장추천·일반고 친화 전형을 전략적으로 검토해야 하는 학생", univs:["kaist","gist"], items:["KAIST 학교장추천: 일반고 학생에게 의미", "GIST 학교장추천: 일반고 위주·학교당 2명", "교내 추천 우선순위 사전 조율 필요"]},
+    {title:"학부모 비용 민감형", desc:"등록금·기숙사·생활비를 함께 따져야 하는 학생", univs:["postech","dgist","unist","kaist"], items:["POSTECH: 등록금 면제 및 특별장학금", "DGIST: 8학기 등록금 면제·월 지원금 메모", "UNIST: residential college 생활환경 강조"]}
+  ];
+
+  function renderFit(){
+    document.getElementById("teacherFitGrid").innerHTML = FITS.map(function(f){
+      var badges = f.univs.map(function(id){ var u = UNIVERSITIES.find(function(x){ return x.id === id; }); var c = UNIVERSITY_COLORS[id] || {main:"var(--accent)"}; return '<span class="badge badge--tip" style="color:' + esc(c.main) + '">' + esc(u ? u.name : id) + '</span>'; }).join("");
+      return '<article class="teacher-fit-card"><h3 class="teacher-fit-card__title">' + esc(f.title) + '</h3><p class="teacher-fit-card__desc">' + esc(f.desc) + '</p><div class="teacher-fit-card__univs">' + badges + '</div><div class="teacher-fit-card__list">' + f.items.map(function(x){ return '<div class="teacher-fit-card__item">' + esc(x) + '</div>'; }).join("") + '</div></article>';
+    }).join("");
+  }
+
+  function renderNotes(){
+    document.getElementById("teacherNotesGrid").innerHTML = UNIVERSITIES.map(function(u){
+      var c = UNIVERSITY_COLORS[u.id] || {main:u.color};
+      var notes = (u.teacherNotes || []).slice(0,6);
+      var checks = (u.officialCheck || []).slice(0,2).map(function(x){ return '공식 확인: ' + x; });
+      return '<article class="teacher-note-card" style="--univ-color:' + esc(c.main) + '"><div class="teacher-note-card__name">' + esc(u.name) + '</div><div class="teacher-note-card__full">' + esc(u.nameFull) + '</div><ul class="teacher-note-list">' + notes.concat(checks).map(function(n){ return '<li>' + esc(n) + '</li>'; }).join("") + '</ul></article>';
+    }).join("");
+  }
+
+  function renderSummaryPages(){
+    document.getElementById("teacherSummaryPages").innerHTML = UNIVERSITIES.map(function(u){
+      var ai=u.admissionInfo||{}, it=u.interview||{}, ms=u.majorSystem||{}, sc=u.scholarship||{};
+      var rec=(u.studentFit&&u.studentFit.recommended||[]).slice(0,3).map(function(x){return '<li>'+esc(x)+'</li>';}).join('');
+      var cau=(u.studentFit&&u.studentFit.caution||[]).slice(0,2).map(function(x){return '<li>'+esc(x)+'</li>';}).join('');
+      return '<section class="teacher-summary-page"><h2>' + esc(u.name) + ' · ' + esc(u.nameFull) + '</h2><p style="font-size:12px;margin-bottom:8px;">' + esc(u.summary) + '</p><div class="summary-grid">' +
+      '<div class="summary-box"><h3>전형 구조</h3><p>수시 6회: ' + esc(yn(ai.sixTimeLimit)) + '<br>정시: ' + esc(yn(ai.hasJeongsi)) + '<br>자소서: ' + esc(yn(ai.selfStatement)) + ' / 추천서: ' + esc(yn(ai.recommendation)) + '</p></div>' +
+      '<div class="summary-box"><h3>면접</h3><p>' + esc(shortText(it.method || '-', 260)) + '</p></div>' +
+      '<div class="summary-box"><h3>전공 선택</h3><p>' + esc(ms.type || '-') + '<br>' + esc(ms.selectionTime || '') + '<br>' + esc(shortText(ms.freedom || '', 180)) + '</p></div>' +
+      '<div class="summary-box"><h3>장학·생활</h3><p>' + esc(sc.tuition || '-') + '<br>' + esc(shortText(sc.livingCost || sc.special || '', 180)) + '</p></div>' +
+      '<div class="summary-box"><h3>추천 학생</h3><ul>' + rec + '</ul></div>' +
+      '<div class="summary-box"><h3>주의 학생</h3><ul>' + cau + '</ul></div>' +
+      '</div></section>';
+    }).join("");
+  }
+
+  function updateSheet(){
+    var name = document.getElementById("teacherStudentName").value.trim() || "________";
+    var type = document.getElementById("teacherStudentType").value;
+    var uid = document.getElementById("teacherPriorityUniv").value;
+    var memo = document.getElementById("teacherMemo").value.trim() || "상담 후 보완 과제를 입력하세요.";
+    var u = uid ? UNIVERSITIES.find(function(x){ return x.id === uid; }) : null;
+    var related = FITS.find(function(f){ return f.title.indexOf(type.replace(" 확정형","").replace(" 특화형","").replace("·글로벌형","")) >= 0; }) || FITS[0];
+    document.getElementById("teacherSheetPreview").innerHTML = '<h3>이공계 특성화대 상담 결과지</h3>' +
+      '<div class="teacher-sheet-preview__meta">학생명: <b>' + esc(name) + '</b> · 학생 유형: <b>' + esc(type) + '</b> · 우선 검토 대학: <b>' + esc(u ? u.name : "미선택") + '</b></div>' +
+      '<div class="teacher-sheet-preview__body">' +
+        '<div><b>추천 방향</b> — ' + esc(related.desc) + ' / 검토 대학: ' + esc(related.univs.map(univName).join(" · ")) + '</div>' +
+        '<div><b>대학 포인트</b> — ' + esc(u ? u.summary : "우선 검토 대학을 선택하면 대학별 핵심 요약이 표시됩니다.") + '</div>' +
+        '<div><b>다음 준비 과제</b> — 수학·과학 성취 추세, 세특 탐구 흐름, 면접 대응력, 자소서·추천서 필요 여부를 순서대로 점검합니다.</div>' +
+        '<div><b>상담 메모</b> — ' + esc(memo).replace(/\n/g,"<br>") + '</div>' +
+      '</div>';
+  }
+
+  function initTabs(){
+    document.querySelectorAll(".teacher-tab").forEach(function(tab){
+      tab.addEventListener("click", function(){
+        var id = tab.getAttribute("data-teacher-tab");
+        document.querySelectorAll(".teacher-tab").forEach(function(t){ t.setAttribute("aria-selected", String(t === tab)); });
+        document.querySelectorAll(".teacher-panel").forEach(function(panel){ panel.classList.toggle("is-active", panel.id === "teacher-panel-" + id); });
+      });
+    });
+  }
+
+  function initTeacherMode(){
+    if(!document.getElementById("teacherMasterTable")) return;
+    renderMaster(); renderFit(); renderNotes(); renderSummaryPages(); initTabs();
+    var select = document.getElementById("teacherPriorityUniv");
+    select.innerHTML += UNIVERSITIES.map(function(u){ return '<option value="' + esc(u.id) + '">' + esc(u.name) + ' · ' + esc(u.nameFull) + '</option>'; }).join("");
+    updateSheet();
+    ["teacherStudentName","teacherStudentType","teacherPriorityUniv","teacherMemo"].forEach(function(id){ var el=document.getElementById(id); if(el) el.addEventListener("input", updateSheet); if(el) el.addEventListener("change", updateSheet); });
+    document.getElementById("teacherUpdateSheetBtn").addEventListener("click", updateSheet);
+    document.getElementById("teacherPrintMasterBtn").addEventListener("click", function(){ printWithClass("print-teacher-master"); });
+    document.getElementById("teacherPrintSummaryBtn").addEventListener("click", function(){ printWithClass("print-teacher-summary"); });
+    document.getElementById("teacherPrintParentBtn").addEventListener("click", function(){ document.querySelector('[data-mode="parent"]').click(); setTimeout(function(){ window.print(); }, 80); });
+    document.getElementById("teacherPrintSheetBtn").addEventListener("click", function(){ updateSheet(); printWithClass("print-teacher-sheet"); });
+    document.getElementById("teacherPrintSheetBtn2").addEventListener("click", function(){ updateSheet(); printWithClass("print-teacher-sheet"); });
+    var fv = document.getElementById("footerVersion");
+    if(fv){ fv.textContent = "배포용 자료 (데이터: " + META.version + ")"; }
+  }
+  if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", initTeacherMode);
+  else initTeacherMode();
+})();
+</script>
+
+
+<script>
+(function(){
+  function finalizeStep08(){
+    var fv = document.getElementById("footerVersion");
+    var fu = document.getElementById("footerUpdated");
+    var fd = document.getElementById("footerDisclaimer");
+    if(fv) fv.textContent = "배포용 자료 (데이터: " + (window.META ? META.version : "2027학년도") + ")";
+    if(fu) fu.textContent = "최종 수정 2027학년도 · 배포용";
+    if(fd) fd.textContent = "입시설명회 메모 기반 상담 보조 자료입니다. 최종 지원 전 대학별 공식 모집요강과 입학처 공지를 반드시 확인하세요.";
+  }
+  if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", finalizeStep08);
+  else finalizeStep08();
+})();
+</script>
+
+</body>
+</html>
