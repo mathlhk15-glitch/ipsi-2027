@@ -195,7 +195,7 @@ body{font-family:'Apple SD Gothic Neo','Malgun Gothic','Noto Sans KR',sans-serif
 
 <!-- HEADER -->
 <div class="hd">
-  <a class="hub-link" href="index.html#/ebs" onclick="keepMapPos()"><span>← 국어 파이널 허브<small>중요 문학 S·A 34 · 문제 풀기 · 복습 노트</small></span><b>🔥</b></a>
+  <a class="hub-link" href="https://mathlhk15-glitch.github.io/final-2027-korean/#/ebs" onclick="keepMapPos()"><span>← 국어 파이널 허브<small>중요 문학 S·A 34 · 문제 풀기 · 복습 노트</small></span><b>🔥</b></a>
   <div class="hd-title">📚 2027 수능완성 문학·독서 학습맵</div>
   <div class="hd-sub">창원경일고 진로진학상담실 · 총 <span id="hd-total">64</span>개 작품·지문</div>
   <div class="hd-notice">
@@ -1011,7 +1011,7 @@ function render(){
           <div class="ctags">${d.career.map(c=>`<span class="ctag">🎯 ${c}</span>`).join('')}</div>
           <div class="lrow">${d.url?`<a class="clink" href="${d.url}" target="_blank" rel="noopener">📖 해설 보기</a>`
                  :`<span class="clink dis">📝 해설 링크 준비 중${d.pg?` · 교재 ${d.pg}쪽으로 확인`:''}</span>`}
-          ${d.hub?`<a class="clink hubl" href="index.html#/${d.hub}" onclick="keepMapPos()">${d.hub.startsWith('ebs')?'🔥 허브 S·A 카드':d.hub.startsWith('lit')?'📚 허브 학습 카드':'🗂 허브 색인'}</a>`:''}</div>
+          ${d.hub?`<a class="clink hubl" href="https://mathlhk15-glitch.github.io/final-2027-korean/#/${d.hub}" onclick="keepMapPos()">${d.hub.startsWith('ebs')?'🔥 허브 S·A 카드':d.hub.startsWith('lit')?'📚 허브 학습 카드':'🗂 허브 색인'}</a>`:''}</div>
         </div>
       </div>`;
     });
